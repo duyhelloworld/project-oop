@@ -5,3 +5,7 @@
 > * [target](./target)    : file biên dịch ra, sử dụng để chạy code mà ko có source code
 > * [resources](./src/main/resources) : folder chứa cấu hình phần front-end + thông tin kết nối database
 > * [java](./src/main/java) + [package](./src/main/java/com/helloworld) : folder chứa source code thực thi
+
+
+### Tính năng (Features)
+- Kiến trúc 3-Tier : Presentation -> Service -> DataAcceess  

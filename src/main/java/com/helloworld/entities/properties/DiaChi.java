@@ -1,7 +1,7 @@
 package com.helloworld.entities.properties;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 enum Pho {
     SO, DUONG, NGO, QUAN, PHO
@@ -12,10 +12,48 @@ enum Que {
 }
 
 public class DiaChi {
-    private Map<Que, String> dia_chi_o_que = new HashMap<>();
+    private Map<Que, String> dia_chi_o_que;
 
-    private Map<Pho, String> dia_chi_o_pho = new HashMap<>();
+    private Map<Pho, String> dia_chi_o_pho;
 
+// Use for convert
+    public DiaChi(String diaChi){
+        String[] cacThanhPhan = diaChi.split(",");
+        int soThanhPhan = cacThanhPhan.length;
+
+        if (soThanhPhan == 3) {
+            if (cacThanhPhan[0].matches("\\d+")){
+                dia_chi_o_pho = new HashMap<>();
+                this.dia_chi_o_pho.put(Pho.SO, cacThanhPhan[0]);
+                this.dia_chi_o_pho.put(Pho.DUONG, cacThanhPhan[1]);
+                this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[2]);
+            } else {
+                dia_chi_o_que = new HashMap<>();
+                this.dia_chi_o_que.put(Que.XA, cacThanhPhan[0]);
+                this.dia_chi_o_que.put(Que.HUYEN, cacThanhPhan[1]);
+                this.dia_chi_o_que.put(Que.TINH, cacThanhPhan[2]);
+            }
+        }
+        else if (soThanhPhan == 4) {
+            dia_chi_o_pho = new HashMap<>();
+            this.dia_chi_o_pho.put(Pho.SO, cacThanhPhan[0]);
+            this.dia_chi_o_pho.put(Pho.NGO, cacThanhPhan[1]);
+            this.dia_chi_o_pho.put(Pho.DUONG, cacThanhPhan[2]);
+            this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[3]);
+        } else if (soThanhPhan == 5) {
+            dia_chi_o_pho = new HashMap<>();
+            this.dia_chi_o_pho.put(Pho.SO, cacThanhPhan[0]);
+            this.dia_chi_o_pho.put(Pho.NGO, cacThanhPhan[1]);
+            this.dia_chi_o_pho.put(Pho.PHO, cacThanhPhan[2]);
+            this.dia_chi_o_pho.put(Pho.DUONG, cacThanhPhan[3]);
+            this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[4]);
+        } 
+        else {
+            throw new IllegalArgumentException("Format DiaChi is incorrect");
+        }
+    }
+
+// Use for insert
     public DiaChi(Integer so, String duong, String quan) {
         this.dia_chi_o_pho.put(Pho.SO, so.toString());
         this.dia_chi_o_pho.put(Pho.DUONG, duong);
@@ -33,12 +71,13 @@ public class DiaChi {
         this.dia_chi_o_que.put(Que.TINH, tinh);
     }
 
+
     @Override
     public String toString() {
         if(this.dia_chi_o_que != null) {
             return "xã " + this.dia_chi_o_que.get(Que.XA) 
-                + ",huyện " + this.dia_chi_o_que.get(Que.HUYEN)
-                + ",tỉnh " + this.dia_chi_o_que.get(Que.TINH);
+                + ", huyện " + this.dia_chi_o_que.get(Que.HUYEN)
+                + ", tỉnh " + this.dia_chi_o_que.get(Que.TINH);
         } 
 
         if (this.dia_chi_o_pho.get(Pho.NGO) != null) {

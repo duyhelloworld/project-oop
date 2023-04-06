@@ -1,5 +1,7 @@
 package com.helloworld;
 
+import com.helloworld.service.QuanLiSinhVien;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,12 +10,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-
 public class App extends Application {
 
     public static void main(String[] args) {
+        QuanLiSinhVien ql = new QuanLiSinhVien();
+        // ql.layTatCaSinhVien();
+        // System.out.println(ql.laySinhVienTheoMaSo(1));
+        // System.out.println(ql.laySinhVienTheoTen("Hang").toString());
         launch();
     }
+
+    // public static void main(String[] args) {
+    //     DiaChi dc1 = new DiaChi("Trung Luong, Binh Luc, Ha Nam");
+    //     DiaChi dc2 = new DiaChi("9, Binh Luc, Ha Nam");
+    //     DiaChi dc3 = new DiaChi("9,1 , Binh Luc, Ha Nam");
+    //     DiaChi dc4 = new DiaChi("3,5 , Binh Luc, Ha Nam");
+    //     System.out.println(dc1.toString());
+    //     System.out.println(dc2.toString());
+    //     System.out.println(dc3.toString());
+    //     System.out.println(dc4.toString());
+    // }
 
     @Override
     public void start(Stage primaryStage) throws Exception {

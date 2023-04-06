@@ -1,5 +1,7 @@
 package com.helloworld.entities.properties;
 
+import java.util.Arrays;
+
 public class HoTen {
     private String ho;
 
@@ -11,6 +13,13 @@ public class HoTen {
         this.ho = ho;
         this.ten_dem = ten_dem;
         this.ten = ten;
+    }
+
+    public HoTen(String hoTen) {
+        String[] chiaTen = hoTen.split(" ");
+        this.ho = chiaTen[0];
+        this.ten = chiaTen[chiaTen.length - 1];
+        this.ten_dem = String.join(" ", Arrays.copyOfRange(chiaTen, 1, chiaTen.length - 1));
     }
 
     public String getHo() {

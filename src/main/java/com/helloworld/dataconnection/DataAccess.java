@@ -57,6 +57,7 @@ public class DataAccess {
             System.out.println("SQL exception : " + e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println("Not found MySQL driver!");
+            
         }
         return null;
     }
@@ -65,14 +66,24 @@ public class DataAccess {
         PreparedStatement stm = null;
         Connection conn = getConn();
         try {
-            if (conn == null || conn.isClosed() ) {
-                throw new SQLException("Something wrong when create query");
+            if (conn == null) {
+                throw new SQLException("Something wrong when initialize");
             }
             stm = conn.prepareStatement(query);
         } catch (SQLException e) {
             System.out.println("Error : " + e.getMessage());
         }
         return stm;
+    }
+
+    public void closeConnection(PreparedStatement statement) {
+       try {
+           if (!statement.getConnection().isClosed()) {
+                statement.getConnection().close();
+           }
+       } catch (SQLException e) {
+        e.printStackTrace();
+       }
     }
 
 
