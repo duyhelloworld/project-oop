@@ -1,5 +1,6 @@
 package com.helloworld.entities;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,7 +13,6 @@ public class SinhVien {
     private HoTen hoten;
 
     private Boolean gioi_tinh;
-    // 0 = gái
 
     private LocalDate ngay_sinh;
 
@@ -44,15 +44,11 @@ public class SinhVien {
         this.maso = maso;
     }
 
-    public HoTen getHoten() {
+    public HoTen getHoTen() {
         return this.hoten;
     }
 
-    public String getHoTen() {
-        return this.hoten.toString();
-    }
-
-    public void setHoten(HoTen hoten) {
+    public void setHoTen(HoTen hoten) {
         this.hoten = hoten;
     }
 
@@ -60,8 +56,16 @@ public class SinhVien {
         return this.ngay_sinh;
     }
 
+    public Date getNgaySinhVoiKieuSQL() {
+        return Date.valueOf(this.ngay_sinh);
+    }
+
     public void setNgaySinh(LocalDate ngay_sinh) {
         this.ngay_sinh = ngay_sinh;
+    }
+
+    public void setNgaySinh(Date ngay_sinh) {
+        this.ngay_sinh = ngay_sinh.toLocalDate();
     }
 
     public Boolean getGioiTinh() {
@@ -89,7 +93,7 @@ public class SinhVien {
     }
 
     public String getEmail() {
-        return this.getHoten().getTen().toLowerCase() + String.format("%05d", this.getMaso()) + "66" + "@huce.edu.vn";
+        return this.getHoTen().getTen().toLowerCase() + String.format("%05d", this.getMaso()) + "66" + "@huce.edu.vn";
     }
 
     public String getSoDienThoai() {
@@ -108,6 +112,43 @@ public class SinhVien {
         }
     }
 
+
+    public SinhVien maso(Integer maso) {
+        setMaso(maso);
+        return this;
+    }
+
+    public SinhVien hoten(HoTen hoten) {
+        setHoTen(hoten);
+        return this;
+    }
+
+    public SinhVien gioi_tinh(Boolean gioi_tinh) {
+        setGioiTinh(gioi_tinh);
+        return this;
+    }
+
+    public SinhVien ngay_sinh(LocalDate ngay_sinh) {
+        setNgaySinh(ngay_sinh);
+        return this;
+    }
+
+    public SinhVien dia_chi_hien_tai(DiaChi dia_chi_hien_tai) {
+        setDiaChiHienTai(dia_chi_hien_tai);
+        return this;
+    }
+
+    public SinhVien que_quan(DiaChi que_quan) {
+        setQueQuan(que_quan);
+        return this;
+    }
+
+    public SinhVien so_dien_thoai(String so_dien_thoai) {
+        setSoDienThoai(so_dien_thoai);
+        return this;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -125,7 +166,7 @@ public class SinhVien {
     public String toString() {
         return "{" +
                 " maso='" + getMaso() + "'" +
-                ", hoten='" + getHoten() + "'" +
+                ", hoten='" + getHoTen() + "'" +
                 ", ngay_sinh='" + getNgaySinh() + "'" +
                 ", dia_chi_hien_tai='" + getDiaChiHienTai() + "'" +
                 ", que_quan='" + getQueQuan() + "'" +

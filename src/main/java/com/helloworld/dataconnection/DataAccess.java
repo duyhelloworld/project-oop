@@ -92,7 +92,7 @@ public class DataAccess {
             statement.close();
             statement = getConn().prepareStatement(newQuery);
         } catch (SQLException e) {
-            System.out.println("Error : " + e.getMessage());
+            System.out.println("Error when changing statement : " + e.getMessage());
         }
     }
 }

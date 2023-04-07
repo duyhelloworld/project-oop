@@ -1,7 +1,5 @@
 package com.helloworld;
 
-import com.helloworld.service.QuanLiSinhVien;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,11 +11,15 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     public static void main(String[] args) {
-        QuanLiSinhVien ql = new QuanLiSinhVien();
+        // QuanLiSinhVien ql = new QuanLiSinhVien();
         // ql.layTatCaSinhVien();
         // System.out.println(ql.laySinhVienTheoMaSo(1));
         // System.out.println(ql.laySinhVienTheoTen("Hang").toString());
-        launch();
+        // SinhVien sv = new SinhVien();
+        // sv.hoten(new HoTen("Van Anh"));
+        // ql.capNhatThongTin(1, sv);
+        // System.out.println(ql.laySinhVienTheoMaSo(1));
+        // launch();
     }
 
     // public static void main(String[] args) {

@@ -24,7 +24,7 @@ public class QuanLiSinhVien {
             SinhVien temp = new SinhVien();
             while (result.next()) {
                 temp.setMaso(result.getInt("mssv"));
-                temp.setHoten(new HoTen(result.getString("ho_ten")));
+                temp.setHoTen(new HoTen(result.getString("ho_ten")));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
                 temp.setNgaySinh(
                     result.getDate("ngay_sinh").toLocalDate());
@@ -49,7 +49,7 @@ public class QuanLiSinhVien {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 kq.setMaso(maso);
-                kq.setHoten(new HoTen(result.getString("ho_ten")));
+                kq.setHoTen(new HoTen(result.getString("ho_ten")));
                 kq.setGioiTinh(result.getBoolean("gioi_tinh"));
                 kq.setNgaySinh(
                         result.getDate("ngay_sinh").toLocalDate());
@@ -74,7 +74,7 @@ public class QuanLiSinhVien {
             SinhVien temp = new SinhVien();
             while (result.next()) {
                 temp.setMaso(result.getInt("mssv"));
-                temp.setHoten(new HoTen(result.getString("ho_ten")));
+                temp.setHoTen(new HoTen(result.getString("ho_ten")));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
                 temp.setNgaySinh(
                     result.getDate("ngay_sinh").toLocalDate());
@@ -90,8 +90,63 @@ public class QuanLiSinhVien {
         return kq;
     }
 
+    public Boolean capNhatThongTin(Integer mssv, SinhVien sinhVienTruyenVao) {
+        SinhVien sinhVienLayRa = laySinhVienTheoMaSo(mssv);
+        
+        try {
+            if (sinhVienLayRa == null) {
+                throw new IllegalArgumentException("Not found mssv " + mssv);
+            }
 
+            PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ho_ten = ?, ngay_sinh = ?, gioi_tinh = ?, que_quan = ?, dia_chi_hien_tai = ?, so_dien_thoai = ? WHERE mssv = ?");
+            if (sinhVienTruyenVao.getHoTen() != null) {
+                statement.setString(1, sinhVienTruyenVao.getHoTen().toString());
+            } else {
+                statement.setString(1, sinhVienLayRa.getHoTen().toString());
+            }
 
+            if (sinhVienTruyenVao.getNgaySinh() != null) {
+                statement.setDate(2, sinhVienTruyenVao.getNgaySinhVoiKieuSQL());
+            } else {
+                statement.setDate(2, sinhVienLayRa.getNgaySinhVoiKieuSQL());
+            }
+
+            if (sinhVienTruyenVao.getGioiTinh() != null) {
+                statement.setBoolean(3,  sinhVienTruyenVao.getGioiTinh());
+            } else {
+                statement.setBoolean(3, sinhVienLayRa.getGioiTinh());
+            }
+
+            if (sinhVienTruyenVao.getQueQuan() != null) {
+                statement.setString(4, sinhVienTruyenVao.getQueQuan().formatToSaveDataBase());
+            } else {
+                statement.setString(4, sinhVienLayRa.getQueQuan().formatToSaveDataBase());
+            }
+
+            if (sinhVienTruyenVao.getDiaChiHienTai() != null) {
+                statement.setString(5, sinhVienTruyenVao.getDiaChiHienTai().formatToSaveDataBase());
+            } else {
+                statement.setString(5, sinhVienLayRa.getDiaChiHienTai().formatToSaveDataBase());
+            }
+
+            if (sinhVienTruyenVao.getSoDienThoai()!= null) {
+                statement.setString(6, sinhVienTruyenVao.getSoDienThoai());
+            } else {
+                statement.setString(6, sinhVienLayRa.getSoDienThoai());
+            }
+            statement.setInt(7, mssv);
+            int rowAffected = statement.executeUpdate();
+            access.closeConnection(statement);
+
+            return rowAffected == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Delete
+    
 
 
 }

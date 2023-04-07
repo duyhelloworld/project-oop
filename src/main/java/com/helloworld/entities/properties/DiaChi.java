@@ -92,4 +92,25 @@ public class DiaChi {
                 + ", quận " + this.dia_chi_o_pho.get(Pho.QUAN);
     }
 
+
+    public String formatToSaveDataBase(){
+        if (this.dia_chi_o_pho != null) {
+            if (this.dia_chi_o_pho.get(Pho.NGO) != null) {
+                return this.dia_chi_o_pho.get(Pho.SO)
+                        + ", " + this.dia_chi_o_pho.get(Pho.NGO)
+                        + ", " + this.dia_chi_o_pho.get(Pho.DUONG)
+                        + ", " + this.dia_chi_o_pho.get(Pho.QUAN);
+            }
+            return this.dia_chi_o_pho.get(Pho.SO)
+                    + ", " + this.dia_chi_o_pho.get(Pho.DUONG)
+                    + ", " + this.dia_chi_o_pho.get(Pho.QUAN);
+        }
+        if (this.dia_chi_o_que != null) {
+            return this.dia_chi_o_que.get(Que.XA)
+                    + ", " + this.dia_chi_o_que.get(Que.HUYEN)
+                    + ", " + this.dia_chi_o_que.get(Que.TINH);
+        }
+        throw new NullPointerException("Missing value at diachi");       
+    }
+
 }
