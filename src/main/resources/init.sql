@@ -22,7 +22,8 @@ CREATE TABLE MonHoc (
     ma_mon_hoc INT PRIMARY KEY AUTO_INCREMENT,
     ten VARCHAR(20),
     so_tin_chi INT,
-    mo_ta_mh TEXT
+    bat_buoc BIT,
+    tien_quyet BIT
 );
 
 CREATE TABLE Lop (
@@ -30,7 +31,7 @@ CREATE TABLE Lop (
     ten_lop CHAR(5)
 );
 
-CREATE TABLE DiemThi (
+CREATE TABLE TinhDiem (
     ma_mon_hoc INT,
     ma_lop INT,
     mssv INT,

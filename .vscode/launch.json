@@ -9,7 +9,7 @@
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "vmArgs": "--module-path /media/duyaiti/Project/Project_Java/JavaFX_SDK/javafx-sdk-20/lib --add-modules javafx.controls"
+            "vmArgs": "--module-path /opt/javafx-sdk/lib --add-modules javafx.controls"
         },
         {
             "type": "java",
@@ -17,7 +17,7 @@
             "request": "launch",
             "mainClass": "com.helloworld.App",
             "projectName": "javafx",
-            "vmArgs": "--module-path /media/duyaiti/Project/Project_Java/JavaFX_SDK/javafx-sdk-20/lib --add-modules javafx.controls"
+            "vmArgs": "--module-path /opt/javafx-sdk/lib --add-modules javafx.controls"
         }
     ]
 }
