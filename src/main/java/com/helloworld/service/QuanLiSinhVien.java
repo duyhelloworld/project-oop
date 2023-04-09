@@ -64,7 +64,7 @@ public class QuanLiSinhVien {
         return kq;
     }
 
-    public List<SinhVien> laySinhVienTheoTen(String ten){
+    public List<SinhVien> timKiemSinhVienTheoTen(String ten){
         List<SinhVien> kq = new ArrayList<SinhVien>();
         PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien WHERE ho_ten LIKE ?");
 
@@ -91,10 +91,10 @@ public class QuanLiSinhVien {
     }
 
     public Boolean capNhatThongTin(Integer mssv, SinhVien sinhVienTruyenVao) {
-        SinhVien sinhVienLayRa = laySinhVienTheoMaSo(mssv);
+        SinhVien sinhVienLayRaTuDatabase = laySinhVienTheoMaSo(mssv);
         
         try {
-            if (sinhVienLayRa == null) {
+            if (sinhVienLayRaTuDatabase == null) {
                 throw new IllegalArgumentException("Not found mssv " + mssv);
             }
 
@@ -102,37 +102,37 @@ public class QuanLiSinhVien {
             if (sinhVienTruyenVao.getHoTen() != null) {
                 statement.setString(1, sinhVienTruyenVao.getHoTen().toString());
             } else {
-                statement.setString(1, sinhVienLayRa.getHoTen().toString());
+                statement.setString(1, sinhVienLayRaTuDatabase.getHoTen().toString());
             }
 
             if (sinhVienTruyenVao.getNgaySinh() != null) {
                 statement.setDate(2, sinhVienTruyenVao.getNgaySinhVoiKieuSQL());
             } else {
-                statement.setDate(2, sinhVienLayRa.getNgaySinhVoiKieuSQL());
+                statement.setDate(2, sinhVienLayRaTuDatabase.getNgaySinhVoiKieuSQL());
             }
 
             if (sinhVienTruyenVao.getGioiTinh() != null) {
                 statement.setBoolean(3,  sinhVienTruyenVao.getGioiTinh());
             } else {
-                statement.setBoolean(3, sinhVienLayRa.getGioiTinh());
+                statement.setBoolean(3, sinhVienLayRaTuDatabase.getGioiTinh());
             }
 
             if (sinhVienTruyenVao.getQueQuan() != null) {
                 statement.setString(4, sinhVienTruyenVao.getQueQuan().formatToSaveDataBase());
             } else {
-                statement.setString(4, sinhVienLayRa.getQueQuan().formatToSaveDataBase());
+                statement.setString(4, sinhVienLayRaTuDatabase.getQueQuan().formatToSaveDataBase());
             }
 
             if (sinhVienTruyenVao.getDiaChiHienTai() != null) {
                 statement.setString(5, sinhVienTruyenVao.getDiaChiHienTai().formatToSaveDataBase());
             } else {
-                statement.setString(5, sinhVienLayRa.getDiaChiHienTai().formatToSaveDataBase());
+                statement.setString(5, sinhVienLayRaTuDatabase.getDiaChiHienTai().formatToSaveDataBase());
             }
 
             if (sinhVienTruyenVao.getSoDienThoai()!= null) {
                 statement.setString(6, sinhVienTruyenVao.getSoDienThoai());
             } else {
-                statement.setString(6, sinhVienLayRa.getSoDienThoai());
+                statement.setString(6, sinhVienLayRaTuDatabase.getSoDienThoai());
             }
             statement.setInt(7, mssv);
             int rowAffected = statement.executeUpdate();
@@ -146,6 +146,7 @@ public class QuanLiSinhVien {
     }
 
     // Delete
+    
     
 
 
