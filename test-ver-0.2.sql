@@ -2,7 +2,6 @@
 
 CREATE DATABASE DoAnOOP2;
 USE DoAnOOP2;
-
 CREATE TABLE MonHoc (
         ma_mon INT PRIMARY KEY AUTO_INCREMENT,
         ten VARCHAR(20),
@@ -78,24 +77,24 @@ SELECT * FROM `MonHoc`;
 SELECT * FROM `SinhVien`;
 
 -- Quản lí bảng điểm từng môn theo lớp quản lí
-SELECT SinhVien.mssv, ho_ten, SinhVien.ten_lop AS lop_quan_li, khoa, TinhDiem.ten_lop AS lop_mon_hoc, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki
-FROM (`SinhVien` 
-INNER JOIN `LopQuanLi` 
-ON SinhVien.ten_lop = LopQuanLi.ten_lop) 
-INNER JOIN `TinhDiem` On TinhDiem.mssv = SinhVien.mssv;
 
-SELECT SinhVien.mssv, ho_ten, khoa, TinhDiem.ten_lop AS lop_mon_hoc, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki
-FROM (`SinhVien` 
+SELECT
+SinhVien.mssv, ho_ten, SinhVien.ten_lop AS lop_quan_li, TinhDiem.ten_lop AS lop_mon_hoc, MonHoc.ten, khoa, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki
+FROM
+    (`SinhVien` 
 INNER JOIN `LopQuanLi` 
-ON SinhVien.ten_lop = LopQuanLi.ten_lop) 
+ON SinhVien.ten_lop = LopQuanLi.ten_lop)
+INNER JOIN (`MonHoc` INNER JOIN `LopMonHoc` On LopMonHoc.ma_mon = MonHoc.ma_mon)
 INNER JOIN `TinhDiem` On TinhDiem.mssv = SinhVien.mssv
-WHERE SinhVien.ten_lop = "66IT5";
+WHERE SinhVien.ten_lop = "66IT5"
+ORDER BY SinhVien.mssv;
 
 -- Quản lí bảng điểm từng môn theo lớp môn học
-SELECT SinhVien.mssv, ho_ten, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki 
+SELECT
+SinhVien.mssv, ho_ten, SinhVien.ten_lop AS lop_quan_li, LopMonHoc.ten_lop AS lop_mon_hoc, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki 
 FROM (`SinhVien` 
 INNER JOIN 
 (`TinhDiem` INNER JOIN `LopMonHoc` ON TinhDiem.ten_lop = LopMonHoc.ten_lop)
 ON SinhVien.mssv = TinhDiem.mssv)
-WHERE LopMonHoc.ten_lop = "66ML1"; 
-
+WHERE LopMonHoc.ten_lop = "66ML1"
+ORDER BY SinhVien.mssv; 
