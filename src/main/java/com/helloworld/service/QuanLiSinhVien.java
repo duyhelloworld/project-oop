@@ -144,10 +144,4 @@ public class QuanLiSinhVien {
         }
         return false;
     }
-
-    // Delete
-    
-    
-
-
 }
