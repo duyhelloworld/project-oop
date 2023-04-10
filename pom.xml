@@ -30,12 +30,6 @@
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- <dependency>
-            <groupId>no.tornado</groupId>
-            <artifactId>fxlauncher</artifactId>
-            <version>1.0.21</version>
-        </dependency> -->
-        
     </dependencies>
     <build>
         <plugins>
