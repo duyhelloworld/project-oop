@@ -11,7 +11,7 @@ import com.helloworld.entities.SinhVien;
 import com.helloworld.entities.properties.DiaChi;
 import com.helloworld.entities.properties.HoTen;
 
-public class QuanLiSinhVien {
+public class SinhVienCRUD {
 
     private DataAccess access = DataAccess.getInstance();
 
