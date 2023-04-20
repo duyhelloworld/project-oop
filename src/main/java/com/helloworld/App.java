@@ -1,5 +1,10 @@
 package com.helloworld;
 
+import java.util.List;
+import java.util.Map;
+
+import com.helloworld.service.QuanLiSinhVienTheoLop;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,14 +16,12 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     public static void main(String[] args) {
-        // QuanLiSinhVien ql = new QuanLiSinhVien();
-        // ql.layTatCaSinhVien();
-        // System.out.println(ql.laySinhVienTheoMaSo(1));
-        // System.out.println(ql.laySinhVienTheoTen("Hang").toString());
-        // SinhVien sv = new SinhVien();
-        // sv.hoten(new HoTen("Van Anh"));
-        // ql.capNhatThongTin(1, sv);
-        // System.out.println(ql.laySinhVienTheoMaSo(1));
+        QuanLiSinhVienTheoLop ql = new QuanLiSinhVienTheoLop();
+        // List<Map<String, String>> kq = ql.laySinhVienTheoLopQuanLi("66IT5");
+        List<Map<String, String>> kq = ql.laySinhVienTheoLopMonHoc("66ML1");
+        for (Map<String,String> sinhVien : kq) {
+            System.out.println(sinhVien.toString());
+        }
         // launch();
     }
 
@@ -27,10 +30,6 @@ public class App extends Application {
     //     DiaChi dc2 = new DiaChi("9, Binh Luc, Ha Nam");
     //     DiaChi dc3 = new DiaChi("9,1 , Binh Luc, Ha Nam");
     //     DiaChi dc4 = new DiaChi("3,5 , Binh Luc, Ha Nam");
-    //     System.out.println(dc1.toString());
-    //     System.out.println(dc2.toString());
-    //     System.out.println(dc3.toString());
-    //     System.out.println(dc4.toString());
     // }
 
     @Override

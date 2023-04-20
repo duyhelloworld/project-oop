@@ -9,18 +9,17 @@ import com.helloworld.entities.properties.HoTen;
 public class SinhVien extends ConNguoi {
     private LocalDate ngay_vao_truong;
 
-    private Integer ma_lop_quan_li;
+    private String ten_lop_quan_li;
 
-    private String khoa;
+    
 
     public SinhVien() {
     }
 
-    public SinhVien(HoTen hoten, LocalDate ngay_sinh, Boolean gioi_tinh, DiaChi dia_chi_hien_tai, DiaChi que_quan, String so_dien_thoai, LocalDate ngay_vao_truong, Integer ma_lop_quan_li, String khoa) {
+    public SinhVien(HoTen hoten, LocalDate ngay_sinh, Boolean gioi_tinh, DiaChi dia_chi_hien_tai, DiaChi que_quan, String so_dien_thoai, LocalDate ngay_vao_truong, String ten_lop_quan_li) {
         super(hoten, ngay_sinh, gioi_tinh, que_quan, dia_chi_hien_tai, so_dien_thoai);
         this.ngay_vao_truong = ngay_vao_truong;
-        this.ma_lop_quan_li = ma_lop_quan_li;
-        this.khoa = khoa;
+        this.ten_lop_quan_li = ten_lop_quan_li;
     }
 
     public SinhVien ngayVaoTruong(LocalDate ngay_vao_truong) {
@@ -36,20 +35,12 @@ public class SinhVien extends ConNguoi {
         this.ngay_vao_truong = ngay_vao_truong;
     }
 
-    public Integer getMaLopQuanLi() {
-        return this.ma_lop_quan_li;
+    public String getTenLopQuanLi() {
+        return this.ten_lop_quan_li;
     }
 
-    public void setMaLopQuanLi(Integer ma_lop_quan_li) {
-        this.ma_lop_quan_li = ma_lop_quan_li;
-    }
-
-    public String getKhoa() {
-        return this.khoa;
-    }
-
-    public void setKhoa(String khoa) {
-        this.khoa = khoa;
+    public void setTenLopQuanLi(String ten_lop_quan_li) {
+        this.ten_lop_quan_li = ten_lop_quan_li;
     }
 
     public SinhVien ngay_vao_truong(LocalDate ngay_vao_truong) {
@@ -57,13 +48,8 @@ public class SinhVien extends ConNguoi {
         return this;
     }
 
-    public SinhVien ma_lop_quan_li(Integer ma_lop_quan_li) {
-        setMaLopQuanLi(ma_lop_quan_li);
-        return this;
-    }
-
-    public SinhVien khoa(String khoa) {
-        setKhoa(khoa);
+    public SinhVien ten_lop_quan_li(String ten_lop_quan_li) {
+        setTenLopQuanLi(ten_lop_quan_li);
         return this;
     }
 
@@ -77,16 +63,14 @@ public class SinhVien extends ConNguoi {
         SinhVien sinhVien = (SinhVien) o;
         return super.equals(sinhVien) 
             && Objects.equals(ngay_vao_truong, sinhVien.ngay_vao_truong)
-            && Objects.equals(ma_lop_quan_li, sinhVien.ma_lop_quan_li)
-            && Objects.equals(khoa, sinhVien.khoa);
+            && Objects.equals(ten_lop_quan_li, sinhVien.ten_lop_quan_li);
     }
 
     @Override
     public String toString() {
         return super.toString() +
-            ", ngayVaoTruong='" + getNgayVaoTruong() + "'" +
-            ", maLopQuanLi=" + getMaLopQuanLi() + "" +
-            ", khoa=" + getKhoa() + "" +
+            ", ngày vào trường = '" + getNgayVaoTruong() + "'" +
+            ", lớp quản lí = " + getTenLopQuanLi() + "" +
             "}";
     }
 }

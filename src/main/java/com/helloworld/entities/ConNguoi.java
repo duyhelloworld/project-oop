@@ -163,13 +163,13 @@ public abstract class ConNguoi {
     @Override
     public String toString() {
         return "{" +
-                " maso='" + getMaso() + "'" +
-                ", hoten='" + getHoTen() + "'" +
-                ", ngay_sinh='" + getNgaySinh() + "'" +
-                ", dia_chi_hien_tai='" + getDiaChiHienTai() + "'" +
-                ", que_quan='" + getQueQuan() + "'" +
-                ", email='" + getEmail() + "'" +
-                ", so_dien_thoai='" + getSoDienThoai()
+                " mã số = '" + getMaso() + "'" +
+                ", họ tên = '" + getHoTen() + "'" +
+                ", ngày sinh = '" + getNgaySinh() + "'" +
+                ", địa chỉ hiện tại = '" + getDiaChiHienTai() + "'" +
+                ", quê quán = '" + getQueQuan() + "'" +
+                ", email = '" + getEmail() + "'" +
+                ", số điện thoại = '" + getSoDienThoai()
                 ;
     }
 }

@@ -45,7 +45,7 @@ public class NhanVienDaoTao extends ConNguoi {
     @Override
     public String toString() {
         return super.toString() +
-            " quanLiCacGiangVien='" + getMaSoGiangVien() + "'" +
+            " đang quản lí các GV có mã số = '" + getMaSoGiangVien() + "'" +
             "}";
     }
 
