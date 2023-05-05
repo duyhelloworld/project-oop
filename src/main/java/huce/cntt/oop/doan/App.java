@@ -3,37 +3,47 @@ package huce.cntt.oop.doan;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class App extends Application implements EventHandler<ActionEvent> {
+public class App extends Application {
     
-    private static Scene scene;
-    private Button btn1;
+    private Scene home, login;
+    private Stage windowHello, primaryStage;
+
+    // private Scene home(){
+    //     StackPane pane = new StackPane();
+    //     Label welcome = new Label("Welcome !");
+    //     pane.getChildren().add(welcome);
+
+    //     home = new Scene(pane, 400, 500);
+    //     return home;
+    // }
+
+    private Scene login() {
+        StackPane pane = new StackPane();
+        Button loginBtn = new Button("Login Now");
+        loginBtn.setOnAction(e -> {
+            System.out.println("Logined in");
+            primaryStage.setScene(home);
+        });
+        Label loginLabel = new Label("Login Page");
+        pane.getChildren().addAll(loginLabel, loginBtn);
+
+        login = new Scene(pane, 400, 500);
+        return login;
+    }   
 
     @Override
-    public void handle(ActionEvent event) {
-        if (event.getSource() == btn1) {
-            btn1.setText("Ohhh, you clicked!");
-            
-        }
-    }
-
-    @Override
-    public void start(Stage stage) throws IOException {
-        btn1 = new Button("Click me!");
-
-        StackPane simpleLayout = new StackPane();
-        simpleLayout.getChildren().add(btn1);
-        scene = new Scene(simpleLayout, 780, 560);
-
-        stage.setTitle("HUCE student management system");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) throws IOException {
+        windowHello.setTitle("HUCE student management system");
+        windowHello.setScene(login());
+        
+        primaryStage = windowHello;
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
