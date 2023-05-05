@@ -1,4 +1,4 @@
-package com.helloworld.entities;
+package huce.cntt.oop.doan.entities;
 
 import java.util.Objects;
 

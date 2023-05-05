@@ -1,11 +1,11 @@
-package com.helloworld.entities;
+package huce.cntt.oop.doan.entities;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import com.helloworld.entities.properties.DiaChi;
-import com.helloworld.entities.properties.HoTen;
+import huce.cntt.oop.doan.entities.properties.DiaChi;
+import huce.cntt.oop.doan.entities.properties.HoTen;
 
 public class GiangVien extends ConNguoi {
     private List<Integer> maLopMonHoc;

@@ -1,4 +1,4 @@
-package com.helloworld.service;
+package huce.cntt.oop.doan.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.helloworld.dataconnection.DataAccess;
+import huce.cntt.oop.doan.dataconnection.DataAccess;
 
 public class QuanLiSinhVienTheoLop {
     private DataAccess access = DataAccess.getInstance();

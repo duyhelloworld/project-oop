@@ -1,4 +1,4 @@
-package com.helloworld.entities.properties;
+package huce.cntt.oop.doan.entities.properties;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.helloworld.service;
+package huce.cntt.oop.doan.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.helloworld.dataconnection.DataAccess;
-import com.helloworld.entities.SinhVien;
-import com.helloworld.entities.properties.DiaChi;
-import com.helloworld.entities.properties.HoTen;
+import huce.cntt.oop.doan.dataconnection.DataAccess;
+import huce.cntt.oop.doan.entities.SinhVien;
+import huce.cntt.oop.doan.entities.properties.DiaChi;
+import huce.cntt.oop.doan.entities.properties.HoTen;
 
 public class SinhVienCRUD {
 
@@ -97,8 +97,11 @@ public class SinhVienCRUD {
         // CHọn tạm con 1 để update vào, sau đó sẽ xóa đi
         // Luôn đảm bảo bảng SinhVien có 1 dòng id 0
         PreparedStatement statement = access.getStatement("INSERT INTO SInhVien VALUE (DEFAULT, ?, ?, ?, ?)");
-        
-
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

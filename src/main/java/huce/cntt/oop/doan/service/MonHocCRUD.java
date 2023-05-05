@@ -1,4 +1,4 @@
-package com.helloworld.service;
+package huce.cntt.oop.doan.service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.helloworld.dataconnection.DataAccess;
-import com.helloworld.entities.MonHoc;
+import huce.cntt.oop.doan.dataconnection.DataAccess;
+import huce.cntt.oop.doan.entities.MonHoc;
 
 public class MonHocCRUD {
     private DataAccess access = DataAccess.getInstance();

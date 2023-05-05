@@ -1,4 +1,4 @@
-package com.helloworld.dataconnection;
+package huce.cntt.oop.doan.dataconnection;
 
 import java.io.FileReader;
 import java.io.IOException;
