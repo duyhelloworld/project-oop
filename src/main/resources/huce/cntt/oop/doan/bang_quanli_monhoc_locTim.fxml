@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="188.0" prefHeight="39.0" prefWidth="162.0" text="Lọc" />
+      <TreeView layoutX="17.0" layoutY="38.0" prefHeight="172.0" prefWidth="358.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <effect>
+            <Shadow>
+               <color>
+                  <Color opacity="0.48091602325439453" />
+               </color>
+            </Shadow>
+         </effect>
+      </TreeView>
+      <Label layoutX="37.0" layoutY="50.0" text="Mã môn" />
+      <Label layoutX="193.0" layoutY="127.0" text="Loại Học Phần" />
+      <Label layoutX="37.0" layoutY="127.0" text="Tên môn" />
+      <Label layoutX="193.0" layoutY="46.0" prefHeight="25.0" prefWidth="44.0" text="Số TC" />
+      <ComboBox layoutX="27.0" layoutY="71.0" prefWidth="150.0" />
+      <ComboBox layoutX="27.0" layoutY="160.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="241.0" layoutY="71.0" prefHeight="25.0" prefWidth="124.0" />
+      <ChoiceBox layoutX="225.0" layoutY="160.0" prefHeight="25.0" prefWidth="137.0" />
+      <Button defaultButton="true" layoutX="386.0" layoutY="41.0" mnemonicParsing="false" prefHeight="172.0" prefWidth="36.0" text="TÌm" textFill="#0eb8e3" textOverrun="CLIP" />
+   </children>
+</Pane>
