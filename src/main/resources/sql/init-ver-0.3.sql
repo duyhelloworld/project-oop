@@ -40,7 +40,8 @@ CREATE TABLE SinhVien (
 );
 
 CREATE TABLE
-    LopMonHoc_SinhVien (mssv INT, ma_mon INT,);
+    LopMonHoc_SinhVien (mssv INT,
+    ma_lop_mh INT);
 
 CREATE TABLE
     GiangVien (
@@ -54,6 +55,20 @@ CREATE TABLE
         so_dien_thoai VARCHAR(10),
         CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai)
     );
+
+CREATE TABLE
+    NhanVienDaoTao (
+        mssv INT PRIMARY KEY AUTO_INCREMENT,
+        ho_ten VARCHAR(100),
+        gioi_tinh BIT,
+        ngay_sinh DATE,
+        dia_chi_hien_tai VARCHAR(),
+        que_quan VARCHAR(),
+        email VARCHAR(),
+        so_dien_thoai VARCHAR(10),
+        CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai)
+    );
+
 CREATE TABLE TinhDiem (
     lop_mon_hoc CHAR(5),
     mssv INT,
@@ -63,6 +78,8 @@ CREATE TABLE TinhDiem (
     Foreign Key (ten_lop) REFERENCES LopMonHoc(ten_lop),
     Foreign Key (mssv) REFERENCES SinhVien(mssv) 
 );
+
+
 
 UPDATE `TinhDiem` SET diem_cuoi_ki = 0, diem_giua_ki = 0, so_buoi_diem_danh = 0 WHERE mssv = 1;
 SELECT * FROM MonHoc ;
