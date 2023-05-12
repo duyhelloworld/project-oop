@@ -14,8 +14,8 @@
 			"label": "java : Build JavaFX Application",
 			"detail": "$(tools) Build all the Java projects in workspace.",
 			// "command": "cd D:/Project_Java/project-oop/quanlisinhvien; if ($?) {mvn clean javafx:run}"
-			"command": "cd /d D:/Project_Java/project-oop/quanlisinhvien && mvn clean javafx:run
-			"
+			// "command": "cd /d D:/Project_Java/project-oop/quanlisinhvien && mvn clean javafx:run
+			"command": "cd /media/duyaiti/Project/Project_Java/project-oop/quanlisinhvien && mvn clean javafx:run"
 		}
 	]
 }

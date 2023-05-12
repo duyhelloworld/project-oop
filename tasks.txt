@@ -1,0 +1,32 @@
+- Quản lí Sinh Viên : 
+    + Có thể tìm kiếm nhóm/cá nhân theo khoa, lớp quản lí, lớp môn học (kết quả của lớp môn và lớp ql dùng chung giao diện đi)
+    + Tìm kiếm cá nhân theo tên, email, số ĐT, quê, nơi ở
+    + Tìm kiếm cá nhân theo điểm trong lớp môn học
+    --> Giao diện của Hiệp sửa 1 chút là đc. Thêm nút Tìm
+
+    + Thêm 1 sinh viên vào lớp quản lí
+    + Thêm 1 sinh viên vào lớp môn học
+    + Thêm 1 sinh viên mà chưa thuộc lớp nào 
+    --> Xây 1 giao diện thêm sinh viên có 2 option phụ : 
+        * Thêm vào lớp ql nào đó
+        * Thêm vào lớp môn học nào đó
+
+    + Sửa, xóa thông tin sinh viên khi click vào sinh viên đó
+        * Sửa điểm
+        * Sửa tên, tuổi, khoa
+    --> Xây giao diện sửa thông tin (dùng Prompt trong SceneBuilder để in mờ thông tin hiện tại của sinh viên đó)
+        Sửa : Có 1 nút Lưu ở dưới
+        Xóa : Có 1 nút Xóa ở góc. Ấn vào sẽ ra 1 bảng hỏi nhỏ có muốn xóa sinh viên này ko (bên cạnh cột STT khi in ra luôn có 1 checkbox)
+            __ Request lên NVĐT 
+ 
+- Quản lí lớp môn học
+    + Tìm ra các lớp dạy bởi 1 giảng viên
+    + Tìm ra các lớp dạy 1 môn học 
+    + [Có thê] : Thống kê điểm số trong các lớp môn học theo khoảng điểm
+    --> Thành 1 cửa sổ chức năng. có 2 ô như vậy + 1 nút Tìm
+    
+    + Thêm / Sửa / Xóa sinh viên đều gọi tới phần QLSV ở trên
+    
+- Quản lí lớp quản lí
+    + Tìm thông tin GV chủ nhiệm  của lớp khi bấm vào tên GVCN
+    + Tìm thông tin lớp (sử dụng giao diện lớp kia (thêm cột lớp quản lí))
