@@ -13,7 +13,7 @@ import huce.cntt.oop.doan.entities.properties.HoTen;
 
 public class SinhVienCRUD {
 
-    private DataAccess access = DataAccess.getInstance();
+    private final DataAccess access = DataAccess.getInstance();
 
     public List<SinhVien> layTatCaSinhVien() {
         PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien");
@@ -95,9 +95,10 @@ public class SinhVienCRUD {
             throw new IllegalArgumentException("property 'mssv' is not null");
         }
         // CHọn tạm con 1 để update vào, sau đó sẽ xóa đi
-        // Luôn đảm bảo bảng SinhVien có 1 dòng id 0
+        // Luôn đảm bảo bảng SinhVien có 1 dòng id 0 ---> MSSV bắt đầu từ 1
         PreparedStatement statement = access.getStatement("INSERT INTO SInhVien VALUE (DEFAULT, ?, ?, ?, ?)");
         try {
+            // statement;
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();

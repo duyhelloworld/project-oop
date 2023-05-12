@@ -11,8 +11,6 @@ public class SinhVien extends ConNguoi {
 
     private String ten_lop_quan_li;
 
-    
-
     public SinhVien() {
     }
 
