@@ -10,7 +10,7 @@ import java.util.Map;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 
-public class QuanLiSinhVienTheoLop {
+public class DiemSinhVien {
     private DataAccess access = DataAccess.getInstance();
 
     public List<Map<String, String>> laySinhVienTheoLopQuanLi(String tenLop) {

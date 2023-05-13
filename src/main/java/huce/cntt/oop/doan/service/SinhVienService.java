@@ -10,11 +10,13 @@ import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
+import huce.cntt.oop.doan.interfaces.ISinhVienService;
 
-public class SinhVienCRUD {
+public class SinhVienService implements ISinhVienService {
 
     private final DataAccess access = DataAccess.getInstance();
 
+    @Override
     public List<SinhVien> layTatCaSinhVien() {
         PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien");
         List<SinhVien> kq = new ArrayList<SinhVien>();
@@ -40,6 +42,7 @@ public class SinhVienCRUD {
         return kq;
     }
 
+    @Override
     public SinhVien laySinhVienTheoMaSo(Integer maso){
         SinhVien kq = new SinhVien();
         PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien WHERE mssv = ?");
@@ -64,6 +67,7 @@ public class SinhVienCRUD {
         return kq;
     }
 
+    @Override
     public List<SinhVien> timKiemSinhVienTheoTen(String ten){
         List<SinhVien> kq = new ArrayList<SinhVien>();
         PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien WHERE ho_ten LIKE ?");
@@ -90,12 +94,11 @@ public class SinhVienCRUD {
         return kq;
     }
 
+    @Override
     public void themMoiSinhVien(SinhVien sinhVien){
         if (sinhVien.getMaso() != null) {
             throw new IllegalArgumentException("property 'mssv' is not null");
         }
-        // CHọn tạm con 1 để update vào, sau đó sẽ xóa đi
-        // Luôn đảm bảo bảng SinhVien có 1 dòng id 0 ---> MSSV bắt đầu từ 1
         PreparedStatement statement = access.getStatement("INSERT INTO SInhVien VALUE (DEFAULT, ?, ?, ?, ?)");
         try {
             // statement;
@@ -105,7 +108,7 @@ public class SinhVienCRUD {
         }
     }
 
-
+    @Override
     public Boolean capNhatThongTinSinhVien(Integer mssv, SinhVien sinhVienTruyenVao) {
         SinhVien sinhVienLayRaTuDatabase = laySinhVienTheoMaSo(mssv);
         

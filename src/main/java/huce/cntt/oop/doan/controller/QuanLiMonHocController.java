@@ -4,7 +4,7 @@ package huce.cntt.oop.doan.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class QuanLiMH_Ctl {
+public class QuanLiMonHocController {
 
     @FXML
     private Button nutLoc;

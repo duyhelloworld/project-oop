@@ -2,6 +2,11 @@
 CREATE DATABASE DoAnOOP2;
 USE DoAnOOP2;
 # Thuc the
+CREATE TABLE Khoa (
+    ma_khoa INT PRIMARY KEY AUTO_INCREMENT,
+    ten_khoa VARCHAR(120)
+);
+
 CREATE TABLE MonHoc (
         ma_monhoc INT PRIMARY KEY AUTO_INCREMENT,
         ten_monhoc VARCHAR(20),
@@ -12,11 +17,6 @@ CREATE TABLE MonHoc (
         mo_ta TEXT,
         Foreign Key (ma_khoa) REFERENCES khoa(ma_khoa)
     );
-
-CREATE TABLE khoa (
-    ma_khoa INT PRIMARY KEY AUTO_INCREMENT,
-    ten_khoa VARCHAR(120)
-)
 
 CREATE TABLE
     LopMonHoc (

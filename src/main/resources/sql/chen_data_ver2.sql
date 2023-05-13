@@ -1,12 +1,20 @@
 -- Active: 1683203836476@@127.0.0.1@3306@doanoop2
 use doanoop2;
 
-INSERT INTO `MonHoc` (ten_monhoc, so_tin_chi, bat_buoc, la_tien_quyet_cua, khoa, mo_ta)
+INSERT INTO khoa (ma_khoa, ten_khoa)
+VALUES (NULL, NULL);
+INSERT INTO khoa (ten_khoa) VALUES
+    ("Công Nghệ Thông Tin"),
+    ("Xây Dựng"),
+    ("Kinh Tế"),
+    ("Khoa Học Máy Tính");
+
+INSERT INTO `MonHoc` (ten_monhoc, so_tin_chi, bat_buoc, la_tien_quyet_cua, ma_khoa, mo_ta)
  VALUES
-    ("Ngon ngu C++", 3, TRUE, NULL, "CNTT", "lập trình với ngôn ngữ c++"),
-    ("Triet hoc Mac-lenin", 3, TRUE, NULL, NULL, "triết học Mác - Lênin"),
-    ("Chinh Tri-Xa Hoi", 2, TRUE, 2, NULL, "Chính trị xã hội hiện đại"),
-    ("Toan roi rac", 2, FALSE, 0, "CNTT", "Toán rời rạc");
+    ("Ngon ngu C++", 3, TRUE, NULL, 2, "lập trình với ngôn ngữ c++"),
+    ("Triet hoc Mac-lenin", 3, TRUE, NULL, 1, "triết học Mác - Lênin"),
+    ("Chinh Tri-Xa Hoi", 2, TRUE, 2, 1, "Chính trị xã hội hiện đại"),
+    ("Toan roi rac", 2, FALSE, 0, 2, "Toán rời rạc");
 
 
 INSERT INTO `LopMonHoc` (ten_lop_monhoc, ma_monhoc)
@@ -41,12 +49,12 @@ VALUES
     ('Lê Văn Sơn', 1, '2000-09-09', '258 UVW Street, Hanoi', 'Hanoi', 'levanson@example.com', '0123456797', '2021-09-01'),
     ('Phạm Thị Tú', 0, '2000-10-10', '852 XYZ Street, Ho Chi Minh City', 'Hanoi', 'phamthitu@example.com', '0123456798', '2021-09-01');
 
-INSERT INTO `LopQuanLi` (ma_gv, ten_lop_quanli, khoa)
+INSERT INTO `LopQuanLi` (ma_gv, ten_lop_quanli, ma_khoa)
 VALUES
-    (1, "66IT5", "CNTT"),
-    (2, "66IT4", "CNTT"),
-    (4, "67KT3", "Logistic"),
-    (5, "64IT1", "CNTT");
+    (1, "66IT5", 2),
+    (2, "66IT4", 2),
+    (4, "67KT3", 3),
+    (5, "64IT1", 2);
 
 INSERT INTO `lopquanli_sinhvien` (ma_lop_quanli, mssv) 
 VALUES (1, 1),

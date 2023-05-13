@@ -14,7 +14,7 @@ public class SinhVien extends ConNguoi {
     public SinhVien() {
     }
 
-    public SinhVien(HoTen hoten, LocalDate ngay_sinh, Boolean gioi_tinh, DiaChi dia_chi_hien_tai, DiaChi que_quan, String so_dien_thoai, LocalDate ngay_vao_truong, String ten_lop_quan_li) {
+    public SinhVien(HoTen hoten, LocalDate ngay_sinh, boolean gioi_tinh, DiaChi dia_chi_hien_tai, DiaChi que_quan, String so_dien_thoai, LocalDate ngay_vao_truong, String ten_lop_quan_li) {
         super(hoten, ngay_sinh, gioi_tinh, que_quan, dia_chi_hien_tai, so_dien_thoai);
         this.ngay_vao_truong = ngay_vao_truong;
         this.ten_lop_quan_li = ten_lop_quan_li;

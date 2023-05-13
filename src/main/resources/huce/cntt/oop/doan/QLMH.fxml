@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="46.0" layoutY="1.0" prefHeight="26.0" prefWidth="586.0" text="                                                                         QUẢN LÍ MÔN HỌC" />
+      <Label layoutX="32.0" layoutY="45.0" text="Tìm kiếm Môn học" />
+      <TextField layoutX="171.0" layoutY="41.0" />
+      <ChoiceBox layoutX="421.0" layoutY="41.0" prefWidth="150.0" />
+      <TableView layoutX="20.0" layoutY="83.0" prefHeight="200.0" prefWidth="630.0">
+        <columns>
+          <TableColumn prefWidth="58.66665458679199" text="Mã Môn" />
+          <TableColumn prefWidth="116.66666412353516" text="Tên Môn Học" />
+            <TableColumn minWidth="0.0" prefWidth="64.66667175292969" text="Số Tín Chỉ" />
+            <TableColumn prefWidth="63.33331298828125" text="Số Tiết LT" />
+            <TableColumn prefWidth="64.66668701171875" text="Số Tiết TH" />
+            <TableColumn prefWidth="66.66668701171875" text="Số Tiết BT" />
+            <TableColumn prefWidth="94.66671752929688" text="Môn Điều kiện" />
+            <TableColumn prefWidth="118.66668701171875" text="Thuộc Khoa" />
+        </columns>
+      </TableView>
+      <TextField layoutX="521.0" layoutY="420.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField layoutX="176.0" layoutY="418.0" prefHeight="25.0" prefWidth="164.0" />
+      <TextField layoutX="176.0" layoutY="377.0" prefHeight="25.0" prefWidth="164.0" />
+      <TextField layoutX="521.0" layoutY="299.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField layoutX="521.0" layoutY="339.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField layoutX="521.0" layoutY="379.0" prefHeight="25.0" prefWidth="85.0" />
+      <ChoiceBox layoutX="176.0" layoutY="297.0" prefHeight="25.0" prefWidth="164.0" />
+      <ComboBox layoutX="176.0" layoutY="337.0" prefHeight="25.0" prefWidth="164.0" />
+      <Label layoutX="406.0" layoutY="302.0" text="Số tiết lí thuyết" />
+      <Label layoutX="406.0" layoutY="343.0" text="Số tiết thực hành" />
+      <Label layoutX="406.0" layoutY="383.0" text="Số tiết bài tập" />
+      <Label layoutX="406.0" layoutY="424.0" text="Số tín chỉ" />
+      <TextField layoutX="176.0" layoutY="462.0" prefHeight="25.0" prefWidth="164.0" />
+      <Button layoutX="87.0" layoutY="531.0" mnemonicParsing="false" text="Thêm môn" />
+      <Button layoutX="305.0" layoutY="531.0" mnemonicParsing="false" text="Sửa môn" />
+      <Button layoutX="194.0" layoutY="531.0" mnemonicParsing="false" text="Xóa môn" />
+      <Button layoutX="496.0" layoutY="531.0" mnemonicParsing="false" text="Lưu thay đổi" />
+      <Button layoutX="583.0" layoutY="531.0" mnemonicParsing="false" text="Thoát" />
+      <Label layoutX="60.0" layoutY="302.0" prefHeight="17.0" prefWidth="64.0" text="Thuộc khoa" />
+      <Label layoutX="60.0" layoutY="340.0" prefHeight="17.0" prefWidth="64.0" text="Chọn môn" />
+      <Label layoutX="60.0" layoutY="380.0" prefHeight="17.0" prefWidth="64.0" text="Mã môn" />
+      <Label layoutX="60.0" layoutY="421.0" prefHeight="17.0" prefWidth="64.0" text="Tên môn" />
+      <Label layoutX="60.0" layoutY="465.0" prefHeight="17.0" prefWidth="91.0" text="Môn điều kiện" />
+      <ScrollBar layoutX="643.0" layoutY="83.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="15.0" />
+   </children>
+</Pane>
