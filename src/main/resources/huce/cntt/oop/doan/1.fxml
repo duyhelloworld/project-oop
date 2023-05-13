@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="812.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutX="4.0" layoutY="4.0" prefHeight="810.0" prefWidth="1209.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Thêm Sinh Viên">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="777.0" prefWidth="1206.0">
+                     <children>
+                        <Label layoutX="36.0" layoutY="36.0" prefHeight="27.0" prefWidth="170.0" text="Thông tin Sinh Viên">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="81.0" layoutY="136.0" text="Thông tin cá nhân">
+                           <font>
+                              <Font name="System Italic" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="137.0" layoutY="201.0" text="Họ tên:" />
+                        <Label layoutX="137.0" layoutY="276.0" text="Ngày sinh:" />
+                        <Label layoutX="137.0" layoutY="357.0" text="Quê quán:" />
+                        <Label layoutX="137.0" layoutY="441.0" text="Địa chỉ thường trú:" />
+                        <Label layoutX="137.0" layoutY="514.0" text="Số CMT:" />
+                        <Label layoutX="137.0" layoutY="578.0" text="Giới tính:" />
+                        <TextField layoutX="255.0" layoutY="196.0" prefHeight="26.0" prefWidth="239.0" />
+                        <TextField layoutX="256.0" layoutY="509.0" prefHeight="26.0" prefWidth="239.0" />
+                        <TextField layoutX="256.0" layoutY="436.0" prefHeight="26.0" prefWidth="239.0" />
+                        <TextField layoutX="256.0" layoutY="352.0" prefHeight="26.0" prefWidth="239.0" />
+                        <RadioButton fx:id="nam" layoutX="255.0" layoutY="575.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="88.0" text="Nam" />
+                        <RadioButton fx:id="nu" layoutX="406.0" layoutY="575.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="88.0" text="Nữ" />
+                        <Label layoutX="665.0" layoutY="201.0" text="Khoa:" />
+                        <Label layoutX="665.0" layoutY="515.0" text="Lớp:" />
+                        <Label layoutX="665.0" layoutY="441.0" text="Ngày vào trường:" />
+                        <Label layoutX="665.0" layoutY="358.0" text="Số điện thoại:" />
+                        <Label layoutX="665.0" layoutY="276.0" text="Email:" />
+                        <TextField fx:id="hoTenTextField" layoutX="781.0" layoutY="510.0" prefHeight="26.0" prefWidth="239.0" />
+                        <TextField fx:id="TextField" layoutX="779.0" layoutY="353.0" prefHeight="26.0" prefWidth="239.0" />
+                        <TextField fx:id="hoTenTextField" layoutX="781.0" layoutY="272.0" prefHeight="26.0" prefWidth="239.0" />
+                        <Button layoutX="553.0" layoutY="679.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="110.0" text="Lưu">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="1022.0" layoutY="678.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="110.0" text="Quay lại">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
+                        <DatePicker layoutX="256.0" layoutY="271.0" prefHeight="26.0" prefWidth="238.0" />
+                        <DatePicker layoutX="779.0" layoutY="436.0" prefHeight="26.0" prefWidth="240.0" />
+                        <ComboBox editable="true" layoutX="781.0" layoutY="196.0" prefHeight="26.0" prefWidth="239.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Sửa/Xóa Sinh Viên">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="1206.0">
+                     <children>
+                        <Label layoutX="67.0" layoutY="31.0" text="Nhập thông tin:">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="179.0" layoutY="28.0" prefHeight="26.0" prefWidth="199.0" />
+                        <Label layoutX="428.0" layoutY="31.0" text="Tìm kiếm theo:">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox layoutX="537.0" layoutY="29.0" prefWidth="150.0" promptText="Tên Sinh Viên" />
+                        <TableView layoutX="8.0" layoutY="74.0" prefHeight="162.0" prefWidth="1194.0">
+                          <columns>
+                            <TableColumn prefWidth="80.7999849319458" text="Mã SV" />
+                            <TableColumn prefWidth="188.80003356933594" text="Họ Tên" />
+                              <TableColumn minWidth="0.0" prefWidth="149.60003662109375" text="Ngày Sinh" />
+                              <TableColumn prefWidth="96.79998779296875" text="Giới tính" />
+                              <TableColumn prefWidth="123.199951171875" text="Khoa" />
+                              <TableColumn prefWidth="205.60003662109375" text="Chuyên ngành" />
+                              <TableColumn prefWidth="158.4000244140625" text="Ngày vào trường" />
+                              <TableColumn minWidth="0.0" prefWidth="95.20001220703125" text="Lớp" />
+                              <TableColumn prefWidth="88.7999267578125" text="Xóa" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="791.0" layoutY="28.0" mnemonicParsing="false" text="Tìm kiếm" />
+                        <Button layoutX="1112.0" layoutY="253.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="89.0" text="Xóa SV">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="34.0" layoutY="295.0" text="Thông tin Sinh viên">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="53.0" layoutY="354.0" text="Thông tin cá nhân">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="72.0" layoutY="410.0" text="Họ tên:" />
+                        <Label layoutX="72.0" layoutY="660.0" text="Giới tính:" />
+                        <Label layoutX="72.0" layoutY="609.0" text="Số CMT:" />
+                        <Label layoutX="72.0" layoutY="554.0" text="Địa chỉ thường trú:" />
+                        <Label layoutX="72.0" layoutY="507.0" text="Quê quán:" />
+                        <Label layoutX="72.0" layoutY="456.0" text="Ngày sinh:" />
+                        <TextField layoutX="228.0" layoutY="405.0" prefHeight="26.0" prefWidth="264.0" />
+                        <TextField layoutX="228.0" layoutY="604.0" prefHeight="26.0" prefWidth="265.0" />
+                        <TextField layoutX="228.0" layoutY="558.0" prefHeight="26.0" prefWidth="265.0" />
+                        <TextField layoutX="228.0" layoutY="502.0" prefHeight="26.0" prefWidth="265.0" />
+                        <DatePicker layoutX="228.0" layoutY="452.0" prefHeight="26.0" prefWidth="264.0" />
+                        <RadioButton layoutX="228.0" layoutY="660.0" mnemonicParsing="false" text="Nam" />
+                        <RadioButton layoutX="399.0" layoutY="660.0" mnemonicParsing="false" text="Nữ" />
+                        <Label layoutX="657.0" layoutY="410.0" text="Mã SV:" />
+                        <Label layoutX="657.0" layoutY="609.0" text="Lớp:" />
+                        <Label layoutX="657.0" layoutY="554.0" text="Ngày vào trường:" />
+                        <Label layoutX="657.0" layoutY="506.0" text="Email:" />
+                        <Label layoutX="657.0" layoutY="456.0" text="Khoa:" />
+                        <TextField layoutX="824.0" layoutY="406.0" prefHeight="26.0" prefWidth="272.0" />
+                        <TextField layoutX="824.0" layoutY="604.0" prefHeight="26.0" prefWidth="272.0" />
+                        <TextField layoutX="824.0" layoutY="502.0" prefHeight="26.0" prefWidth="272.0" />
+                        <DatePicker layoutX="825.0" layoutY="549.0" prefHeight="26.0" prefWidth="269.0" />
+                        <Button layoutX="577.0" layoutY="713.0" mnemonicParsing="false" text="Lưu" />
+                        <Button layoutX="1052.0" layoutY="713.0" mnemonicParsing="false" text="Quay lại" />
+                        <ComboBox editable="true" layoutX="823.0" layoutY="452.0" prefHeight="26.0" prefWidth="273.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

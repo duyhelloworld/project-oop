@@ -2,7 +2,6 @@ package huce.cntt.oop.doan;
 
 import java.io.IOException;
 
-import huce.cntt.oop.doan.controller.QuanLiMonHocController;
 import huce.cntt.oop.doan.controller.QuanLiSinhVienController;
 import huce.cntt.oop.doan.service.SinhVienService;
 import javafx.application.Application;
