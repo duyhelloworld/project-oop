@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="63.0" layoutY="51.0" prefHeight="27.0" prefWidth="163.0" text="Thông tin cá nhân">
@@ -52,5 +51,12 @@
       <Label layoutX="520.0" layoutY="568.0" text="Điểm trung bình tích lũy (hệ 4):" />
       <Label layoutX="114.0" layoutY="601.0" text="Xếp loại học lực tích lũy:" />
       <Label layoutX="521.0" layoutY="601.0" text="Xếp loại học lực học kỳ:" />
+      <TextField layoutX="251.0" layoutY="531.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField layoutX="691.0" layoutY="597.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField layoutX="691.0" layoutY="564.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField layoutX="691.0" layoutY="529.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField layoutX="251.0" layoutY="597.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField layoutX="251.0" layoutY="564.0" prefHeight="25.0" prefWidth="45.0" />
+      <Button layoutX="811.0" layoutY="648.0" mnemonicParsing="false" text="Quay lại" />
    </children>
 </Pane>
