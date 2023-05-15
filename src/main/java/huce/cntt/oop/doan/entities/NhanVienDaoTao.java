@@ -1,34 +1,24 @@
 package huce.cntt.oop.doan.entities;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
-import huce.cntt.oop.doan.entities.properties.DiaChi;
-import huce.cntt.oop.doan.entities.properties.HoTen;
+import huce.cntt.oop.doan.entities.parents.ConNguoi;
 
 public class NhanVienDaoTao extends ConNguoi {
-    private List<Integer> maSoGiangVien;
+    private String password;
 
     public NhanVienDaoTao() {
     }
 
-    public NhanVienDaoTao(HoTen hoten, LocalDate ngay_sinh, Boolean gioi_tinh, DiaChi dia_chi_hien_tai, DiaChi que_quan, String so_dien_thoai, List<Integer> maSoGiangVien) {
-        super(hoten, ngay_sinh, gioi_tinh, dia_chi_hien_tai, que_quan, so_dien_thoai);
-        this.maSoGiangVien = maSoGiangVien;
+    public String getPassword() {
+        return this.password;
     }
 
-    public List<Integer> getMaSoGiangVien() {
-        return this.maSoGiangVien;
-    }
-
-    public void setMaSoGiangVien(List<Integer> maSoGiangVien) {
-        this.maSoGiangVien = maSoGiangVien;
-    }
-
-    public NhanVienDaoTao maSoGiangVien(List<Integer> maSoGiangVien) {
-        setMaSoGiangVien(maSoGiangVien);
-        return this;
+    public void setPassword(String password) {
+        if (password.length() < 8) {
+            throw new IllegalArgumentException("'password' length is not enough!");
+        }
+        this.password = password;
     }
 
     @Override
@@ -39,14 +29,12 @@ public class NhanVienDaoTao extends ConNguoi {
             return false;
         }
         NhanVienDaoTao nhanVienDaoTao = (NhanVienDaoTao) o;
-        return super.equals(nhanVienDaoTao) && Objects.equals(maSoGiangVien, nhanVienDaoTao.maSoGiangVien);
+        return super.equals(nhanVienDaoTao) && Objects.equals(password, nhanVienDaoTao.password);
     }
 
     @Override
     public String toString() {
-        return super.toString() +
-            " đang quản lí các GV có mã số = '" + getMaSoGiangVien() + "'" +
-            "}";
+        return super.toString();
     }
 
 }
