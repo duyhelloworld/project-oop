@@ -69,7 +69,11 @@ public class DataAccess {
             if (conn == null) {
                 throw new SQLException("Something wrong when initialize");
             }
-            stm = conn.prepareStatement(query);
+            if (query.startsWith("INSERT INTO ")) {
+                stm = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            } else {
+                stm = conn.prepareStatement(query);
+            }
         } catch (SQLException e) {
             System.out.println("Error : " + e.getMessage());
         }
@@ -85,7 +89,6 @@ public class DataAccess {
         e.printStackTrace();
        }
     }
-
 
     public void changeQuery(PreparedStatement statement, String newQuery) {
         try {

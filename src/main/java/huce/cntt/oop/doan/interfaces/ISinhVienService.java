@@ -7,11 +7,20 @@ import huce.cntt.oop.doan.entities.SinhVien;
 public interface ISinhVienService {
     public List<SinhVien> layTatCaSinhVien();
 
-    public SinhVien laySinhVienTheoMaSo(Integer maso);
+    public SinhVien timKiemSinhVienTheoMaSo(Integer maso);
 
     public List<SinhVien> timKiemSinhVienTheoTen(String ten);
 
-    public void themMoiSinhVien(SinhVien sinhVien);
+    public SinhVien timKiemSinhVienTheoEmail(String ten);
 
-    public Boolean capNhatThongTinSinhVien(Integer mssv, SinhVien sinhVienTruyenVao);
+    public Integer themMoiSinhVien(SinhVien sinhVien);
+
+    public void capNhatThongTinSinhVien(Integer mssv, SinhVien sinhVienTruyenVao);
+
+    public void xoaSinhVienTheoMaSo(List<Integer> mssvs);
+
+    public List<SinhVien> timSinhVienTheoLopQuanLi(Integer ma_lop_quan_li);
+
+    public List<SinhVien> timSinhVienTheoLopMonHoc(Integer ma_lop_mon_hoc);
+
 }

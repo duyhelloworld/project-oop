@@ -14,21 +14,34 @@ public class LopService implements ILopService {
     private final DataAccess access = DataAccess.getInstance();
 
     @Override
-    public List<String> layTenTatCaLopQuanLiTheoKhoa(String tenKhoa) {
-        PreparedStatement statement = access.getStatement("SELECT ten_lop_quanli FROM LopQuanLi INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa WHERE khoa.ten_khoa = ?");
-        List<String> tenCacLopQuanLi = new ArrayList<String>();
-        ResultSet resultSet;
+    public List<String> layTenCacLopQuanLiTheoKhoa(String tenKhoa) {
+        List<String> kq = new ArrayList<>();
         try {
+            PreparedStatement statement = access.getStatement("SELECT ten_lop_quanli FROM LopQuanLi INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa WHERE khoa.ten_khoa = ?");
             statement.setString(1, tenKhoa);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                tenCacLopQuanLi.add(resultSet.getString("ten_lop_quanli"));
+               kq.add(resultSet.getString("ten_lop_quanli"));
             }
-            return tenCacLopQuanLi;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return kq;
     }
-    
+
+    @Override
+    public void themSinhVienVaoLopQuanLi(Integer mssv, Integer maLopQuanLi) {
+        PreparedStatement statement = access.getStatement("INSERT INTO `lopquanli_sinhvien` (ma_lop_quanli, mssv) VALUES (?, ?)");
+        try {
+            statement.setInt(1, maLopQuanLi);
+            statement.setInt(2, mssv);
+
+            int soDongAnhHuong = statement.executeUpdate();
+            if (soDongAnhHuong != 1) {
+                throw new SQLException("something wrong happened");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
