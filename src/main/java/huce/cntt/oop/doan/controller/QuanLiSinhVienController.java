@@ -51,6 +51,8 @@ public class QuanLiSinhVienController {
     @FXML
     private TextField soDienThoaiTextField;
     @FXML
+    private TextField emailTextField;
+    @FXML
     private DatePicker ngaySinhDatePicker;
     @FXML
     private DatePicker ngayVaoTruongDatePicker;
@@ -62,68 +64,83 @@ public class QuanLiSinhVienController {
 
     @FXML
     private void initialize(){
-        System.out.println("Inited");
+        System.out.println("Loaded " + this.getClass().getName());
         ToggleGroup namHayNu = new ToggleGroup();
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
 
-        hoTenTextField.setText("hoten");
-        queQuanTextField.setText("quequan");
-        diaChiHienTaiTextField.setText("dcht");
-        soDienThoaiTextField.setText("sdt");
-        ngaySinhDatePicker.setPromptText("ngaySinh");
+        hoTenTextField.setText("Pham Hoang Nam");
+        queQuanTextField.setText("1, 1, Ha Nam, Ha Nam");
+        diaChiHienTaiTextField.setText("2, 4, Ha Dong");
+        soDienThoaiTextField.setText("0123232318");
+        ngaySinhDatePicker.setPromptText("ngay sinh");
         ngayVaoTruongDatePicker.setPromptText("ngay vao truong");
+        emailTextField.setText("nam1233");
 
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
         ObservableList<String> O_khoa = FXCollections.observableArrayList(tenCacKhoa);
         khoaComboBox.setItems(O_khoa);
-        khoaComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldV, newV) -> {
-            capNhatDanhSachLopNgaySauKhiChonKhoa(newV);
+
+        khoaComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldV, tenKhoa) -> {
+            List<String> tenCacLop = lopService.layTenCacLopQuanLiTheoKhoa(tenKhoa);
+            ObservableList<String> O_lopQuanLi = FXCollections.observableArrayList(tenCacLop);
+            lopQuanLiComboBox.setItems(O_lopQuanLi);
         });
 
+        // Cấm xoá lớp để mã lớp quản lí trong db luôn trích ra là chỉ số ở đây
         nutLuu.setOnAction(e -> themSinhVien());
     }
 
     // Tab1
     void themSinhVien(){ 
         SinhVien sinhVien = kiemTraDuLieu();
-        if (sinhVien == null) {
-            return;
-        }
-        sinhVienService.themMoiSinhVien(sinhVien);
-    }
-
-    void capNhatDanhSachLopNgaySauKhiChonKhoa(String tenKhoa){
-        List<String> tenCacLopQuanLi = lopService.layTenTatCaLopQuanLiTheoKhoa(tenKhoa);
-        ObservableList<String> O_lopQuanLi = FXCollections.observableArrayList(tenCacLopQuanLi);
-        lopQuanLiComboBox.setItems(O_lopQuanLi);
+        int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
+        int mssv = sinhVienService.themMoiSinhVien(sinhVien);
+        System.out.println("Da Them vao 'sinhvien' voi mssv = " + mssv);
+        sinhVien.setMaso(mssv);
+        lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
+        System.out.println("Da Them vao 'lopquanli'");
     }
 
     // Tab2
-
     private SinhVien kiemTraDuLieu(){
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
         DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
         LocalDate ngaySinh = ngaySinhDatePicker.getValue();
-        LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
         String soDienThoai = soDienThoaiTextField.getText();
+        String email = emailTextField.getText();
+
+        LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
 
         Boolean gioiTinh = nam.isSelected();
         if (!gioiTinh) {
             gioiTinh = nu.isSelected();
             if (!gioiTinh) {
                 try {
-                    throw new IllegalAccessException("GioiTinh is not picked");
-                } catch (IllegalAccessException e) {
+                    throw new IllegalArgumentException("GioiTinh is not picked");
+                } catch (IllegalArgumentException e) {
                     e.printStackTrace();
                 }
             }
         }
         String lopQuanLi = lopQuanLiComboBox.getValue();
-        
-        System.out.println(lopQuanLi);
-        SinhVien sinhVien = new SinhVien(hoTen, ngaySinh, gioiTinh, queQuan, diaChiHienTai, soDienThoai , ngayVaoTruong, lopQuanLi);
+
+        SinhVien sinhVien = new SinhVien();
+        try {
+            sinhVien.setMaso(null);
+            sinhVien.setHoTen(hoTen);
+            sinhVien.setGioiTinh(gioiTinh);
+            sinhVien.setNgaySinh(ngaySinh);
+            sinhVien.setQueQuan(queQuan);
+            sinhVien.setDiaChiHienTai(diaChiHienTai);
+            sinhVien.setSoDienThoai(soDienThoai);
+            sinhVien.setEmail(email);
+            sinhVien.setTenLopQuanLi(lopQuanLi);
+            sinhVien.setNgayVaoTruong(ngayVaoTruong);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return sinhVien;
     }
 
