@@ -4,20 +4,18 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="46.0" layoutY="1.0" prefHeight="26.0" prefWidth="586.0" text="                                                                         QUẢN LÍ MÔN HỌC" />
-      <Label layoutX="32.0" layoutY="45.0" text="Tìm kiếm Môn học" />
-      <TextField layoutX="171.0" layoutY="41.0" />
-      <ChoiceBox layoutX="421.0" layoutY="41.0" prefWidth="150.0" />
-      <TableView layoutX="20.0" layoutY="83.0" prefHeight="200.0" prefWidth="630.0">
+      <Label layoutX="32.0" layoutY="68.0" text="Tìm kiếm Môn học" />
+      <TextField layoutX="183.0" layoutY="64.0" />
+      <ChoiceBox layoutX="421.0" layoutY="64.0" prefWidth="150.0" />
+      <TableView layoutX="5.0" layoutY="106.0" prefHeight="200.0" prefWidth="1203.0">
         <columns>
           <TableColumn prefWidth="58.66665458679199" text="Mã Môn" />
           <TableColumn prefWidth="116.66666412353516" text="Tên Môn Học" />
@@ -29,29 +27,33 @@
             <TableColumn prefWidth="118.66668701171875" text="Thuộc Khoa" />
         </columns>
       </TableView>
-      <TextField layoutX="521.0" layoutY="420.0" prefHeight="25.0" prefWidth="85.0" />
-      <TextField layoutX="176.0" layoutY="418.0" prefHeight="25.0" prefWidth="164.0" />
-      <TextField layoutX="176.0" layoutY="377.0" prefHeight="25.0" prefWidth="164.0" />
-      <TextField layoutX="521.0" layoutY="299.0" prefHeight="25.0" prefWidth="85.0" />
-      <TextField layoutX="521.0" layoutY="339.0" prefHeight="25.0" prefWidth="85.0" />
-      <TextField layoutX="521.0" layoutY="379.0" prefHeight="25.0" prefWidth="85.0" />
-      <ChoiceBox layoutX="176.0" layoutY="297.0" prefHeight="25.0" prefWidth="164.0" />
-      <ComboBox layoutX="176.0" layoutY="337.0" prefHeight="25.0" prefWidth="164.0" />
-      <Label layoutX="406.0" layoutY="302.0" text="Số tiết lí thuyết" />
-      <Label layoutX="406.0" layoutY="343.0" text="Số tiết thực hành" />
-      <Label layoutX="406.0" layoutY="383.0" text="Số tiết bài tập" />
-      <Label layoutX="406.0" layoutY="424.0" text="Số tín chỉ" />
-      <TextField layoutX="176.0" layoutY="462.0" prefHeight="25.0" prefWidth="164.0" />
-      <Button layoutX="87.0" layoutY="531.0" mnemonicParsing="false" text="Thêm môn" />
-      <Button layoutX="305.0" layoutY="531.0" mnemonicParsing="false" text="Sửa môn" />
-      <Button layoutX="194.0" layoutY="531.0" mnemonicParsing="false" text="Xóa môn" />
-      <Button layoutX="496.0" layoutY="531.0" mnemonicParsing="false" text="Lưu thay đổi" />
-      <Button layoutX="583.0" layoutY="531.0" mnemonicParsing="false" text="Thoát" />
-      <Label layoutX="60.0" layoutY="302.0" prefHeight="17.0" prefWidth="64.0" text="Thuộc khoa" />
-      <Label layoutX="60.0" layoutY="340.0" prefHeight="17.0" prefWidth="64.0" text="Chọn môn" />
-      <Label layoutX="60.0" layoutY="380.0" prefHeight="17.0" prefWidth="64.0" text="Mã môn" />
-      <Label layoutX="60.0" layoutY="421.0" prefHeight="17.0" prefWidth="64.0" text="Tên môn" />
-      <Label layoutX="60.0" layoutY="465.0" prefHeight="17.0" prefWidth="91.0" text="Môn điều kiện" />
-      <ScrollBar layoutX="643.0" layoutY="83.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="15.0" />
+      <TextField layoutX="784.0" layoutY="446.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField layoutX="176.0" layoutY="441.0" prefHeight="25.0" prefWidth="164.0" />
+      <TextField layoutX="176.0" layoutY="400.0" prefHeight="25.0" prefWidth="164.0" />
+      <TextField layoutX="784.0" layoutY="324.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField layoutX="784.0" layoutY="365.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField layoutX="784.0" layoutY="405.0" prefHeight="25.0" prefWidth="85.0" />
+      <ComboBox editable="true" layoutX="176.0" layoutY="360.0" prefHeight="25.0" prefWidth="164.0" />
+      <Label layoutX="669.0" layoutY="328.0" text="Số tiết lí thuyết" />
+      <Label layoutX="669.0" layoutY="369.0" text="Số tiết thực hành" />
+      <Label layoutX="669.0" layoutY="409.0" text="Số tiết bài tập" />
+      <Label layoutX="669.0" layoutY="450.0" text="Số tín chỉ" />
+      <TextField layoutX="176.0" layoutY="485.0" prefHeight="25.0" prefWidth="164.0" />
+      <Button layoutX="87.0" layoutY="554.0" mnemonicParsing="false" text="Thêm môn" />
+      <Button layoutX="305.0" layoutY="554.0" mnemonicParsing="false" text="Sửa môn" />
+      <Button layoutX="194.0" layoutY="554.0" mnemonicParsing="false" text="Xóa môn" />
+      <Button layoutX="759.0" layoutY="557.0" mnemonicParsing="false" text="Lưu thay đổi" />
+      <Button layoutX="846.0" layoutY="557.0" mnemonicParsing="false" text="Thoát" />
+      <Label layoutX="60.0" layoutY="325.0" prefHeight="17.0" prefWidth="64.0" text="Khoa" />
+      <Label layoutX="60.0" layoutY="363.0" prefHeight="17.0" prefWidth="64.0" text="Chọn môn" />
+      <Label layoutX="60.0" layoutY="403.0" prefHeight="17.0" prefWidth="64.0" text="Mã môn" />
+      <Label layoutX="60.0" layoutY="444.0" prefHeight="17.0" prefWidth="64.0" text="Tên môn" />
+      <Label layoutX="60.0" layoutY="488.0" prefHeight="17.0" prefWidth="91.0" text="Môn điều kiện" />
+      <Label layoutX="543.0" layoutY="25.0" text="QUẢN LÝ MÔN HỌC" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox editable="true" layoutX="176.0" layoutY="316.0" prefHeight="25.0" prefWidth="164.0" />
    </children>
 </Pane>

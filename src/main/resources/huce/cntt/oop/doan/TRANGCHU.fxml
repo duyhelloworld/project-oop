@@ -3,12 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="114.0" layoutY="22.0" prefHeight="17.0" prefWidth="438.0" text="TRANG CHỦ HỆ THỐNG QUẢN LÍ ĐIỂM SINH VIÊN DÀNH CHO NHÀ TRƯỜNG" />
       <Button layoutX="232.0" layoutY="117.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="184.0" text="QL thông tin sinh viên" />
@@ -23,6 +22,5 @@
          </image>
       </ImageView>
       <Label layoutX="36.0" layoutY="208.0" prefHeight="17.0" prefWidth="124.0" text="Thông tin tài khoản:" />
-      <TextArea layoutX="36.0" layoutY="232.0" prefHeight="221.0" prefWidth="143.0" />
    </children>
 </Pane>
