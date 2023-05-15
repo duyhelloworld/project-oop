@@ -3,27 +3,25 @@ package huce.cntt.oop.doan.entities;
 import java.util.Objects;
 
 public class Diem {
-    private Float so_buoi_diem_danh;
+    private Float diem_chuyen_can;
     private Float diem_giua_ki;
     private Float diem_cuoi_ki;
+
     private Float diem_qua_trinh;
     private Float diem_ket_thuc;
 
     public Diem() {
     }
 
-    public Diem(Float so_buoi_diem_danh, Float diem_giua_ki, Float diem_cuoi_ki) {
-        this.so_buoi_diem_danh = so_buoi_diem_danh;
-        this.diem_giua_ki = diem_giua_ki;
-        this.diem_cuoi_ki = diem_cuoi_ki;
+    public Float getDiemChuyenCan() {
+        return this.diem_chuyen_can;
     }
 
-    public Float getSoBuoiDiemDanh() {
-        return this.so_buoi_diem_danh;
-    }
-
-    public void setSoBuoiDiemDanh(Float so_buoi_diem_danh) {
-        this.so_buoi_diem_danh = so_buoi_diem_danh;
+    public void setDiemChuyenCan(Float diem_chuyen_can) {
+        if (diem_chuyen_can < 0) {
+            throw new IllegalArgumentException("Gia tri 'diem_chuyen_can' ko hop le");
+        }
+        this.diem_chuyen_can = diem_chuyen_can;
     }
 
     public Float getDiemGiuaKi() {
@@ -31,6 +29,9 @@ public class Diem {
     }
 
     public void setDiemGiuaKi(Float diem_giua_ki) {
+        if (diem_giua_ki < 0 || diem_giua_ki > 10) {
+            throw new IllegalArgumentException("Gia tri 'diem_giua_ki' ko hop le");
+        }
         this.diem_giua_ki = diem_giua_ki;
     }
 
@@ -39,15 +40,21 @@ public class Diem {
     }
 
     public void setDiemCuoiKi(Float diem_cuoi_ki) {
+        if (diem_cuoi_ki < 0 || diem_cuoi_ki > 10) {
+            throw new IllegalArgumentException("Gia tri 'diem_cuoi_ki' ko hop le");
+        }
         this.diem_cuoi_ki = diem_cuoi_ki;
     }
 
+
     public Float getDiemQuaTrinh() {
-        return this.so_buoi_diem_danh / 10 + this.diem_giua_ki * 0.7f;
+        this.diem_qua_trinh = this.diem_chuyen_can / 10 + this.diem_giua_ki * 0.7f;
+        return this.diem_qua_trinh;
     }
 
     public Float getDiemKetThuc() {
-        return this.diem_qua_trinh * 0.3f + this.diem_cuoi_ki * 0.7f;
+        this.diem_ket_thuc = this.diem_qua_trinh * 0.3f + this.diem_cuoi_ki * 0.7f;
+        return this.diem_ket_thuc;
     }
 
     @Override
@@ -58,16 +65,17 @@ public class Diem {
             return false;
         }
         Diem diem = (Diem) o;
-        return Objects.equals(so_buoi_diem_danh, diem.so_buoi_diem_danh) && Objects.equals(diem_giua_ki, diem.diem_giua_ki) && Objects.equals(diem_cuoi_ki, diem.diem_cuoi_ki) && Objects.equals(diem_qua_trinh, diem.diem_qua_trinh) && Objects.equals(diem_ket_thuc, diem.diem_ket_thuc);
+        return Objects.equals(diem_giua_ki, diem.diem_giua_ki)
+                && Objects.equals(diem_chuyen_can, diem.diem_chuyen_can)
+                && Objects.equals(diem_cuoi_ki, diem.diem_cuoi_ki);
     }
 
     @Override
     public String toString() {
         return "{" +
+            "diem_chuyen_can='" + getDiemQuaTrinh() + "'" +
             ", diem_qua_trinh='" + getDiemQuaTrinh() + "'" +
             ", diem_ket_thuc='" + getDiemKetThuc() + "'" +
             "}";
     }
-    
-
 }
