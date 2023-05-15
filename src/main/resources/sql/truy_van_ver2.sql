@@ -10,7 +10,6 @@ ma_monhoc, ten_monhoc, so_tin_chi, bat_buoc, la_tien_quyet_cua, ten_khoa, khoa.m
 FROM MonHoc
 INNER JOIN khoa ON monhoc.ma_khoa = khoa.ma_khoa;
 
-
 -- Quản lí danh sách sinh viên
 SELECT 
 * 
@@ -26,7 +25,6 @@ ORDER BY sinhvien.mssv;
 
 -- INSERT INTO sinhvien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong)
 -- VALUES(?, ?, ?, ?, );
-
 
 
 -- Danh sách giảng viên

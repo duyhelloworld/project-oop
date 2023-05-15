@@ -1,4 +1,4 @@
-package huce.cntt.oop.doan.entities;
+package huce.cntt.oop.doan.entities.parents;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -8,6 +8,7 @@ import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 
 public abstract class ConNguoi {
+
     private Integer maso;
 
     private HoTen hoten;
@@ -25,15 +26,6 @@ public abstract class ConNguoi {
     private String so_dien_thoai;
 
     public ConNguoi() {
-    }
-
-    public ConNguoi(HoTen hoten, LocalDate ngay_sinh, Boolean gioi_tinh, DiaChi dia_chi_hien_tai, DiaChi que_quan, String so_dien_thoai) {
-        this.hoten = hoten;
-        this.ngay_sinh = ngay_sinh;
-        this.gioi_tinh = gioi_tinh;
-        this.dia_chi_hien_tai = dia_chi_hien_tai;
-        this.que_quan = que_quan;
-        this.so_dien_thoai = so_dien_thoai;
     }
 
     public Integer getMaso() {
@@ -92,8 +84,15 @@ public abstract class ConNguoi {
         this.que_quan = que_quan;
     }
 
+    public void setEmail(String email) {
+        if (!email.matches("^.*@huce\\.edu\\.vn$")) {
+            email += "@huce.edu.vn";
+        }
+        this.email = email;
+    }
+
     public String getEmail() {
-        return this.getHoTen().getTen().toLowerCase() + String.format("%05d", this.getMaso()) + "66" + "@huce.edu.vn";
+        return this.email;
     }
 
     public String getSoDienThoai() {
@@ -104,47 +103,12 @@ public abstract class ConNguoi {
         try {
             String regex = "^0\\d{9}$";
             if (!so_dien_thoai.matches(regex)) {
-                throw new NumberFormatException("Invalid phone number format");
+                throw new NumberFormatException("Invalid 'phone number' format");
             }
             this.so_dien_thoai = so_dien_thoai;
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-    }
-
-    public ConNguoi maso(Integer maso) {
-        setMaso(maso);
-        return this;
-    }
-
-    public ConNguoi hoten(HoTen hoten) {
-        setHoTen(hoten);
-        return this;
-    }
-
-    public ConNguoi gioi_tinh(Boolean gioi_tinh) {
-        setGioiTinh(gioi_tinh);
-        return this;
-    }
-
-    public ConNguoi ngay_sinh(LocalDate ngay_sinh) {
-        setNgaySinh(ngay_sinh);
-        return this;
-    }
-
-    public ConNguoi dia_chi_hien_tai(DiaChi dia_chi_hien_tai) {
-        setDiaChiHienTai(dia_chi_hien_tai);
-        return this;
-    }
-
-    public ConNguoi que_quan(DiaChi que_quan) {
-        setQueQuan(que_quan);
-        return this;
-    }
-
-    public ConNguoi so_dien_thoai(String so_dien_thoai) {
-        setSoDienThoai(so_dien_thoai);
-        return this;
     }
 
     @Override

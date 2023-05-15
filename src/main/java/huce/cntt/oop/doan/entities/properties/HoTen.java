@@ -3,6 +3,7 @@ package huce.cntt.oop.doan.entities.properties;
 import java.util.Arrays;
 
 public class HoTen {
+    
     private String ho;
 
     private String ten_dem;

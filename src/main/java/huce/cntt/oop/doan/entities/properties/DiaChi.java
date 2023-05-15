@@ -49,7 +49,7 @@ public class DiaChi {
             this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[4]);
         } 
         else {
-            throw new IllegalArgumentException("Format DiaChi is incorrect");
+            throw new IllegalArgumentException("DiaChi thieu 1 so truong!!!");
         }
     }
 
@@ -112,5 +112,4 @@ public class DiaChi {
         }
         throw new NullPointerException("Missing value at diachi");       
     }
-
 }
