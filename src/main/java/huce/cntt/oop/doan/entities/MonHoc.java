@@ -3,7 +3,6 @@ package huce.cntt.oop.doan.entities;
 import java.util.Objects;
 
 public class MonHoc {
-    private static final int MAX_SO_BUOI = 50;
     private static final int MAX_SO_TIN_CHI = 3;
 
     private Integer ma_mon_hoc;
@@ -11,22 +10,16 @@ public class MonHoc {
     private String ten_mon_hoc;
 
     private Integer so_tin_chi;
+    
+    private Integer ma_mon_tien_quyet;
 
-    private Boolean la_tien_quyet;
+    private Boolean mon_bat_buoc;
 
-    private Boolean la_bat_buoc;
+    private String ten_khoa;
 
-    private Integer so_buoi;
+    private String mo_ta;
 
     public MonHoc() {
-    }
-
-    public MonHoc(String ten_mon_hoc, Integer so_tin_chi, Boolean la_tien_quyet, Boolean la_bat_buoc, Integer so_buoi) {
-        this.ten_mon_hoc = ten_mon_hoc;
-        this.so_tin_chi = so_tin_chi;
-        this.la_tien_quyet = la_tien_quyet;
-        this.la_bat_buoc = la_bat_buoc;
-        this.so_buoi = so_buoi;
     }
 
     public Integer getMaMonHoc() {
@@ -56,69 +49,40 @@ public class MonHoc {
         this.so_tin_chi = so_tin_chi;
     }
 
-    public String laTienQuyet() {
-        return this.la_tien_quyet ? "có" : "không";
+    public Integer getMaMonTienQuyet() {
+        return this.ma_mon_tien_quyet;
     }
 
-    public Boolean getLaTienQuyet() {
-        return this.la_tien_quyet;
+    public void setMonTienQuyet(Integer ma_mon_tien_quyet) {
+        this.ma_mon_tien_quyet = ma_mon_tien_quyet;
     }
 
-    public void setLaTienQuyet(Boolean la_tien_quyet) {
-        this.la_tien_quyet = la_tien_quyet;
+    public String laMonBatBuoc() {
+        return this.mon_bat_buoc ? "bắt buộc" : "tự chọn" ;
     }
 
-    public String laBatBuoc() {
-        return this.la_bat_buoc ? "có" : "không" ;
+    public Boolean getMonBatBuoc() {
+        return this.mon_bat_buoc;
     }
 
-    public Boolean getLaBatBuoc() {
-        return this.la_bat_buoc;
+    public void setMonBatBuoc(Boolean mon_bat_buoc) {
+        this.mon_bat_buoc = mon_bat_buoc;
     }
 
-    public void setLaBatBuoc(Boolean la_bat_buoc) {
-        this.la_bat_buoc = la_bat_buoc;
+    public String getTenKhoa() {
+        return this.ten_khoa;
     }
 
-    public Integer getSoBuoi() {
-        return this.so_buoi;
+    public void setTenKhoa(String ten_khoa) {
+        this.ten_khoa = ten_khoa;
     }
 
-    public void setSoBuoi(Integer so_buoi) {
-        if (so_buoi < 0 || so_buoi > MAX_SO_BUOI) {
-            throw new IllegalArgumentException("number 'so_buoi' < 0");
-        }
-        this.so_buoi = so_buoi;
+    public String getMoTa(){
+        return mo_ta;
     }
 
-    public MonHoc ma_mon_hoc(Integer ma_mon_hoc) {
-        setMaMonHoc(ma_mon_hoc);
-        return this;
-    }
-
-    public MonHoc ten_mon_hoc(String ten_mon_hoc) {
-        setTenMonHoc(ten_mon_hoc);
-        return this;
-    }
-
-    public MonHoc so_tin_chi(Integer so_tin_chi) {
-        setSoTinChi(so_tin_chi);
-        return this;
-    }
-
-    public MonHoc la_tien_quyet(Boolean la_tien_quyet) {
-        setLaTienQuyet(la_tien_quyet);
-        return this;
-    }
-
-    public MonHoc la_bat_buoc(Boolean la_bat_buoc) {
-        setLaBatBuoc(la_bat_buoc);
-        return this;
-    }
-
-    public MonHoc so_buoi(Integer so_buoi) {
-        setSoBuoi(so_buoi);
-        return this;
+    public void setMoTa(String mo_ta){
+        this.mo_ta = mo_ta;
     }
 
     @Override
@@ -129,12 +93,13 @@ public class MonHoc {
             return false;
         }
         MonHoc monHoc = (MonHoc) o;
-        return Objects.equals(ma_mon_hoc, monHoc.ma_mon_hoc) && Objects.equals(ten_mon_hoc, monHoc.ten_mon_hoc) && Objects.equals(so_tin_chi, monHoc.so_tin_chi) && Objects.equals(la_tien_quyet, monHoc.la_tien_quyet) && Objects.equals(la_bat_buoc, monHoc.la_bat_buoc) && Objects.equals(so_buoi, monHoc.so_buoi);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ma_mon_hoc, ten_mon_hoc, so_tin_chi, la_tien_quyet, la_bat_buoc, so_buoi);
+        return Objects.equals(ma_mon_hoc, monHoc.ma_mon_hoc) 
+            && Objects.equals(ten_mon_hoc, monHoc.ten_mon_hoc) 
+            && Objects.equals(so_tin_chi, monHoc.so_tin_chi) 
+            && Objects.equals(ma_mon_tien_quyet, monHoc.ma_mon_tien_quyet) 
+            && Objects.equals(mon_bat_buoc, monHoc.mon_bat_buoc) 
+            && Objects.equals(ten_khoa, monHoc.ten_khoa) 
+            && Objects.equals(mo_ta, monHoc.mo_ta);
     }
 
     @Override
@@ -143,9 +108,10 @@ public class MonHoc {
             " mã môn học = '" + getMaMonHoc() + "'" +
             ", tên môn học = '" + getTenMonHoc() + "'" +
             ", số tín chỉ = '" + getSoTinChi() + "'" +
-            ", là tiên quyết = '" + laTienQuyet() + "'" +
-            ", môn bắt buộc = '" + laBatBuoc() + "'" +
-            ", số buổi = '" + getSoBuoi() + "'" +
+            ", môn tiên quyết = '" + getMaMonTienQuyet() + "'" +
+            ", môn bắt buộc = '" + getMonBatBuoc() + "'" +
+            ", khoa = '" + getTenKhoa() + "'" +
+            ", mô tả = '" + getMoTa() + "'" +
             "}";
     }
 
