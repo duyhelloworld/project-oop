@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
+import huce.cntt.oop.doan.entities.Khoa;
+import huce.cntt.oop.doan.interfaces.IKhoaService;
 
-public class KhoaService {
+public class KhoaService implements IKhoaService {
     private final DataAccess access = DataAccess.getInstance();
     
     public List<String> layTenTatCaKhoa() {
@@ -26,4 +28,42 @@ public class KhoaService {
         }
         return null;
     }
+
+    @Override
+    public List<Khoa> layTatCaCacKhoa() {
+        PreparedStatement statement = access.getStatement("SELECT * FROM khoa");
+        List<Khoa> khoas = new ArrayList<Khoa>();
+        ResultSet resultSet;
+        try {
+            resultSet = statement.executeQuery();
+            Khoa k = new Khoa();
+            while (resultSet.next()) {
+                k.setMaKhoa(resultSet.getInt("ma_khoa"));
+                k.setTenKhoa(resultSet.getString("ten_khoa"));
+                khoas.add(k);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return khoas;
+    }
+
+    @Override
+    public String layKhoaTheoMa(Integer ma_khoa) {
+        PreparedStatement statement = access.getStatement("SELECT ten_khoa FROM khoa WHERE ma_khoa = ?");
+        ResultSet resultSet;
+        String kq = "";
+        try {
+            statement.setInt(1, ma_khoa);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                kq = resultSet.getString("ten_khoa");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+
+    
 }
