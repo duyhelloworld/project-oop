@@ -33,7 +33,7 @@
             <TableColumn prefWidth="90.6666259765625" text="Số tín chỉ" />
             <TableColumn prefWidth="153.33331298828125" text="Điểm chuyên cần" />
             <TableColumn minWidth="0.0" prefWidth="99.99993896484375" text="ĐQT" />
-            <TableColumn prefWidth="110.66668701171875" text="ĐKT" />
+            <TableColumn prefWidth="110.66668701171875" text=" kết thúc" />
             <TableColumn minWidth="0.0" prefWidth="122.0" text="Điểm tổng kết" />
             <TableColumn minWidth="0.0" prefWidth="125.33331298828125" text="Thang điểm 4" />
             <TableColumn prefWidth="119.333251953125" text="Điểm chữ" />
