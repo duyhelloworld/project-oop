@@ -92,6 +92,7 @@ CREATE TABLE
         que_quan VARCHAR(200),
         email VARCHAR(40),
         so_dien_thoai VARCHAR(10),
+        mat_khau VARCHAR(20),
         CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai)
     );
 

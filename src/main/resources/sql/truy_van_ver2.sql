@@ -26,7 +26,6 @@ ORDER BY sinhvien.mssv;
 -- INSERT INTO sinhvien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong)
 -- VALUES(?, ?, ?, ?, );
 
-
 -- Danh sách giảng viên
 SELECT * FROM giangvien;
 
