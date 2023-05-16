@@ -18,9 +18,4 @@ public interface ISinhVienService {
     public void capNhatThongTinSinhVien(Integer mssv, SinhVien sinhVienTruyenVao);
 
     public void xoaSinhVienTheoMaSo(List<Integer> mssvs);
-
-    public List<SinhVien> timSinhVienTheoLopQuanLi(Integer ma_lop_quan_li);
-
-    public List<SinhVien> timSinhVienTheoLopMonHoc(Integer ma_lop_mon_hoc);
-
 }

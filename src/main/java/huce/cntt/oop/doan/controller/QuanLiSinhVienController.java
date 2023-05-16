@@ -6,6 +6,7 @@ import java.util.List;
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
+import huce.cntt.oop.doan.interfaces.IKhoaService;
 import huce.cntt.oop.doan.interfaces.ILopService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 import huce.cntt.oop.doan.service.KhoaService;
@@ -24,7 +25,7 @@ public class QuanLiSinhVienController {
 
     private final ISinhVienService sinhVienService;
     private final ILopService lopService;
-    private final KhoaService khoaService;
+    private final IKhoaService khoaService;
 
     public QuanLiSinhVienController(ISinhVienService sinhVienService) {
         this.sinhVienService = sinhVienService;
@@ -45,7 +46,7 @@ public class QuanLiSinhVienController {
     @FXML
     private TextField hoTenTextField;
     @FXML
-    private TextField queQuanTextField;   
+    private TextField queQuanTextField;
     @FXML
     private TextField diaChiHienTaiTextField;
     @FXML
@@ -61,9 +62,8 @@ public class QuanLiSinhVienController {
     @FXML
     private ComboBox<String> khoaComboBox;
 
-
     @FXML
-    private void initialize(){
+    private void initialize() {
         System.out.println("Loaded " + this.getClass().getName());
         ToggleGroup namHayNu = new ToggleGroup();
         nam.setToggleGroup(namHayNu);
@@ -87,23 +87,24 @@ public class QuanLiSinhVienController {
             lopQuanLiComboBox.setItems(O_lopQuanLi);
         });
 
-        // Cấm xoá lớp để mã lớp quản lí trong db luôn trích ra là chỉ số ở đây
+        // Cấm xoá lớp quản lí : để mã lớp quản lí trong db luôn trích ra là chỉ số ở đây
+        // --> hàm get của tôi đỡ phải SELECT 2 trường 
         nutLuu.setOnAction(e -> themSinhVien());
     }
 
     // Tab1
-    void themSinhVien(){ 
+    void themSinhVien() {
         SinhVien sinhVien = kiemTraDuLieu();
         int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
         int mssv = sinhVienService.themMoiSinhVien(sinhVien);
         System.out.println("Da Them vao 'sinhvien' voi mssv = " + mssv);
-        sinhVien.setMaso(mssv);
+        sinhVien.setMaSo(mssv);
         lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
         System.out.println("Da Them vao 'lopquanli'");
     }
 
-    // Tab2
-    private SinhVien kiemTraDuLieu(){
+    // Tab1
+    private SinhVien kiemTraDuLieu() {
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
         DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
@@ -128,12 +129,12 @@ public class QuanLiSinhVienController {
 
         SinhVien sinhVien = new SinhVien();
         try {
-            sinhVien.setMaso(null);
+            sinhVien.setMaSo(null);
             sinhVien.setHoTen(hoTen);
             sinhVien.setGioiTinh(gioiTinh);
             sinhVien.setNgaySinh(ngaySinh);
             sinhVien.setQueQuan(queQuan);
-            sinhVien.setDiaChiHienTai(diaChiHienTai);
+            sinhVien.setDiaChiThuongTru(diaChiHienTai);
             sinhVien.setSoDienThoai(soDienThoai);
             sinhVien.setEmail(email);
             sinhVien.setTenLopQuanLi(lopQuanLi);
@@ -143,5 +144,4 @@ public class QuanLiSinhVienController {
         }
         return sinhVien;
     }
-
 }

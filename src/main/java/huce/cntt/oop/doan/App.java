@@ -2,7 +2,7 @@ package huce.cntt.oop.doan;
 
 import java.io.IOException;
 
-import huce.cntt.oop.doan.controller.QuanLiSinhVienController;
+import huce.cntt.oop.doan.controller.XemSuaXoaSinhVienController;
 import huce.cntt.oop.doan.service.SinhVienService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +18,12 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         
         SinhVienService sinhVienService = new SinhVienService();
-        QuanLiSinhVienController quanLiSinhVienController = new QuanLiSinhVienController(sinhVienService);
-        loader.setController(quanLiSinhVienController);
+        
+        // QuanLiSinhVienController quanLiSinhVienController = new QuanLiSinhVienController(sinhVienService);
+        // loader.setController(quanLiSinhVienController);
+
+        XemSuaXoaSinhVienController xemSuaXoaSinhVienController = new XemSuaXoaSinhVienController(sinhVienService);
+        loader.setController(xemSuaXoaSinhVienController);
 
         // LoginController loginController = new LoginController();
         // loader.setController(loginController);
@@ -36,7 +40,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        // SinhVien sv = new SinhVien(new HoTen("Alex Ferguson"), LocalDate.of(1965, 12, 12), true, new DiaChi("1, Dark Street, London"), new DiaChi("Manchester"), "0123456789", LocalDate.now(), "IT");
         launch();
     }
 

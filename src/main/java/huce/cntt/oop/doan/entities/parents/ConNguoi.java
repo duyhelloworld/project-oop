@@ -11,77 +11,77 @@ public abstract class ConNguoi {
 
     private Integer maso;
 
-    private HoTen hoten;
+    private HoTen hoTen;
 
-    private Boolean gioi_tinh;
+    private Boolean gioiTinh;
 
-    private LocalDate ngay_sinh;
+    private LocalDate ngaySinh;
 
-    private DiaChi dia_chi_hien_tai;
+    private DiaChi diaChiThuongTru;
 
-    private DiaChi que_quan;
+    private DiaChi queQuan;
 
     private String email;
 
-    private String so_dien_thoai;
+    private String soDienThoai;
 
     public ConNguoi() {
     }
 
-    public Integer getMaso() {
+    public Integer getMaSo() {
         return this.maso;
     }
 
-    public void setMaso(Integer maso) {
+    public void setMaSo(Integer maso) {
         this.maso = maso;
     }
 
     public HoTen getHoTen() {
-        return this.hoten;
+        return this.hoTen;
     }
 
-    public void setHoTen(HoTen hoten) {
-        this.hoten = hoten;
+    public void setHoTen(HoTen hoTen) {
+        this.hoTen = hoTen;
     }
 
     public LocalDate getNgaySinh() {
-        return this.ngay_sinh;
+        return this.ngaySinh;
     }
 
     public Date getNgaySinhVoiKieuSQL() {
-        return Date.valueOf(this.ngay_sinh);
+        return Date.valueOf(this.ngaySinh);
     }
 
     public void setNgaySinh(LocalDate ngay_sinh) {
-        this.ngay_sinh = ngay_sinh;
+        this.ngaySinh = ngay_sinh;
     }
 
     public void setNgaySinh(Date ngay_sinh) {
-        this.ngay_sinh = ngay_sinh.toLocalDate();
+        this.ngaySinh = ngay_sinh.toLocalDate();
     }
 
     public Boolean getGioiTinh() {
-        return this.gioi_tinh;
+        return this.gioiTinh;
     }
 
-    public void setGioiTinh(Boolean gioi_tinh) {
-        this.gioi_tinh = gioi_tinh;
+    public void setGioiTinh(Boolean gioiTinh) {
+        this.gioiTinh = gioiTinh;
     }
 
-    public DiaChi getDiaChiHienTai() {
-        return this.dia_chi_hien_tai;
+    public DiaChi getDiaChiThuongTru() {
+        return this.diaChiThuongTru;
     }
 
-    public void setDiaChiHienTai(DiaChi dia_chi_hien_tai) {
-        this.dia_chi_hien_tai = dia_chi_hien_tai;
+    public void setDiaChiThuongTru(DiaChi diaChiThuongTru) {
+        this.diaChiThuongTru = diaChiThuongTru;
     }
 
     public DiaChi getQueQuan() {
-        return this.que_quan;
+        return this.queQuan;
     }
 
     public void setQueQuan(DiaChi que_quan) {
-        this.que_quan = que_quan;
+        this.queQuan = que_quan;
     }
 
     public void setEmail(String email) {
@@ -96,7 +96,7 @@ public abstract class ConNguoi {
     }
 
     public String getSoDienThoai() {
-        return this.so_dien_thoai;
+        return this.soDienThoai;
     }
 
     public void setSoDienThoai(String so_dien_thoai) {
@@ -105,7 +105,7 @@ public abstract class ConNguoi {
             if (!so_dien_thoai.matches(regex)) {
                 throw new NumberFormatException("Invalid 'phone number' format");
             }
-            this.so_dien_thoai = so_dien_thoai;
+            this.soDienThoai = so_dien_thoai;
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -120,18 +120,18 @@ public abstract class ConNguoi {
         }
         ConNguoi nguoi = (ConNguoi) o;
         return Objects.equals(maso, nguoi.maso)
-                && Objects.equals(so_dien_thoai, nguoi.so_dien_thoai)
+                && Objects.equals(soDienThoai, nguoi.soDienThoai)
                 && Objects.equals(email, nguoi.email);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " mã số = '" + getMaso() + "'" +
+                " mã số = '" + getMaSo() + "'" +
                 ", họ tên = '" + getHoTen() + "'" +
                 ", ngày sinh = '" + getNgaySinh() + "'" +
-                ", địa chỉ hiện tại = '" + getDiaChiHienTai() + "'" +
-                ", quê quán = '" + getQueQuan() + "'" +
+                ", địa chỉ hiện tại = '" + getDiaChiThuongTru().formatToSaveDataBase() + "'" +
+                ", quê quán = '" + getQueQuan().formatToSaveDataBase() + "'" +
                 ", email = '" + getEmail() + "'" +
                 ", số điện thoại = '" + getSoDienThoai()
                 ;
