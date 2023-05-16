@@ -110,6 +110,6 @@ public class DiaChi {
                     + ", " + this.dia_chi_o_que.get(Que.HUYEN)
                     + ", " + this.dia_chi_o_que.get(Que.TINH);
         }
-        throw new NullPointerException("Missing value at diachi");       
+        throw new NullPointerException("Missing value at diachi"); 
     }
 }
