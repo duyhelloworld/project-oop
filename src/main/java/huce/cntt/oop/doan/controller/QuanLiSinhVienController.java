@@ -14,12 +14,14 @@ import huce.cntt.oop.doan.service.LopService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 
 public class QuanLiSinhVienController {
 
@@ -69,13 +71,13 @@ public class QuanLiSinhVienController {
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
 
-        hoTenTextField.setText("Pham Hoang Nam");
-        queQuanTextField.setText("1, 1, Ha Nam, Ha Nam");
-        diaChiHienTaiTextField.setText("2, 4, Ha Dong");
-        soDienThoaiTextField.setText("0123232318");
-        ngaySinhDatePicker.setPromptText("ngay sinh");
-        ngayVaoTruongDatePicker.setPromptText("ngay vao truong");
-        emailTextField.setText("nam1233");
+        hoTenTextField.setPromptText("...");
+        queQuanTextField.setPromptText("xã ..., huyện..., tỉnh ...");
+        diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận");
+        soDienThoaiTextField.setPromptText("10 chữ số");
+        ngaySinhDatePicker.setPromptText("Chọn ...");
+        ngayVaoTruongDatePicker.setPromptText("Chọn ...");
+        emailTextField.setPromptText("Đã hỗ trợ tự điền domain '@huce.edu.vn'");
 
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
         ObservableList<String> O_khoa = FXCollections.observableArrayList(tenCacKhoa);
@@ -87,8 +89,9 @@ public class QuanLiSinhVienController {
             lopQuanLiComboBox.setItems(O_lopQuanLi);
         });
 
-        // Cấm xoá lớp quản lí : để mã lớp quản lí trong db luôn trích ra là chỉ số ở đây
-        // --> hàm get của tôi đỡ phải SELECT 2 trường 
+        // Cấm xoá lớp quản lí : để mã lớp quản lí trong db luôn trích ra là chỉ số ở
+        // đây
+        // --> hàm get của tôi đỡ phải SELECT 2 trường
         nutLuu.setOnAction(e -> themSinhVien());
     }
 
@@ -97,10 +100,18 @@ public class QuanLiSinhVienController {
         SinhVien sinhVien = kiemTraDuLieu();
         int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
         int mssv = sinhVienService.themMoiSinhVien(sinhVien);
-        System.out.println("Da Them vao 'sinhvien' voi mssv = " + mssv);
-        sinhVien.setMaSo(mssv);
-        lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
-        System.out.println("Da Them vao 'lopquanli'");
+        Alert alert;
+        try {
+            sinhVien.setMaSo(mssv);
+            lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
+            alert = new Alert(AlertType.CONFIRMATION);
+            alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
+            alert.show();
+        } catch (Exception e) {
+            alert = new Alert(AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 
     // Tab1
@@ -140,7 +151,8 @@ public class QuanLiSinhVienController {
             sinhVien.setTenLopQuanLi(lopQuanLi);
             sinhVien.setNgayVaoTruong(ngayVaoTruong);
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText(e.getMessage());
         }
         return sinhVien;
     }

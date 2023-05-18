@@ -3,113 +3,136 @@ package huce.cntt.oop.doan.entities.properties;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Pho {
-    SO, DUONG, NGO, QUAN, PHO
-}
+enum DonVi {
+    SO("số"), DUONG("đường"), NGO("ngõ"), QUAN("quận"), PHO("phố"), XA("xã"), HUYEN("huyện"), TINH("tỉnh");
 
-enum Que {
-    XA, HUYEN, TINH
+    private final String value;
+
+    DonVi(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }
 
 public class DiaChi {
-    private Map<Que, String> dia_chi_o_que;
 
-    private Map<Pho, String> dia_chi_o_pho;
+    private final Map<DonVi, String> diaChi;
 
-// Use for convert
-    public DiaChi(String diaChi){
-        String[] cacThanhPhan = diaChi.split(",");
+    private StringBuilder giaTriInRa;
+
+    private static boolean isString(String str) {
+        return str.matches("^[A-Za-z ]+$");
+    }
+
+    private static boolean isNumber(String str){
+        return str.matches("^[0-9 ]+$");
+    }
+
+    /**
+     * @param diaChi : tự động chuyển đổi địa chỉ hộ
+        - Logic : các thành phần chi theo dấu ,
+        + Nếu có 3 thành phần, check xem cái đầu là chữ hay số
+            * Chữ : gắn XA, HUYEN, TINH
+            * Số  : gắn SO, DUONG, QUAN
+        + Nếu có 4 thành phần, check cái thứ 2 là gì
+            * Chữ : gắn SO, NGO, DUONG, QUAN
+            * Số  : gắn SO, PHO, DUONG, QUAN
+        + Nếu có 5 thành phần : 
+            Format : SO, NGO, PHO, DUONG, QUAN
+     */
+    public DiaChi(String nguoi_dung_nhap) {
+        String[] cacThanhPhan = nguoi_dung_nhap.split(",");
         int soThanhPhan = cacThanhPhan.length;
+        this.diaChi = new HashMap<DonVi, String>();
+        giaTriInRa = new StringBuilder();
 
+        if (soThanhPhan <= 2) {
+            giaTriInRa.append(nguoi_dung_nhap);
+            return;
+            // throw new IllegalArgumentException("Không thể nhận dạng địa chỉ này");
+        }
+
+        String cacTp0 = cacThanhPhan[0], cacTp1 = cacThanhPhan[1], cacTp2 = cacThanhPhan[2];
         if (soThanhPhan == 3) {
-            if (cacThanhPhan[0].matches("\\d+")){
-                dia_chi_o_pho = new HashMap<>();
-                this.dia_chi_o_pho.put(Pho.SO, cacThanhPhan[0]);
-                this.dia_chi_o_pho.put(Pho.DUONG, cacThanhPhan[1]);
-                this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[2]);
-            } else {
-                dia_chi_o_que = new HashMap<>();
-                this.dia_chi_o_que.put(Que.XA, cacThanhPhan[0]);
-                this.dia_chi_o_que.put(Que.HUYEN, cacThanhPhan[1]);
-                this.dia_chi_o_que.put(Que.TINH, cacThanhPhan[2]);
+
+            if (isString(cacThanhPhan[0])) {
+                diaChi.put(DonVi.XA, cacTp0);
+                diaChi.put(DonVi.HUYEN, cacTp1);
+                diaChi.put(DonVi.TINH, cacTp2);
+                giaTriInRa.append(DonVi.XA.getValue()).append(" ").append(cacTp0).append(", ")
+                        .append(DonVi.HUYEN.getValue()).append(cacTp1).append(", ")
+                        .append(DonVi.TINH.getValue()).append(cacTp2);
+                return;
             }
-        }
-        else if (soThanhPhan == 4) {
-            dia_chi_o_pho = new HashMap<>();
-            this.dia_chi_o_pho.put(Pho.SO, cacThanhPhan[0]);
-            this.dia_chi_o_pho.put(Pho.NGO, cacThanhPhan[1]);
-            this.dia_chi_o_pho.put(Pho.DUONG, cacThanhPhan[2]);
-            this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[3]);
-        } else if (soThanhPhan == 5) {
-            dia_chi_o_pho = new HashMap<>();
-            this.dia_chi_o_pho.put(Pho.SO, cacThanhPhan[0]);
-            this.dia_chi_o_pho.put(Pho.NGO, cacThanhPhan[1]);
-            this.dia_chi_o_pho.put(Pho.PHO, cacThanhPhan[2]);
-            this.dia_chi_o_pho.put(Pho.DUONG, cacThanhPhan[3]);
-            this.dia_chi_o_pho.put(Pho.QUAN, cacThanhPhan[4]);
+            else {
+                diaChi.put(DonVi.SO, cacTp0);
+                diaChi.put(DonVi.DUONG, cacTp1);
+                diaChi.put(DonVi.QUAN, cacTp2);
+                giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
+                        .append(DonVi.DUONG.getValue()).append(cacTp1).append(", ")
+                        .append(DonVi.QUAN.getValue()).append(cacTp2);
+                return;
+            }
+        }  
+        
+        String cacTp3 = cacThanhPhan[3];
+        
+        if (soThanhPhan == 4) {
+            if (isNumber(cacTp1)) {
+                diaChi.put(DonVi.SO, cacTp0);
+                diaChi.put(DonVi.NGO, cacTp1);
+                diaChi.put(DonVi.DUONG, cacTp2);
+                diaChi.put(DonVi.QUAN, cacTp3);
+                giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
+                        .append(DonVi.NGO.getValue()).append(cacTp1).append(", ")
+                        .append(DonVi.DUONG.getValue()).append(cacTp2).append(", ")
+                        .append(DonVi.QUAN.getValue()).append(cacTp3);
+                return;
+            } else {
+                diaChi.put(DonVi.SO, cacTp0);
+                diaChi.put(DonVi.PHO, cacTp1);
+                diaChi.put(DonVi.DUONG, cacTp2);
+                diaChi.put(DonVi.QUAN, cacTp3);
+                giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
+                        .append(DonVi.PHO.getValue()).append(cacTp1).append(", ")
+                        .append(DonVi.DUONG.getValue()).append(cacTp2).append(", ")
+                        .append(DonVi.QUAN.getValue()).append(cacTp3);
+                return;
+            }
         } 
-        else {
-            throw new IllegalArgumentException("DiaChi thieu 1 so truong!!!");
+        else if (soThanhPhan >= 5) {
+            String cacTp4 = cacThanhPhan[4];
+            diaChi.put(DonVi.SO, cacTp0);
+            diaChi.put(DonVi.NGO, cacTp1);
+            diaChi.put(DonVi.PHO, cacTp2);
+            diaChi.put(DonVi.DUONG, cacTp3);
+            diaChi.put(DonVi.QUAN, cacTp4);
+            giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
+                        .append(DonVi.NGO.getValue()).append(cacTp1).append(", ")
+                        .append(DonVi.PHO.getValue()).append(cacTp2).append(", ")
+                        .append(DonVi.DUONG.getValue()).append(cacTp3).append(", ")
+                        .append(DonVi.QUAN.getValue()).append(cacTp4);
+                return;
         }
     }
-
-// Use for insert
-    public DiaChi(Integer so, String duong, String quan) {
-        this.dia_chi_o_pho.put(Pho.SO, so.toString());
-        this.dia_chi_o_pho.put(Pho.DUONG, duong);
-        this.dia_chi_o_pho.put(Pho.QUAN, quan);
-    }
-
-    public DiaChi(Integer so, Integer ngo, String duong, String quan) {
-        this(so, duong, quan);
-        this.dia_chi_o_pho.put(Pho.NGO, ngo.toString());
-    }
-
-    public DiaChi(String xa, String huyen, String tinh) {
-        this.dia_chi_o_que.put(Que.XA, xa);
-        this.dia_chi_o_que.put(Que.HUYEN, huyen);
-        this.dia_chi_o_que.put(Que.TINH, tinh);
-    }
-
 
     @Override
     public String toString() {
-        if(this.dia_chi_o_que != null) {
-            return "xã " + this.dia_chi_o_que.get(Que.XA) 
-                + ", huyện " + this.dia_chi_o_que.get(Que.HUYEN)
-                + ", tỉnh " + this.dia_chi_o_que.get(Que.TINH);
-        } 
-
-        if (this.dia_chi_o_pho.get(Pho.NGO) != null) {
-            return "số " + this.dia_chi_o_pho.get(Pho.SO)
-                + ", ngõ " + this.dia_chi_o_pho.get(Pho.NGO)
-                + ", đường " + this.dia_chi_o_pho.get(Pho.DUONG) 
-                + ", quận " + this.dia_chi_o_pho.get(Pho.QUAN);
+        if (this.giaTriInRa == null) {
+            return "";
         }
-        
-        return "số " + this.dia_chi_o_pho.get(Pho.SO)
-                + ", đường " + this.dia_chi_o_pho.get(Pho.DUONG) 
-                + ", quận " + this.dia_chi_o_pho.get(Pho.QUAN);
+        return this.giaTriInRa.toString();
     }
 
-
-    public String formatToSaveDataBase(){
-        if (this.dia_chi_o_pho != null) {
-            if (this.dia_chi_o_pho.get(Pho.NGO) != null) {
-                return this.dia_chi_o_pho.get(Pho.SO)
-                        + ", " + this.dia_chi_o_pho.get(Pho.NGO)
-                        + ", " + this.dia_chi_o_pho.get(Pho.DUONG)
-                        + ", " + this.dia_chi_o_pho.get(Pho.QUAN);
-            }
-            return this.dia_chi_o_pho.get(Pho.SO)
-                    + ", " + this.dia_chi_o_pho.get(Pho.DUONG)
-                    + ", " + this.dia_chi_o_pho.get(Pho.QUAN);
+    public String formatToSaveDataBase() {
+        if (diaChi == null) {
+            throw new NullPointerException("Missing value at diachi");
         }
-        if (this.dia_chi_o_que != null) {
-            return this.dia_chi_o_que.get(Que.XA)
-                    + ", " + this.dia_chi_o_que.get(Que.HUYEN)
-                    + ", " + this.dia_chi_o_que.get(Que.TINH);
-        }
-        throw new NullPointerException("Missing value at diachi"); 
+        return diaChi.values().stream().reduce(
+                (s1, s2) -> s1 + "," + s2)
+                .orElse("");
     }
 }

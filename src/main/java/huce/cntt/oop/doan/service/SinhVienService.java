@@ -50,7 +50,6 @@ public class SinhVienService implements ISinhVienService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // access.closeConnection(statement);
         return listSinhVien;
     }
 
