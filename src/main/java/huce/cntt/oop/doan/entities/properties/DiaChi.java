@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 enum DonVi {
-    SO("số"), DUONG("đường"), NGO("ngõ"), QUAN("quận"), PHO("phố"), XA("xã"), HUYEN("huyện"), TINH("tỉnh");
+    SO("số "), DUONG(", đường "), NGO(", ngõ "), QUAN(", quận "),
+    PHO(", phố "), XA("xã "), HUYEN(", huyện "), TINH(", tỉnh ");
 
     private final String value;
 
@@ -12,7 +13,7 @@ enum DonVi {
         this.value = value;
     }
 
-    public String getValue() {
+    public String getUnicode() {
         return value;
     }
 }
@@ -33,14 +34,16 @@ public class DiaChi {
 
     /**
      * @param diaChi : tự động chuyển đổi địa chỉ hộ
-        - Logic : các thành phần chi theo dấu ,
-        + Nếu có 3 thành phần, check xem cái đầu là chữ hay số
+     * @apiNote Logic : các thành phần chia theo dấu ","
+     
+     * @serialData Nếu có 3 thành phần, check xem cái đầu là chữ hay số
             * Chữ : gắn XA, HUYEN, TINH
             * Số  : gắn SO, DUONG, QUAN
-        + Nếu có 4 thành phần, check cái thứ 2 là gì
+            
+     * @serialData Nếu có 4 thành phần, check cái thứ 2 là gì
             * Chữ : gắn SO, NGO, DUONG, QUAN
             * Số  : gắn SO, PHO, DUONG, QUAN
-        + Nếu có 5 thành phần : 
+     * @serialData Nếu có 5 thành phần : 
             Format : SO, NGO, PHO, DUONG, QUAN
      */
     public DiaChi(String nguoi_dung_nhap) {
@@ -62,18 +65,18 @@ public class DiaChi {
                 diaChi.put(DonVi.XA, cacTp0);
                 diaChi.put(DonVi.HUYEN, cacTp1);
                 diaChi.put(DonVi.TINH, cacTp2);
-                giaTriInRa.append(DonVi.XA.getValue()).append(" ").append(cacTp0).append(", ")
-                        .append(DonVi.HUYEN.getValue()).append(cacTp1).append(", ")
-                        .append(DonVi.TINH.getValue()).append(cacTp2);
+                giaTriInRa.append(DonVi.XA.getUnicode()).append(cacTp0)
+                        .append(DonVi.HUYEN.getUnicode()).append(cacTp1)
+                        .append(DonVi.TINH.getUnicode()).append(cacTp2);
                 return;
             }
             else {
                 diaChi.put(DonVi.SO, cacTp0);
                 diaChi.put(DonVi.DUONG, cacTp1);
                 diaChi.put(DonVi.QUAN, cacTp2);
-                giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
-                        .append(DonVi.DUONG.getValue()).append(cacTp1).append(", ")
-                        .append(DonVi.QUAN.getValue()).append(cacTp2);
+                giaTriInRa.append(DonVi.SO.getUnicode()).append(cacTp0)
+                        .append(DonVi.DUONG.getUnicode()).append(cacTp1)
+                        .append(DonVi.QUAN.getUnicode()).append(cacTp2);
                 return;
             }
         }  
@@ -86,20 +89,20 @@ public class DiaChi {
                 diaChi.put(DonVi.NGO, cacTp1);
                 diaChi.put(DonVi.DUONG, cacTp2);
                 diaChi.put(DonVi.QUAN, cacTp3);
-                giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
-                        .append(DonVi.NGO.getValue()).append(cacTp1).append(", ")
-                        .append(DonVi.DUONG.getValue()).append(cacTp2).append(", ")
-                        .append(DonVi.QUAN.getValue()).append(cacTp3);
+                giaTriInRa.append(DonVi.SO.getUnicode()).append(cacTp0)
+                        .append(DonVi.NGO.getUnicode()).append(cacTp1)
+                        .append(DonVi.DUONG.getUnicode()).append(cacTp2)
+                        .append(DonVi.QUAN.getUnicode()).append(cacTp3);
                 return;
             } else {
                 diaChi.put(DonVi.SO, cacTp0);
                 diaChi.put(DonVi.PHO, cacTp1);
                 diaChi.put(DonVi.DUONG, cacTp2);
                 diaChi.put(DonVi.QUAN, cacTp3);
-                giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
-                        .append(DonVi.PHO.getValue()).append(cacTp1).append(", ")
-                        .append(DonVi.DUONG.getValue()).append(cacTp2).append(", ")
-                        .append(DonVi.QUAN.getValue()).append(cacTp3);
+                giaTriInRa.append(DonVi.SO.getUnicode()).append(cacTp0)
+                        .append(DonVi.PHO.getUnicode()).append(cacTp1)
+                        .append(DonVi.DUONG.getUnicode()).append(cacTp2)
+                        .append(DonVi.QUAN.getUnicode()).append(cacTp3);
                 return;
             }
         } 
@@ -110,11 +113,11 @@ public class DiaChi {
             diaChi.put(DonVi.PHO, cacTp2);
             diaChi.put(DonVi.DUONG, cacTp3);
             diaChi.put(DonVi.QUAN, cacTp4);
-            giaTriInRa.append(DonVi.SO.getValue()).append(" ").append(cacTp0).append(", ")
-                        .append(DonVi.NGO.getValue()).append(cacTp1).append(", ")
-                        .append(DonVi.PHO.getValue()).append(cacTp2).append(", ")
-                        .append(DonVi.DUONG.getValue()).append(cacTp3).append(", ")
-                        .append(DonVi.QUAN.getValue()).append(cacTp4);
+            giaTriInRa.append(DonVi.SO.getUnicode()).append(cacTp0)
+                        .append(DonVi.NGO.getUnicode()).append(cacTp1)
+                        .append(DonVi.PHO.getUnicode()).append(cacTp2)
+                        .append(DonVi.DUONG.getUnicode()).append(cacTp3)
+                        .append(DonVi.QUAN.getUnicode()).append(cacTp4);
                 return;
         }
     }
@@ -129,7 +132,7 @@ public class DiaChi {
 
     public String formatToSaveDataBase() {
         if (diaChi == null) {
-            throw new NullPointerException("Missing value at diachi");
+            throw new IllegalStateException("Xảy ra lỗi : thiếu giá trị ở diachi");
         }
         return diaChi.values().stream().reduce(
                 (s1, s2) -> s1 + "," + s2)

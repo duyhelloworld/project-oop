@@ -165,9 +165,9 @@
                               </TableColumn>
                            </columns>
                         </TableView>
-                        <Button layoutX="791.0" layoutY="28.0" mnemonicParsing="false"
+                        <Button fx:id="nutTimKiem" layoutX="791.0" layoutY="28.0" mnemonicParsing="false"
                            text="Tìm kiếm" />
-                        <Button layoutX="1105.0" layoutY="29.0" mnemonicParsing="false"
+                        <Button fx:id="nutXoa" layoutX="1105.0" layoutY="29.0" mnemonicParsing="false"
                            prefHeight="26.0" prefWidth="89.0" text="Xóa SV">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -178,39 +178,45 @@
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="72.0" layoutY="370.0" text="Họ tên:" />
-                        <Label layoutX="72.0" layoutY="417.0" text="Giới tính:" />
-                        <Label layoutX="72.0" layoutY="578.0" text="Địa chỉ thường trú:" />
-                        <Label layoutX="72.0" layoutY="536.0" text="Quê quán:" />
-                        <Label layoutX="72.0" layoutY="470.0" text="Ngày sinh:" />
-                        <TextField layoutX="228.0" layoutY="365.0" prefHeight="26.0"
+                        <Label layoutX="72.0" layoutY="350.0" text="Họ tên:" />
+                        <Label layoutX="72.0" layoutY="390.0" text="Giới tính:" />
+                        <Label layoutX="72.0" layoutY="430.0" text="Ngày sinh:" />
+                        <Label layoutX="72.0" layoutY="480.0" text="Số điện thoại:" />
+                        <Label layoutX="72.0" layoutY="526.0" text="Quê quán:" />
+                        <Label layoutX="72.0" layoutY="568.0" text="Địa chỉ thường trú:" />
+
+                        <TextField fx:id="hoTenTextField" layoutX="228.0" layoutY="350.0" prefHeight="26.0"
                            prefWidth="264.0" />
-                        <DatePicker layoutX="228.0" layoutY="470.0" prefHeight="26.0"
-                           prefWidth="264.0" />
-                        <TextField layoutX="228.0" layoutY="518.0" prefHeight="26.0"
-                           prefWidth="265.0" />
-                        <TextField layoutX="228.0" layoutY="573.0" prefHeight="26.0"
-                           prefWidth="265.0" />
-                        <RadioButton layoutX="228.0" layoutY="409.0" mnemonicParsing="false"
+                        <RadioButton fx:id="nam" layoutX="228.0" layoutY="390.0" mnemonicParsing="false"
                            text="Nam" />
-                        <RadioButton layoutX="390.0" layoutY="409.0" mnemonicParsing="false"
+                        <RadioButton fx:id="nu" layoutX="390.0" layoutY="390.0" mnemonicParsing="false"
                            text="Nữ" />
-                        <Label layoutX="655.0" layoutY="517.0" text="Lớp quản lí :" />
-                        <Label layoutX="655.0" layoutY="465.0" text="Ngày vào trường:" />
-                        <Label layoutX="655.0" layoutY="417.0" text="Email:" />
+                        <DatePicker fx:id="ngaySinhDatePicker" layoutX="228.0" layoutY="430.0" prefHeight="26.0"
+                           prefWidth="264.0" />
+                            <TextField fx:id="soDienThoaiTextField" layoutX="228.0" layoutY="480.0" prefHeight="26.0"
+                           prefWidth="265.0" />
+                        <TextField fx:id="queQuanTextField" layoutX="228.0" layoutY="526.0" prefHeight="26.0"
+                           prefWidth="265.0" />
+                        <TextField fx:id="diaChiThuongTruTextField" layoutX="228.0" layoutY="568.0" prefHeight="26.0"
+                           prefWidth="265.0" />
+
                         <Label layoutX="655.0" layoutY="370.0" text="Khoa:" />
-                        <TextField layoutX="824.0" layoutY="413.0" prefHeight="26.0"
-                           prefWidth="272.0" />
-                        <DatePicker layoutX="825.0" layoutY="469.0" prefHeight="26.0"
-                           prefWidth="269.0" />
-                        <Button layoutX="826.0" layoutY="587.0" mnemonicParsing="false"
-                           prefHeight="25.0" prefWidth="92.0" text="Lưu" />
-                        <Button layoutX="1002.0" layoutY="587.0" mnemonicParsing="false"
-                           prefHeight="25.0" prefWidth="83.0" text="Quay lại" />
-                        <ComboBox editable="true" layoutX="823.0" layoutY="365.0" prefHeight="26.0"
+                        <Label layoutX="655.0" layoutY="417.0" text="Email:" />
+                        <Label layoutX="655.0" layoutY="465.0" text="Ngày vào trường:" />
+                        <Label layoutX="655.0" layoutY="517.0" text="Lớp quản lí :" />
+                        <ComboBox fx:id="khoaComboBox" editable="true" layoutX="823.0" layoutY="365.0" prefHeight="26.0"
                            prefWidth="273.0" />
-                        <ChoiceBox layoutX="826.0" layoutY="522.0" prefHeight="25.0"
+                        <TextField fx:id="emailTextField" layoutX="824.0" layoutY="413.0" prefHeight="26.0"
+                           prefWidth="272.0" />
+                        <DatePicker fx:id="ngayVaoTruongDatePicker" layoutX="825.0" layoutY="469.0" prefHeight="26.0"
+                           prefWidth="269.0" />
+                        <ChoiceBox fx:id="lopQuanLiChoiceBox" layoutX="826.0" layoutY="522.0" prefHeight="25.0"
                            prefWidth="267.0" />
+                        
+                        <Button fx:id="nutLuu" layoutX="826.0" layoutY="587.0" mnemonicParsing="false"
+                           prefHeight="25.0" prefWidth="92.0" text="Lưu" />
+                        <Button fx:id="nutQuayLai" layoutX="1002.0" layoutY="587.0" mnemonicParsing="false"
+                           prefHeight="25.0" prefWidth="83.0" text="Quay lại" />
                      </children>
                   </AnchorPane>
                </content>

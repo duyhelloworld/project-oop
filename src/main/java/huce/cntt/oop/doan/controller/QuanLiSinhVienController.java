@@ -64,9 +64,11 @@ public class QuanLiSinhVienController {
     @FXML
     private ComboBox<String> khoaComboBox;
 
+    private Alert alert;
+
     @FXML
     private void initialize() {
-        System.out.println("Loaded " + this.getClass().getName());
+        alert = new Alert(AlertType.NONE);
         ToggleGroup namHayNu = new ToggleGroup();
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
@@ -100,18 +102,16 @@ public class QuanLiSinhVienController {
         SinhVien sinhVien = kiemTraDuLieu();
         int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
         int mssv = sinhVienService.themMoiSinhVien(sinhVien);
-        Alert alert;
         try {
             sinhVien.setMaSo(mssv);
             lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
-            alert = new Alert(AlertType.CONFIRMATION);
+            alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
-            alert.show();
         } catch (Exception e) {
-            alert = new Alert(AlertType.WARNING);
+            alert.setAlertType(AlertType.WARNING);
             alert.setContentText(e.getMessage());
-            alert.show();
         }
+        alert.show();
     }
 
     // Tab1
@@ -126,17 +126,8 @@ public class QuanLiSinhVienController {
         LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
 
         Boolean gioiTinh = nam.isSelected();
-        if (!gioiTinh) {
-            gioiTinh = nu.isSelected();
-            if (!gioiTinh) {
-                try {
-                    throw new IllegalArgumentException("GioiTinh is not picked");
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         String lopQuanLi = lopQuanLiComboBox.getValue();
+        String khoa = khoaComboBox.getValue();
 
         SinhVien sinhVien = new SinhVien();
         try {
@@ -150,6 +141,7 @@ public class QuanLiSinhVienController {
             sinhVien.setEmail(email);
             sinhVien.setTenLopQuanLi(lopQuanLi);
             sinhVien.setNgayVaoTruong(ngayVaoTruong);
+            sinhVien.setKhoa(khoa);
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setContentText(e.getMessage());

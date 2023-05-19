@@ -100,15 +100,11 @@ public abstract class ConNguoi {
     }
 
     public void setSoDienThoai(String so_dien_thoai) {
-        try {
-            String regex = "^0\\d{9}$";
-            if (!so_dien_thoai.matches(regex)) {
-                throw new NumberFormatException("Invalid 'phone number' format");
-            }
-            this.soDienThoai = so_dien_thoai;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        String regex = "^0\\d{9}$";
+        if (!so_dien_thoai.matches(regex)) {
+            throw new NumberFormatException("Định dạng 'số điện thoại' không đúng!");
         }
+        this.soDienThoai = so_dien_thoai;
     }
 
     @Override
@@ -130,8 +126,8 @@ public abstract class ConNguoi {
                 " mã số = '" + getMaSo() + "'" +
                 ", họ tên = '" + getHoTen() + "'" +
                 ", ngày sinh = '" + getNgaySinh() + "'" +
-                ", địa chỉ hiện tại = '" + getDiaChiThuongTru().formatToSaveDataBase() + "'" +
-                ", quê quán = '" + getQueQuan().formatToSaveDataBase() + "'" +
+                ", địa chỉ hiện tại = '" + getDiaChiThuongTru() + "'" +
+                ", quê quán = '" + getQueQuan() + "'" +
                 ", email = '" + getEmail() + "'" +
                 ", số điện thoại = '" + getSoDienThoai()
                 ;
