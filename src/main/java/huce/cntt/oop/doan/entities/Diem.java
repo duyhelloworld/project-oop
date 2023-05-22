@@ -18,8 +18,8 @@ public class Diem {
     }
 
     public void setDiemChuyenCan(Float diem_chuyen_can) {
-        if (diem_chuyen_can < 0) {
-            throw new IllegalArgumentException("Gia tri 'diem_chuyen_can' ko hop le");
+        if (diem_chuyen_can < 0 || diem_chuyen_can > 10) {
+            throw new IllegalArgumentException("Giá trị 'điểm chuyên cần' không hợp lệ!");
         }
         this.diem_chuyen_can = diem_chuyen_can;
     }
@@ -30,7 +30,7 @@ public class Diem {
 
     public void setDiemGiuaKi(Float diem_giua_ki) {
         if (diem_giua_ki < 0 || diem_giua_ki > 10) {
-            throw new IllegalArgumentException("Gia tri 'diem_giua_ki' ko hop le");
+            throw new IllegalArgumentException("Giá trị 'điểm giữa kì' không hợp lệ!");
         }
         this.diem_giua_ki = diem_giua_ki;
     }
@@ -41,7 +41,7 @@ public class Diem {
 
     public void setDiemCuoiKi(Float diem_cuoi_ki) {
         if (diem_cuoi_ki < 0 || diem_cuoi_ki > 10) {
-            throw new IllegalArgumentException("Gia tri 'diem_cuoi_ki' ko hop le");
+            throw new IllegalArgumentException("Giá trị 'điểm cuối kì' không hợp lệ!");
         }
         this.diem_cuoi_ki = diem_cuoi_ki;
     }

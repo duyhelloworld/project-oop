@@ -20,7 +20,12 @@ public class HoTen {
         String[] chiaTen = hoTen.split(" ");
         this.ho = chiaTen[0];
         this.ten = chiaTen[chiaTen.length - 1];
-        this.ten_dem = String.join(" ", Arrays.copyOfRange(chiaTen, 1, chiaTen.length - 1));
+        if (chiaTen.length >= 2) {
+            this.ten_dem = String.join(" ", Arrays.copyOfRange(chiaTen, 1, chiaTen.length - 1));
+        }
+        else {
+            this.ten_dem = "";
+        }
     }
 
     public String getHo() {

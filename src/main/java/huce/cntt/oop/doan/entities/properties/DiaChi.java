@@ -132,7 +132,7 @@ public class DiaChi {
 
     public String formatToSaveDataBase() {
         if (diaChi == null) {
-            throw new IllegalStateException("Xảy ra lỗi : thiếu giá trị ở diachi");
+            throw new IllegalStateException("Thiếu giá trị ở địa chỉ " + this.diaChi.getClass().getSimpleName());
         }
         return diaChi.values().stream().reduce(
                 (s1, s2) -> s1 + "," + s2)

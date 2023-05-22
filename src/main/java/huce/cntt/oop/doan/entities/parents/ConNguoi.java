@@ -53,6 +53,10 @@ public abstract class ConNguoi {
     }
 
     public void setNgaySinh(LocalDate ngay_sinh) {
+        // if (!ngay_sinh.isBefore(LocalDate.now()) 
+        //     || !ngay_sinh.isAfter(LocalDate.of(1940, 1, 1))) {
+        //     throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm là từ 1980 tới " + LocalDate.now().getYear());
+        // }
         this.ngaySinh = ngay_sinh;
     }
 
@@ -101,10 +105,11 @@ public abstract class ConNguoi {
 
     public void setSoDienThoai(String so_dien_thoai) {
         String regex = "^0\\d{9}$";
-        if (!so_dien_thoai.matches(regex)) {
-            throw new NumberFormatException("Định dạng 'số điện thoại' không đúng!");
+        if (so_dien_thoai.matches(regex)) {    
+            this.soDienThoai = so_dien_thoai;
+            return;
         }
-        this.soDienThoai = so_dien_thoai;
+        throw new NumberFormatException("Định dạng 'số điện thoại' không đúng!");
     }
 
     @Override
@@ -129,7 +134,7 @@ public abstract class ConNguoi {
                 ", địa chỉ hiện tại = '" + getDiaChiThuongTru() + "'" +
                 ", quê quán = '" + getQueQuan() + "'" +
                 ", email = '" + getEmail() + "'" +
-                ", số điện thoại = '" + getSoDienThoai()
+                ", số điện thoại = '" + getSoDienThoai() + "'"
                 ;
     }
 }
