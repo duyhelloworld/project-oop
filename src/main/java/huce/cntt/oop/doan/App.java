@@ -2,6 +2,7 @@ package huce.cntt.oop.doan;
 
 import java.io.IOException;
 
+import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.loader.LoadSinhVien;
 import javafx.application.Application;
 import javafx.scene.Scene;
