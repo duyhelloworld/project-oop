@@ -2,7 +2,7 @@
 
 --                          XEM
 
-
+SELECT * FROM MonHoc INNER JOIN khoa ON khoa.ma_khoa = monhoc.ma_khoa;
 
 -- Quản lí danh sách môn + số tín, bắt /tc, môn tiên quyết, khoa
 SELECT 
