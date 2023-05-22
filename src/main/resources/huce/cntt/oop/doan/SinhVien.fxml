@@ -150,6 +150,11 @@
                                     <PropertyValueFactory property="email" />
                                  </cellValueFactory>
                               </TableColumn>
+                              <TableColumn fx:id="cotSoDienThoai" editable="false" prefWidth="160.0" text="Số điện thoại">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="soDienThoai" />
+                                 </cellValueFactory>
+                              </TableColumn>
                               <TableColumn fx:id="cotNienKhoa" editable="false" prefWidth="55.0" text="Khóa">
                                  <cellValueFactory>
                                     <PropertyValueFactory property="nienKhoa" />
