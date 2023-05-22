@@ -97,7 +97,7 @@ public class QuanLiSinhVienController {
         nutLuu.setOnAction(e -> themSinhVien());
     }
 
-    // Tab1
+    // Lấy dữ liệu
     void themSinhVien() {
         SinhVien sinhVien = kiemTraDuLieu();
         int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
