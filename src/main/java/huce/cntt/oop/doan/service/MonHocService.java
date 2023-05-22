@@ -16,19 +16,20 @@ public class MonHocService implements IMonHocService {
 
     @Override
     public List<MonHoc> layTatCaMonHoc() {
-        PreparedStatement statement = access.getStatement("SELECT * FROM MonHoc INNER JOIN khoa ON khoa.ma_khoa = monhoc.ma_khoa");
+        PreparedStatement statement = access.getStatement(
+            "SELECT ma_mon_hoc, ten_mon_hoc, so_tin_chi, bat_buoc, ma_mon_tien_quyet, khoa.ma_khoa, mo_ta, ten_khoa FROM MonHoc INNER JOIN khoa ON khoa.ma_khoa = monhoc.ma_khoa");
         List<MonHoc> kq = new ArrayList<MonHoc>();
 
         try {
             ResultSet result = statement.executeQuery();
             MonHoc temp = new MonHoc();
             while (result.next()) {
-                temp.setMaMonHoc(result.getInt("ma_monhoc"));
-                temp.setTenMonHoc(result.getString("ten_monhoc"));
+                temp.setMaMonHoc(result.getInt("ma_mon_hoc"));
+                temp.setTenMonHoc(result.getString("ten_mon_hoc"));
                 temp.setSoTinChi(result.getInt("so_tin_chi"));
                 temp.setMonBatBuoc(result.getBoolean("bat_buoc"));
                 temp.setTenKhoa(result.getString("ten_khoa"));
-                temp.setMonTienQuyet(result.getInt("la_mon_tien_quyet_cua"));
+                temp.setMonTienQuyet(result.getInt("ma_mon_tien_quyet"));
                 kq.add(temp);
             }
             access.closeConnection(statement);
@@ -53,7 +54,7 @@ public class MonHocService implements IMonHocService {
                 mh.setMonBatBuoc((result.getBoolean("bat_buoc")));
                 mh.setTenKhoa(result.getString("ten_khoa"));
                 mh.setMoTa(result.getString("mo_ta"));
-                mh.setMonTienQuyet(result.getInt("la_mon_tien_quyet_cua"));
+                mh.setMonTienQuyet(result.getInt("ma_mon_tien_quyet"));
             }
             access.closeConnection(statement);
         } catch (SQLException e) {
@@ -77,7 +78,7 @@ public class MonHocService implements IMonHocService {
                 temp.setSoTinChi(result.getInt("so_tin_chi"));
                 temp.setMonBatBuoc(result.getBoolean("bat_buoc"));
                 temp.setTenKhoa(result.getString("ten_khoa"));
-                temp.setMonTienQuyet(result.getInt("la_mon_tien_quyet_cua"));
+                temp.setMonTienQuyet(result.getInt("ma_mon_tien_quyet"));
                 kq.add(temp);
             }
             access.closeConnection(statement);

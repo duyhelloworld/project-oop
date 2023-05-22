@@ -17,11 +17,11 @@ public class LopService implements ILopService {
     public List<String> layTenCacLopQuanLiTheoKhoa(String tenKhoa) {
         List<String> kq = new ArrayList<>();
         try {
-            PreparedStatement statement = access.getStatement("SELECT ten_lop_quanli FROM LopQuanLi INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa WHERE khoa.ten_khoa = ?");
+            PreparedStatement statement = access.getStatement("SELECT ten_lop_quan_li FROM LopQuanLi INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa WHERE khoa.ten_khoa = ?");
             statement.setString(1, tenKhoa);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-               kq.add(resultSet.getString("ten_lop_quanli"));
+               kq.add(resultSet.getString("ten_lop_quan_li"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -30,18 +30,14 @@ public class LopService implements ILopService {
     }
 
     @Override
-    public void themSinhVienVaoLopQuanLi(Integer mssv, Integer maLopQuanLi) {
+    public void themSinhVienVaoLopQuanLi(Integer mssv, Integer maLopQuanLi) throws SQLException {
         PreparedStatement statement = access.getStatement("INSERT INTO `lopquanli_sinhvien` (ma_lop_quanli, mssv) VALUES (?, ?)");
-        try {
             statement.setInt(1, maLopQuanLi);
             statement.setInt(2, mssv);
 
             int soDongAnhHuong = statement.executeUpdate();
             if (soDongAnhHuong != 1) {
-                throw new SQLException("something wrong happened");
+                throw new SQLException("Có lỗi trong lúc chèn");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

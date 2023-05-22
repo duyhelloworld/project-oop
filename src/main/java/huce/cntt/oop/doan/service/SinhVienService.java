@@ -19,10 +19,10 @@ public class SinhVienService implements ISinhVienService {
     @Override
     public List<SinhVien> layTatCaSinhVien() {
         PreparedStatement statement = access.getStatement("SELECT " +
-        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quanli, ten_khoa " + 
+        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " + 
         "FROM `SinhVien` " +
         "INNER JOIN lopquanli_sinhvien ON lopquanli_sinhvien.mssv = sinhvien.mssv " + 
-        "INNER JOIN lopquanli ON lopquanli.ma_lop_quanli = lopquanli_sinhvien.ma_lop_quanli " + 
+        "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = lopquanli_sinhvien.ma_lop_quan_li " + 
         "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
         "ORDER BY sinhvien.mssv");
         List<SinhVien> listSinhVien = new ArrayList<SinhVien>();
@@ -36,14 +36,13 @@ public class SinhVienService implements ISinhVienService {
                 temp.setMaSo(result.getInt("mssv"));
                 temp.setHoTen(new HoTen(result.getString("ho_ten")));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
-                temp.setNgaySinh(
-                    result.getDate("ngay_sinh").toLocalDate());
+                temp.setNgaySinh(result.getDate("ngay_sinh").toLocalDate());
                 temp.setNgayVaoTruong(result.getDate("ngay_vao_truong").toLocalDate());
                 temp.setQueQuan(new DiaChi(result.getString("que_quan")));
                 temp.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_hien_tai")));
                 temp.setEmail(result.getString("email"));
                 temp.setSoDienThoai(result.getString("so_dien_thoai"));
-                temp.setTenLopQuanLi(result.getString("ten_lop_quanli"));
+                temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
                 temp.setKhoa(result.getString("ten_khoa"));
                 listSinhVien.add(temp);
             }
@@ -71,6 +70,7 @@ public class SinhVienService implements ISinhVienService {
                 sv.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_hien_tai")));
                 sv.setSoDienThoai(result.getString("so_dien_thoai"));
                 sv.setEmail(result.getString("email"));
+                sv.setNgayVaoTruong(result.getDate("ngay_vao_truong").toLocalDate());
             }
             access.closeConnection(statement);
         } catch (SQLException e) {
@@ -114,7 +114,7 @@ public class SinhVienService implements ISinhVienService {
         int maSoSinhVien = 0;
         try {
             if (sinhVien.getMaSo() != null) {
-                throw new IllegalArgumentException("'mssv' must be NULL");
+                throw new IllegalArgumentException("'MSSV' đang mang giá trị!!!");
             }
             PreparedStatement statement = access.getStatement("INSERT INTO SinhVien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong) VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
             statement.setString(1, sinhVien.getHoTen().toString());
@@ -135,7 +135,7 @@ public class SinhVienService implements ISinhVienService {
                     maSoSinhVien = resultSet.getInt(1);
                 }
             } else {
-                throw new IllegalStateException("This 'sinhvien' isn't inserted !");
+                throw new IllegalStateException("Sinh viên này chưa chèn thành công!");
             }
             statement.close();
         } catch (SQLException e) {
@@ -222,6 +222,7 @@ public class SinhVienService implements ISinhVienService {
                 kq.setQueQuan(new DiaChi(result.getString("que_quan")));
                 kq.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_hien_tai")));
                 kq.setSoDienThoai(result.getString("so_dien_thoai"));
+                kq.setNgayVaoTruong(result.getDate("ngay_vao_truong").toLocalDate());
                 kq.setEmail(email);
             }
             access.closeConnection(statement);
