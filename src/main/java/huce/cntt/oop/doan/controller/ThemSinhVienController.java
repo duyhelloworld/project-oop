@@ -23,13 +23,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 
-public class QuanLiSinhVienController {
+public class ThemSinhVienController {
 
     private final ISinhVienService sinhVienService;
     private final ILopService lopService;
     private final IKhoaService khoaService;
 
-    public QuanLiSinhVienController(ISinhVienService sinhVienService) {
+    public ThemSinhVienController(ISinhVienService sinhVienService) {
         this.sinhVienService = sinhVienService;
         this.lopService = new LopService();
         this.khoaService = new KhoaService();

@@ -76,7 +76,6 @@ public class XemSuaXoaSinhVienController {
     @FXML
     private TextField hoTenTextField;
 
-    private ToggleGroup gioiTinhToggle = new ToggleGroup();
     @FXML
     private RadioButton nam;
     @FXML
@@ -98,6 +97,7 @@ public class XemSuaXoaSinhVienController {
     private DatePicker ngayVaoTruongDatePicker;
     @FXML
     private ChoiceBox<String> lopQuanLiChoiceBox;
+    private SinhVien sinhVien;
 
     private Alert alert;
 
@@ -112,39 +112,40 @@ public class XemSuaXoaSinhVienController {
     @FXML
     private Button nutQuayLai;
 
-    private SinhVien sinhVienTamThoi;
-
     @FXML
     public void initialize() {
-
+        alert = new Alert(AlertType.NONE);
         // Show
         showBangSinhVien();
-
         // Set Bool
+        ToggleGroup gioiTinhToggle = new ToggleGroup();
         nam.setToggleGroup(gioiTinhToggle);
         nu.setToggleGroup(gioiTinhToggle);
 
-        SinhVien sinhVienMoi = layGiaTriPromptHoacText();
+        nutLuu.setOnAction(e -> luu());
+        nutQuayLai.setOnAction(e -> quayLai());
+    }
 
-        nutLuu.setOnAction(e -> luu(sinhVienMoi));
-
-        nutQuayLai.setOnAction(e -> {
-            if (nutQuayLai.isPressed()) {
-                System.out.println("pressed");
-            } 
-            else {
-                if (sinhVienTamThoi.equals(sinhVienMoi)) {
-                    // back !
-                } else {
-                    alert.setAlertType(AlertType.CONFIRMATION);
-                    alert.setContentText("Bạn có thay đổi chưa lưu.\nLưu ?");
-                    Optional<ButtonType> confirm = alert.showAndWait();
-                    if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-                        luu(sinhVienMoi);
-                    }
+    private void quayLai() {
+            if (!nutQuayLai.isPressed()) {
+                sinhVien = layGiaTriPromptHoacText();
+                alert.setAlertType(AlertType.CONFIRMATION);
+                alert.setContentText("Bạn có thay đổi chưa lưu.\nLưu ?");
+                Optional<ButtonType> confirm = alert.showAndWait();
+                if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+                    luu();
                 }
             }
-        });
+    }
+
+    private void luu() {
+        if (!nutLuu.isPressed()) {
+            sinhVien = layGiaTriPromptHoacText();
+            alert.setAlertType(AlertType.INFORMATION);
+            alert.setHeight(700);
+            alert.setContentText(sinhVien.toString());
+            alert.show();
+        }
     }
 
     private void showBangSinhVien() {
@@ -159,7 +160,6 @@ public class XemSuaXoaSinhVienController {
         cotSoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
         cotNienKhoa.setCellValueFactory(new PropertyValueFactory<>("nienKhoa"));
         cotLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("tenLopQuanLi"));
-        cotMaSoSV.setEditable(false);
 
         bangSinhVien.setItems(loadDanhSachSinhVien());
 
@@ -167,14 +167,18 @@ public class XemSuaXoaSinhVienController {
             TableRow<SinhVien> row = new TableRow<>();
             row.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 1 && !row.isEmpty()) {
-                    alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setAlertType(AlertType.CONFIRMATION);
                     alert.setContentText("Bạn có muốn thay đổi sinh viên này?");
                     Optional<ButtonType> confirm = alert.showAndWait();
                     if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-                        SinhVien sv = row.getItem();
-                        sinhVienTamThoi = sv;
-                        renderSinhVienKhiClick(sinhVienTamThoi);
+                        sinhVien = row.getItem();
+                        renderSinhVienKhiClick(sinhVien);
                     }
+                }
+                if (e.getClickCount() >= 3) {
+                    alert.setAlertType(AlertType.WARNING);
+                    alert.setContentText("Bạn sống hơi nhanh. Hãy sống chậm lại");
+                    alert.show();
                 }
             });
             return row;
@@ -197,26 +201,20 @@ public class XemSuaXoaSinhVienController {
             diaChiThuongTruTextField.getText().isEmpty() ? diaChiThuongTruTextField.getPromptText() : diaChiThuongTruTextField.getText()
         );
         LocalDate ngaySinh = ngaySinhDatePicker.getValue();
-        // if (ngaySinh == null) {
-        //     ngaySinh = LocalDate.parse(ngaySinhDatePicker.getPromptText(), formatter);
-        // }
+        if (ngaySinh == null && ngaySinhDatePicker.getPromptText() != null) {
+            ngaySinh = LocalDate.parse(ngaySinhDatePicker.getPromptText(), formatter);
+        }
         String soDienThoai = soDienThoaiTextField.getText().isEmpty() ? soDienThoaiTextField.getPromptText() : soDienThoaiTextField.getText();
         String email = emailTextField.getText().isEmpty() ? emailTextField.getPromptText() : emailTextField.getText();
 
         LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
-        // if (ngayVaoTruong == null) {
-        //     ngayVaoTruong = LocalDate.parse(ngayVaoTruongDatePicker.getPromptText(), formatter);
-        // }
+        if (ngayVaoTruong == null && ngayVaoTruongDatePicker.getPromptText() != null) {
+            ngayVaoTruong = LocalDate.parse(ngayVaoTruongDatePicker.getPromptText(), formatter);
+        }
 
         Boolean gioiTinh = nam.isSelected();
         String lopQuanLi = lopQuanLiChoiceBox.getValue();
-        if (lopQuanLi == null) {
-            lopQuanLi = lopQuanLiChoiceBox.getSelectionModel().getSelectedItem();
-        }
         String khoa = khoaComboBox.getValue();
-        if (khoa == null) {
-            khoa = khoaComboBox.getSelectionModel().getSelectedItem();
-        }
         
         SinhVien sinhVien = new SinhVien();
         try {
@@ -229,6 +227,7 @@ public class XemSuaXoaSinhVienController {
             sinhVien.setNgaySinh(ngaySinh);
             sinhVien.setNgayVaoTruong(ngayVaoTruong);
             sinhVien.setTenLopQuanLi(lopQuanLi);
+            sinhVien.setKhoa(khoa);
         } catch (Exception e) {
             alert = new Alert(AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -244,7 +243,7 @@ public class XemSuaXoaSinhVienController {
         diaChiThuongTruTextField.setPromptText(sv.getDiaChiThuongTru().toString());
         emailTextField.setPromptText(sv.getEmail());
         soDienThoaiTextField.setPromptText(sv.getSoDienThoai());
-        khoaComboBox.setPromptText(sv.getKhoa());
+        khoaComboBox.setValue(sv.getKhoa());
         lopQuanLiChoiceBox.setValue(sv.getTenLopQuanLi());
         ngayVaoTruongDatePicker.setPromptText(sv.getNgayVaoTruong().toString());
         // Giới tính ko auto-render đc
@@ -258,12 +257,5 @@ public class XemSuaXoaSinhVienController {
             ObservableList<String> O_lopQuanLi = FXCollections.observableArrayList(tenCacLop);
             lopQuanLiChoiceBox.setItems(O_lopQuanLi);
         });
-    }
-
-    private void luu(SinhVien sv) {
-        alert.setAlertType(AlertType.INFORMATION);
-        alert.setHeight(700);
-        alert.setContentText(sv.toString());
-        alert.show();
     }
 }
