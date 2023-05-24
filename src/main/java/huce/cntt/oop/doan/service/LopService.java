@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
+import huce.cntt.oop.doan.entities.SinhVien;
+import huce.cntt.oop.doan.entities.dto.DTOSinhVien;
 import huce.cntt.oop.doan.interfaces.ILopService;
 
 public class LopService implements ILopService {
@@ -39,5 +41,15 @@ public class LopService implements ILopService {
             if (soDongAnhHuong != 1) {
                 throw new SQLException("Có lỗi trong lúc chèn");
             }
+    }
+
+    @Override
+    public void capNhatLopQuanLi(DTOSinhVien dtoSinhVien) throws SQLException {
+        PreparedStatement statement = access.getStatement("UPDATE Lopquanli_SinhVien SET ma_lop_quan_li = " + dtoSinhVien.getMaLopQuanLi() + " WHERE mssv = " + dtoSinhVien.getMaSo());
+        int rowAffected = statement.executeUpdate();
+        if (rowAffected != 1) {
+            throw new SQLException("Có 1 số lỗi xảy ra với hệ thống. Hãy quay lại sau!");
+        }
+        access.closeConnection(statement);
     }
 }
