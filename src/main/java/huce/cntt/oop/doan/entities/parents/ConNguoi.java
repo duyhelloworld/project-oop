@@ -130,6 +130,7 @@ public abstract class ConNguoi {
         return "{" +
                 " mã số = '" + getMaSo() + "'" +
                 ", họ tên = '" + getHoTen() + "'" +
+                ", giới tính = '" + (getGioiTinh() ? "nam" : "nữ" ) + "'" +
                 ", ngày sinh = '" + getNgaySinh() + "'" +
                 ", địa chỉ hiện tại = '" + getDiaChiThuongTru() + "'" +
                 ", quê quán = '" + getQueQuan() + "'" +
