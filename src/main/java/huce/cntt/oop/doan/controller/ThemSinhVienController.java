@@ -3,7 +3,7 @@ package huce.cntt.oop.doan.controller;
 import java.time.LocalDate;
 import java.util.List;
 
-import huce.cntt.oop.doan.entities.SinhVien;
+import huce.cntt.oop.doan.entities.dto.DTOSinhVien;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
@@ -15,13 +15,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
 
 public class ThemSinhVienController {
 
@@ -99,10 +99,10 @@ public class ThemSinhVienController {
 
     // Lấy dữ liệu
     void themSinhVien() {
-        SinhVien sinhVien = kiemTraDuLieu();
+        DTOSinhVien sinhVien = kiemTraDuLieu();
         int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
-        int mssv = sinhVienService.themMoiSinhVien(sinhVien);
         try {
+            int mssv = sinhVienService.themMoiSinhVien(sinhVien);
             sinhVien.setMaSo(mssv);
             lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
             alert.setAlertType(AlertType.INFORMATION);
@@ -115,7 +115,7 @@ public class ThemSinhVienController {
     }
 
     // Tab1
-    private SinhVien kiemTraDuLieu() {
+    private DTOSinhVien kiemTraDuLieu() {
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
         DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
@@ -129,23 +129,23 @@ public class ThemSinhVienController {
         String lopQuanLi = lopQuanLiComboBox.getValue();
         String khoa = khoaComboBox.getValue();
 
-        SinhVien sinhVien = new SinhVien();
+        DTOSinhVien dtoSinhVien = new DTOSinhVien();
         try {
-            sinhVien.setMaSo(null);
-            sinhVien.setHoTen(hoTen);
-            sinhVien.setGioiTinh(gioiTinh);
-            sinhVien.setNgaySinh(ngaySinh);
-            sinhVien.setQueQuan(queQuan);
-            sinhVien.setDiaChiThuongTru(diaChiHienTai);
-            sinhVien.setSoDienThoai(soDienThoai);
-            sinhVien.setEmail(email);
-            sinhVien.setTenLopQuanLi(lopQuanLi);
-            sinhVien.setNgayVaoTruong(ngayVaoTruong);
-            sinhVien.setKhoa(khoa);
+            dtoSinhVien.setMaSo(null);
+            dtoSinhVien.setHoTen(hoTen);
+            dtoSinhVien.setGioiTinh(gioiTinh);
+            dtoSinhVien.setNgaySinh(ngaySinh);
+            dtoSinhVien.setQueQuan(queQuan);
+            dtoSinhVien.setDiaChiThuongTru(diaChiHienTai);
+            dtoSinhVien.setSoDienThoai(soDienThoai);
+            dtoSinhVien.setEmail(email);
+            dtoSinhVien.setTenLopQuanLi(lopQuanLi);
+            dtoSinhVien.setNgayVaoTruong(ngayVaoTruong);
+            dtoSinhVien.setKhoa(khoa);
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setContentText(e.getMessage());
         }
-        return sinhVien;
+        return dtoSinhVien;
     }
 }
