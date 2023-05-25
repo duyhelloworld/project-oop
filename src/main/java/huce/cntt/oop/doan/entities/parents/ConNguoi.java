@@ -53,10 +53,10 @@ public abstract class ConNguoi {
     }
 
     public void setNgaySinh(LocalDate ngay_sinh) {
-        // if (!ngay_sinh.isBefore(LocalDate.now()) 
-        //     || !ngay_sinh.isAfter(LocalDate.of(1940, 1, 1))) {
-        //     throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm là từ 1980 tới " + LocalDate.now().getYear());
-        // }
+        if (!ngay_sinh.isBefore(LocalDate.now()) 
+            || !ngay_sinh.isAfter(LocalDate.of(1940, 1, 1))) {
+            throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 5));
+        }
         this.ngaySinh = ngay_sinh;
     }
 
