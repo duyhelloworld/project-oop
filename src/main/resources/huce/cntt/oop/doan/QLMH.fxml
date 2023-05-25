@@ -12,48 +12,53 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="32.0" layoutY="68.0" text="Tìm kiếm Môn học" />
-      <TextField layoutX="183.0" layoutY="64.0" />
-      <ChoiceBox layoutX="421.0" layoutY="64.0" prefWidth="150.0" />
-      <TableView layoutX="5.0" layoutY="106.0" prefHeight="200.0" prefWidth="1203.0">
+      <Label layoutX="50.0" layoutY="96.0" text="Tìm kiếm Môn học" />
+      <TextField fx:id="timKiemMonHoc" layoutX="192.0" layoutY="92.0" prefHeight="25.0" prefWidth="175.0" />
+      <ChoiceBox fx:id="timKiemTheo" layoutX="878.0" layoutY="92.0" prefHeight="25.0" prefWidth="175.0" >
+        <!-- <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Khoa" />
+                <String fx:value="Mã môn" />
+                <String fx:value="Tên môn" />
+             </FXCollections>
+         </items> -->
+      </ChoiceBox>
+      <TableView fx:id="tableView" layoutX="5.0" layoutY="150.0" prefHeight="236.0" prefWidth="1203.0">
         <columns>
-          <TableColumn prefWidth="58.66665458679199" text="Mã Môn" />
-          <TableColumn prefWidth="116.66666412353516" text="Tên Môn Học" />
-            <TableColumn minWidth="0.0" prefWidth="64.66667175292969" text="Số Tín Chỉ" />
-            <TableColumn prefWidth="63.33331298828125" text="Số Tiết LT" />
-            <TableColumn prefWidth="64.66668701171875" text="Số Tiết TH" />
-            <TableColumn prefWidth="66.66668701171875" text="Số Tiết BT" />
-            <TableColumn prefWidth="94.66671752929688" text="Môn Điều kiện" />
-            <TableColumn prefWidth="118.66668701171875" text="Thuộc Khoa" />
+            <TableColumn fx:id="cotMaMon" prefWidth="125.33331298828125" text="Mã môn" />
+            <TableColumn fx:id="cotTenMon" prefWidth="260.66668701171875" text="Tên môn học" />
+            <TableColumn fx:id="cotSoTinChi" minWidth="0.0" prefWidth="91.3333740234375" text="Số tín chỉ" />
+            <TableColumn fx:id="cotBatBuoc" prefWidth="79.3333740234375" text="Bắt buộc" />
+            <TableColumn fx:id="cotMonTienQuyet" prefWidth="172.6666259765625" text="Môn tiên quyết" />
+            <TableColumn fx:id="cotKhoa" prefWidth="171.3333740234375" text="Khoa" />
+            <TableColumn fx:id="cotMoTa" prefWidth="304.6666259765625" text="Mô tả" />
         </columns>
       </TableView>
-      <TextField layoutX="784.0" layoutY="446.0" prefHeight="25.0" prefWidth="85.0" />
-      <TextField layoutX="176.0" layoutY="441.0" prefHeight="25.0" prefWidth="164.0" />
-      <TextField layoutX="176.0" layoutY="400.0" prefHeight="25.0" prefWidth="164.0" />
-      <TextField layoutX="784.0" layoutY="324.0" prefHeight="25.0" prefWidth="85.0" />
-      <TextField layoutX="784.0" layoutY="365.0" prefHeight="25.0" prefWidth="85.0" />
-      <TextField layoutX="784.0" layoutY="405.0" prefHeight="25.0" prefWidth="85.0" />
-      <ComboBox editable="true" layoutX="176.0" layoutY="360.0" prefHeight="25.0" prefWidth="164.0" />
-      <Label layoutX="669.0" layoutY="328.0" text="Số tiết lí thuyết" />
-      <Label layoutX="669.0" layoutY="369.0" text="Số tiết thực hành" />
-      <Label layoutX="669.0" layoutY="409.0" text="Số tiết bài tập" />
-      <Label layoutX="669.0" layoutY="450.0" text="Số tín chỉ" />
-      <TextField layoutX="176.0" layoutY="485.0" prefHeight="25.0" prefWidth="164.0" />
-      <Button layoutX="87.0" layoutY="554.0" mnemonicParsing="false" text="Thêm môn" />
-      <Button layoutX="305.0" layoutY="554.0" mnemonicParsing="false" text="Sửa môn" />
-      <Button layoutX="194.0" layoutY="554.0" mnemonicParsing="false" text="Xóa môn" />
-      <Button layoutX="759.0" layoutY="557.0" mnemonicParsing="false" text="Lưu thay đổi" />
-      <Button layoutX="846.0" layoutY="557.0" mnemonicParsing="false" text="Thoát" />
-      <Label layoutX="60.0" layoutY="325.0" prefHeight="17.0" prefWidth="64.0" text="Khoa" />
-      <Label layoutX="60.0" layoutY="363.0" prefHeight="17.0" prefWidth="64.0" text="Chọn môn" />
-      <Label layoutX="60.0" layoutY="403.0" prefHeight="17.0" prefWidth="64.0" text="Mã môn" />
-      <Label layoutX="60.0" layoutY="444.0" prefHeight="17.0" prefWidth="64.0" text="Tên môn" />
-      <Label layoutX="60.0" layoutY="488.0" prefHeight="17.0" prefWidth="91.0" text="Môn điều kiện" />
+      <ComboBox fx:id="khoa" editable="true" layoutX="192.0" layoutY="400.0" prefHeight="25.0" prefWidth="175.0" />
+      <TextField fx:id="batBuoc" layoutX="878.0" layoutY="400.0" prefHeight="25.0" prefWidth="175.0" />
+      <TextField fx:id="maMon" layoutX="192.0" layoutY="448.0" prefHeight="25.0" prefWidth="175.0" />
+      <TextField fx:id="moTa" layoutX="878.0" layoutY="448.0" prefHeight="25.0" prefWidth="175.0" />
+      <TextField fx:id="tenMon" layoutX="192.0" layoutY="496.0" prefHeight="25.0" prefWidth="175.0" />
+      <TextField fx:id="soTinChi" layoutX="878.0" layoutY="496.0" prefHeight="25.0" prefWidth="175.0" />
+      <TextField fx:id="monTienQuyet" layoutX="192.0" layoutY="544.0" prefHeight="25.0" prefWidth="175.0" />
+      <Label layoutX="669.0" layoutY="328.0" />
+      <Label layoutX="736.0" layoutY="402.0" text="Bắt buộc" />
+      <Label layoutX="736.0" layoutY="452.0" text="Mô tả" />
+      <Label layoutX="736.0" layoutY="500.0" text="Số tín chỉ" />
+      <Button fx:id="themMon" layoutX="50.0" layoutY="600.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="98.0" text="Thêm môn" />
+      <Button fx:id="xoaMon" layoutX="230.0" layoutY="600.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="100.0" text="Xóa môn" />
+      <Button fx:id="suaMon" layoutX="410.0" layoutY="600.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" text="Sửa môn" />
+      <Button fx:id="luuThayDoi" layoutX="798.0" layoutY="600.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="116.0" text="Lưu thay đổi" />
+      <Button fx:id="thoat" layoutX="978.0" layoutY="600.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="75.0" text="Thoát" />
+      <Label layoutX="50.0" layoutY="404.0" prefHeight="17.0" prefWidth="64.0" text="Khoa" />
+      <Label layoutX="50.0" layoutY="452.0" prefHeight="17.0" prefWidth="64.0" text="Mã môn" />
+      <Label layoutX="50.0" layoutY="500.0" prefHeight="17.0" prefWidth="64.0" text="Tên môn" />
+      <Label layoutX="50.0" layoutY="548.0" prefHeight="17.0" prefWidth="91.0" text="Môn tiên quyết" />
       <Label layoutX="543.0" layoutY="25.0" text="QUẢN LÝ MÔN HỌC" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox editable="true" layoutX="176.0" layoutY="316.0" prefHeight="25.0" prefWidth="164.0" />
+      <Label layoutX="736.0" layoutY="96.0" text="Tìm kiếm theo:" />
    </children>
 </Pane>
