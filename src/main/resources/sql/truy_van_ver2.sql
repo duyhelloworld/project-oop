@@ -19,7 +19,7 @@ SELECT
 sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quanli, ten_khoa
 FROM `SinhVien`
 INNER JOIN lopquanli_sinhvien ON lopquanli_sinhvien.mssv = sinhvien.mssv
-INNER JOIN lopquanli ON lopquanli.ma_lop_quanli = lopquanli_sinhvien.ma_lop_quanli
+INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = lopquanli_sinhvien.ma_lop_quan_li
 INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa
 ORDER BY sinhvien.mssv;
 

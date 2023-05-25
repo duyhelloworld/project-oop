@@ -14,6 +14,16 @@ import huce.cntt.oop.doan.interfaces.IMonHocService;
 public class MonHocService implements IMonHocService {
     private DataAccess access = DataAccess.getInstance();
 
+    private MonHocService() {}
+    private static MonHocService service;
+
+    public static MonHocService getInstance(){
+        if (service == null) {
+           service = new MonHocService();
+        }
+        return service;
+    }
+
     @Override
     public List<MonHoc> layTatCaMonHoc() {
         PreparedStatement statement = access.getStatement(
