@@ -8,10 +8,18 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.SinhVien;
-import huce.cntt.oop.doan.entities.dto.DTOSinhVien;
 import huce.cntt.oop.doan.interfaces.ILopService;
 
 public class LopService implements ILopService {
+    private LopService() {}
+    private static LopService service;
+
+    public static LopService getInstance(){
+        if (service == null) {
+           service = new LopService();
+        }
+        return service;
+    }
 
     private final DataAccess access = DataAccess.getInstance();
 
@@ -33,7 +41,7 @@ public class LopService implements ILopService {
 
     @Override
     public void themSinhVienVaoLopQuanLi(Integer mssv, Integer maLopQuanLi) throws SQLException {
-        PreparedStatement statement = access.getStatement("INSERT INTO `lopquanli_sinhvien` (ma_lop_quanli, mssv) VALUES (?, ?)");
+        PreparedStatement statement = access.getStatement("INSERT INTO `lopquanli_sinhvien` (ma_lop_quan_li, mssv) VALUES (?, ?)");
             statement.setInt(1, maLopQuanLi);
             statement.setInt(2, mssv);
 
@@ -44,8 +52,8 @@ public class LopService implements ILopService {
     }
 
     @Override
-    public void capNhatLopQuanLi(DTOSinhVien dtoSinhVien) throws SQLException {
-        PreparedStatement statement = access.getStatement("UPDATE Lopquanli_SinhVien SET ma_lop_quan_li = " + dtoSinhVien.getMaLopQuanLi() + " WHERE mssv = " + dtoSinhVien.getMaSo());
+    public void capNhatLopQuanLi(SinhVien SinhVien) throws SQLException {
+        PreparedStatement statement = access.getStatement("UPDATE Lopquanli_SinhVien SET ma_lop_quan_li = " + SinhVien.getMaLopQuanLi() + " WHERE mssv = " + SinhVien.getMaSo());
         int rowAffected = statement.executeUpdate();
         if (rowAffected != 1) {
             throw new SQLException("Có 1 số lỗi xảy ra với hệ thống. Hãy quay lại sau!");
