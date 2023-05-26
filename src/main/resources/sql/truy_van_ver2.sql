@@ -35,6 +35,8 @@ ORDER BY sinhvien.mssv;
 
 -- Danh sách giảng viên
 SELECT * FROM giangvien;
+-- DELETE FROM LopQuanLi_SinhVien WHERE mssv = 13;
+SELECT COUNT(*) FROM diemsinhvien WHERE mssv = 1;
 
 SELECT 
 sinhvien.mssv, ho_ten, khoa.ten_khoa, ten_monhoc, ten_lop_monhoc, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki, ghi_chu
