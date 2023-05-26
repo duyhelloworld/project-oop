@@ -12,4 +12,10 @@ public interface ILopService {
     public void themSinhVienVaoLopQuanLi(Integer mssv, Integer maLopQuanLi) throws SQLException;
 
     public void capNhatLopQuanLi(SinhVien SinhVien) throws SQLException, IllegalArgumentException;
+
+    public int laySoLopMonHocDangHoc(Integer mssv) throws SQLException;
+
+    public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws SQLException;
+
+    public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws SQLException;
 }
