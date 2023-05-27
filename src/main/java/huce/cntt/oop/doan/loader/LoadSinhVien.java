@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class LoadSinhVien {
-    private static String path = "/huce/cntt/oop/doan/SinhVien.fxml";
+    private static String path = "/view/SinhVien.fxml";
 
     public static Scene loadSinhVien() throws IOException { 
         FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
