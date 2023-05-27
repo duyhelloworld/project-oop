@@ -73,12 +73,6 @@ public class ThemSinhVienController {
     private ComboBox<String> khoaComboBox;
 
     private Alert alert;
-    // private DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder()
-    //                             .appendPattern("yyyy/dd/mm")
-    //                             .appendPattern("dd/mm/yyyy")
-    //                             .appendPattern("dd/MM/yyyy")
-    //                             .appendPattern("dd/mm/yy");
-
 
     @FXML
     private void initialize() {

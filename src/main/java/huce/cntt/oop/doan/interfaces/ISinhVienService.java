@@ -16,7 +16,7 @@ public interface ISinhVienService {
 
     public Integer themMoiSinhVien(SinhVien sinhVien) throws SQLException;
 
-    public void xoaSinhVienTheoMaSo(List<Integer> mssvs)  throws SQLException, IllegalArgumentException;
+    public boolean xoaSinhVienTheoMaSo(Integer mssvs)  throws SQLException, IllegalArgumentException;
 
     public void capNhatThongTinSinhVien(SinhVien sinhVien) throws SQLException, IllegalArgumentException;
 }

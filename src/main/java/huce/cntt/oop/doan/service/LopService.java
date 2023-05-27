@@ -60,4 +60,36 @@ public class LopService implements ILopService {
         }
         access.closeConnection(statement);
     }
+
+    @Override
+    public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws SQLException {
+        PreparedStatement statement = access.getStatement("DELETE FROM LopQuanLi_SinhVien WHERE mssv = " + mssv);
+        int rowAffected = statement.executeUpdate();
+        if (rowAffected < 1) {
+            throw new SQLException("Không tồn tại sinh viên mang mã số này");
+        }
+        access.closeConnection(statement);
+    }
+
+    @Override
+    public int laySoLopMonHocDangHoc(Integer mssv) throws SQLException {
+        PreparedStatement statement = access.getStatement("SELECT COUNT(*) FROM diemsinhvien WHERE mssv = " + mssv);
+        ResultSet resultSet = statement.executeQuery();
+        int count = 0;
+        if (resultSet.next()) {
+            count = resultSet.getInt(1);
+        }
+        access.closeConnection(statement);
+        return count;
+    }
+
+    @Override
+    public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws SQLException {
+        PreparedStatement statement = access.getStatement("DELETE FROM diemsinhvien WHERE mssv = " + mssv);
+        int rowAffected = statement.executeUpdate();
+        if (rowAffected < 1) {
+            throw new SQLException("Không tồn tại sinh viên mang mã số này");
+        }
+        access.closeConnection(statement);
+    }    
 }

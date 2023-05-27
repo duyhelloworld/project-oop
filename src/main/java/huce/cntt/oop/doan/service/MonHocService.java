@@ -8,7 +8,6 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.MonHoc;
-import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.interfaces.IMonHocService;
 
 public class MonHocService implements IMonHocService {
@@ -142,17 +141,5 @@ public class MonHocService implements IMonHocService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<SinhVien> timSinhVienTheoLopQuanLi(Integer ma_lop_quan_li) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'timSinhVienTheoLopQuanLi'");
-    }
-
-    @Override
-    public List<SinhVien> timSinhVienTheoLopMonHoc(Integer ma_lop_mon_hoc) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'timSinhVienTheoLopMonHoc'");
     }
 }

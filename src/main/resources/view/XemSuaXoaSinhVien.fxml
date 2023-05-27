@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.text.Font?>
-<?import huce.cntt.oop.doan.controller.CheckBoxTableCellFactory?>
 
 <AnchorPane prefHeight="722.0" prefWidth="1206.0"
     fx:controller="huce.cntt.oop.doan.controller.XemSuaXoaSinhVienController"
@@ -110,11 +109,7 @@
                         <PropertyValueFactory property="maKhoa" />
                     </cellValueFactory>
                 </TableColumn>
-
-                <TableColumn fx:id="cotXoa" editable="true" prefWidth="47.0" text="Xóa">
-                    <cellFactory>
-                         <CheckBoxTableCellFactory />
-                    </cellFactory>
+                <TableColumn fx:id="cotXoa" editable="false" visible="false" prefWidth="47.0" text="Xóa">
                 </TableColumn>
             </columns>
         </TableView>

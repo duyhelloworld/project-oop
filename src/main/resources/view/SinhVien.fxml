@@ -30,7 +30,7 @@
             </Tab>
             <Tab fx:id="tabSuaXoaSinhVien" text="Sửa/Xóa Sinh Viên">
                <content>
-               <fx:include source="XemSuaXoaSinhVien.fxml" />
+                  <fx:include source="XemSuaXoaSinhVien.fxml" />
                </content>
             </Tab>
          </tabs>
