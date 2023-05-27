@@ -1,9 +1,10 @@
 package huce.cntt.oop.doan.controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-import huce.cntt.oop.doan.entities.dto.DTOSinhVien;
+import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
@@ -11,6 +12,7 @@ import huce.cntt.oop.doan.interfaces.ILopService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 import huce.cntt.oop.doan.service.KhoaService;
 import huce.cntt.oop.doan.service.LopService;
+import huce.cntt.oop.doan.service.SinhVienService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,10 +31,16 @@ public class ThemSinhVienController {
     private final ILopService lopService;
     private final IKhoaService khoaService;
 
-    public ThemSinhVienController(ISinhVienService sinhVienService) {
+    public ThemSinhVienController() {
+        this.sinhVienService = SinhVienService.getInstance();
+        this.lopService = LopService.getInstance();
+        this.khoaService = KhoaService.getInstance();
+    }
+
+    public ThemSinhVienController(ISinhVienService sinhVienService, ILopService lopService, IKhoaService khoaService ) {
         this.sinhVienService = sinhVienService;
-        this.lopService = new LopService();
-        this.khoaService = new KhoaService();
+        this.lopService = lopService;
+        this.khoaService = khoaService;
     }
 
     @FXML
@@ -73,12 +81,12 @@ public class ThemSinhVienController {
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
 
-        hoTenTextField.setPromptText("...");
+        hoTenTextField.setPromptText("..............");
         queQuanTextField.setPromptText("xã ..., huyện..., tỉnh ...");
-        diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận");
+        diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận ...");
         soDienThoaiTextField.setPromptText("10 chữ số");
-        ngaySinhDatePicker.setPromptText("Chọn ...");
-        ngayVaoTruongDatePicker.setPromptText("Chọn ...");
+        ngaySinhDatePicker.setPromptText("...");
+        ngayVaoTruongDatePicker.setPromptText("...");
         emailTextField.setPromptText("Đã hỗ trợ tự điền domain '@huce.edu.vn'");
 
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
@@ -94,58 +102,74 @@ public class ThemSinhVienController {
         // Cấm xoá lớp quản lí : để mã lớp quản lí trong db luôn trích ra là chỉ số ở
         // đây
         // --> hàm get của tôi đỡ phải SELECT 2 trường
-        nutLuu.setOnAction(e -> themSinhVien());
+        nutLuu.setOnAction(e -> {
+            if (!nutLuu.isPressed()) {
+                themSinhVien();
+            }
+        });
     }
 
     // Lấy dữ liệu
     void themSinhVien() {
-        DTOSinhVien sinhVien = kiemTraDuLieu();
-        int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
+
+        // đã try catch các lỗi
         try {
+            SinhVien sinhVien = kiemTraDuLieu();
+            if (sinhVien.hasNullElement()) {
+                System.out.println(sinhVien);
+                throw new NullPointerException();
+            }
             int mssv = sinhVienService.themMoiSinhVien(sinhVien);
             sinhVien.setMaSo(mssv);
-            lopService.themSinhVienVaoLopQuanLi(mssv, maLopQuanLi);
+            lopService.themSinhVienVaoLopQuanLi(mssv, sinhVien.getMaLopQuanLi());
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             alert.setAlertType(AlertType.WARNING);
-            alert.setContentText(e.getMessage());
+            alert.setContentText("Bạn đang điền thiếu 1 trường nào đó!\nHãy kiểm tra lại");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText(e.getLocalizedMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("Lỗi thông tin.\n" + e.getMessage());
+            e.printStackTrace();
         }
         alert.show();
     }
 
     // Tab1
-    private DTOSinhVien kiemTraDuLieu() {
+    private SinhVien kiemTraDuLieu() throws IllegalArgumentException {
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
         DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
-        LocalDate ngaySinh = ngaySinhDatePicker.getValue();
         String soDienThoai = soDienThoaiTextField.getText();
         String email = emailTextField.getText();
-
+        
+        LocalDate ngaySinh = ngaySinhDatePicker.getValue();
         LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
 
         Boolean gioiTinh = nam.isSelected();
         String lopQuanLi = lopQuanLiComboBox.getValue();
         String khoa = khoaComboBox.getValue();
 
-        DTOSinhVien dtoSinhVien = new DTOSinhVien();
-        try {
-            dtoSinhVien.setMaSo(null);
-            dtoSinhVien.setHoTen(hoTen);
-            dtoSinhVien.setGioiTinh(gioiTinh);
-            dtoSinhVien.setNgaySinh(ngaySinh);
-            dtoSinhVien.setQueQuan(queQuan);
-            dtoSinhVien.setDiaChiThuongTru(diaChiHienTai);
-            dtoSinhVien.setSoDienThoai(soDienThoai);
-            dtoSinhVien.setEmail(email);
-            dtoSinhVien.setTenLopQuanLi(lopQuanLi);
-            dtoSinhVien.setNgayVaoTruong(ngayVaoTruong);
-            dtoSinhVien.setKhoa(khoa);
-        } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-        }
-        return dtoSinhVien;
+        int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
+
+        SinhVien sinhVien = new SinhVien();
+        sinhVien.setMaSo(null);
+        sinhVien.setHoTen(hoTen);
+        sinhVien.setGioiTinh(gioiTinh);
+        sinhVien.setNgaySinh(ngaySinh);
+        sinhVien.setQueQuan(queQuan);
+        sinhVien.setDiaChiThuongTru(diaChiHienTai);
+        sinhVien.setSoDienThoai(soDienThoai);
+        sinhVien.setEmail(email);
+        sinhVien.setTenLopQuanLi(lopQuanLi);
+        sinhVien.setNgayVaoTruong(ngayVaoTruong);
+        sinhVien.setKhoa(khoa);
+        sinhVien.setMaLopQuanLi(maLopQuanLi);
+        return sinhVien;
     }
 }

@@ -4,7 +4,8 @@ USE DoAnOOP;
 # Thuc the
 CREATE TABLE Khoa (
     ma_khoa INT PRIMARY KEY AUTO_INCREMENT,
-    ten_khoa VARCHAR(120)
+    ten_khoa VARCHAR(120),
+    UNIQUE(ma_khoa, ten_khoa)
 );
 
 CREATE TABLE MonHoc (
@@ -12,15 +13,16 @@ CREATE TABLE MonHoc (
     ten_mon_hoc VARCHAR(20),
     so_tin_chi TINYINT,
     bat_buoc BIT,
-    ma_mon_tien_quyet INT UNIQUE,
+    ma_mon_tien_quyet INT,
     ma_khoa INT,
     mo_ta TEXT,
+    UNIQUE (ma_mon_hoc, ten_mon_hoc),
     Foreign Key (ma_khoa) REFERENCES khoa(ma_khoa)
 );
 
 CREATE TABLE LopMonHoc (
     ma_lop_mon_hoc INT PRIMARY KEY AUTO_INCREMENT,
-    ten_lop_mon_hoc CHAR(5),
+    ten_lop_mon_hoc CHAR(5) UNIQUE,
     ma_mon_hoc INT,
     Foreign Key (ma_mon_hoc) REFERENCES MonHoc(ma_mon_hoc)
 );
@@ -49,7 +51,7 @@ CREATE TABLE GiangVien (
     email VARCHAR(40),
     so_dien_thoai VARCHAR(10),
     mat_khau VARCHAR(20),
-    CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai, mat_khau)
+    CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai)
 );
 
 CREATE TABLE LopMonHoc_GiangVien (
@@ -88,7 +90,7 @@ CREATE TABLE NhanVienDaoTao (
         email VARCHAR(40),
         so_dien_thoai VARCHAR(10),
         mat_khau VARCHAR(20),
-        CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai, mat_khau)
+        CONSTRAINT UK_GiangVien UNIQUE(email, so_dien_thoai)
     );
 
 CREATE TABLE DiemSinhVien (

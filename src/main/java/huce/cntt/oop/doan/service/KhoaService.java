@@ -11,6 +11,15 @@ import huce.cntt.oop.doan.entities.Khoa;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
 
 public class KhoaService implements IKhoaService {
+    private KhoaService() {}
+    private static KhoaService khoaService;
+
+    public static KhoaService getInstance() {
+        if (khoaService == null) {
+            khoaService = new KhoaService();
+        }
+        return khoaService;
+    }
     private final DataAccess access = DataAccess.getInstance();
     
     public List<String> layTenTatCaKhoa() {
