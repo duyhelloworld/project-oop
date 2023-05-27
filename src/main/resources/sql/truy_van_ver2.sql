@@ -51,4 +51,12 @@ ORDER BY monhoc.ma_monhoc;
 SELECT ten_lop_quanli 
 FROM LopQuanLi 
 INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa
-WHERE khoa.ten_khoa = Công Nghệ Thông Tin;
+WHERE khoa.ten_khoa = "Công Nghệ Thông Tin";
+
+-- SELECT 
+-- *
+-- FROM SinhVien
+-- INNER JOIN diemsinhvien ON sinhvien.mssv = diemsinhvien.mssv
+-- INNER JOIN LopMonHoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc
+-- INNER JOIN MonHoc ON LopMonHoc.ma_mon_hoc = MonHoc.ma_mon_hoc
+-- ORDER BY monhoc.ma_mon_hoc;
