@@ -13,12 +13,15 @@
       <Text layoutX="21.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HỆ THỐNG QUẢN LÍ ĐIỂM SINH VIÊN DÀNH CHO NHÀ TRƯỜNG" textAlignment="CENTER" wrappingWidth="558.6497745513916">
          <font>
             <Font name="System Bold" size="18.0" />
-         </font></Text>
-      <PasswordField layoutX="169.0" layoutY="223.0" prefHeight="25.0" prefWidth="263.0" promptText="Mật khẩu" />
-      <TextField layoutX="169.0" layoutY="164.0" prefHeight="25.0" prefWidth="263.0" promptText="Mã giảng viên" />
-      <Button layoutX="169.0" layoutY="283.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="263.0" text="ĐĂNG NHẬP NGAY" />
+         </font>
+      </Text>
+      <Label layoutX="150.0" layoutY="136.0" text="Mã số giảng viên" />
+      <TextField fx:id="maGiangVienField" layoutX="169.0" layoutY="164.0" prefHeight="25.0" prefWidth="263.0" />
+      <Label layoutX="150.0" layoutY="203.0" text="Mật khẩu" />
+      <PasswordField fx:id="matKhauField" layoutX="169.0" layoutY="223.0" prefHeight="25.0" prefWidth="263.0" />
+      <Button fx:id="nutDangNhap" layoutX="169.0" layoutY="283.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="263.0" text="ĐĂNG NHẬP NGAY" />
       <Label layoutX="273.0" layoutY="115.0" textAlignment="CENTER" />
-      <Label layoutX="349.0" layoutY="256.0" prefHeight="17.0" prefWidth="86.0" text="Quên mật khẩu" underline="true" />
+      <Label fx:id="nutQuenMatKhau" layoutX="349.0" layoutY="256.0" prefHeight="17.0" prefWidth="86.0" text="Quên mật khẩu" underline="true" />
       <Label fx:id="footer" layoutX="128.0" layoutY="352.0" prefHeight="38.0" prefWidth="328.0" wrapText="true" />
    </children>
 </Pane>
