@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class LoadLogin {
-    private static String fxmlPath = "/view/LOGIN.fxml";
+    private static String fxmlPath = "/view/Login.fxml";
 
     public static Scene loadLogin() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
