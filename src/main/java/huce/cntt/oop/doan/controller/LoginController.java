@@ -51,12 +51,14 @@ public class LoginController {
                         .checkLogin(giangVien.getMaSo(), giangVien.getPassword());
                     if (thanhCong) {
                         thanhCongDangNhap = true;
-                    } else {
-                        throw new Exception("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
-                    }
+                        System.out.println("Login OK!");
+                    } 
+                    // else {
+                        // throw new IllegalArgumentException("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
+                    // }
                 } catch (Exception ex) {
-                    alert.setContentText(ex.getMessage());
-                    alert.show();
+                    // alert.setContentText(ex.getMessage());
+                    // alert.show();
                     ex.printStackTrace();
                 }
             }
@@ -69,14 +71,16 @@ public class LoginController {
         String matKhau = matKhauField.getText();
 
         giangVien.setMaSoString(maGiangVien);
-        if (giangVien.getMaSo() == null) {
-            throw new Exception("Dãy nhập vào sai định dạng!");
-        }
+        // if (giangVien.getMaSo() == null) {
+        //     throw new Exception("Dãy nhập vào sai định dạng!");
+        // }
+        System.out.println(giangVien.getMaSo());
 
         giangVien.setPassword(matKhau);
-        if (giangVien.getPassword() == null) {
-            throw new Exception("Mật khẩu thiếu sức sống (> 8 kí tự, không chứa khoảng trắng)");
-        }
+        System.out.println(giangVien.getPassword());
+        // if (giangVien.getPassword() == null) {
+            // throw new Exception("Mật khẩu thiếu sức sống (> 8 kí tự, không chứa khoảng trắng)");
+        // }
         
         return giangVien;
     }

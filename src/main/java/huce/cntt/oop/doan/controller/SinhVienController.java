@@ -17,8 +17,8 @@ public class SinhVienController {
     public void initialize() {
         
         try {
-            FXMLLoader tabThemSVLoader = new FXMLLoader(getClass().getResource("/huce/cntt/oop/doan/ThemSinhVien.fxml"));
-            FXMLLoader tabXemSVLoader = new FXMLLoader(getClass().getResource("/huce/cntt/oop/doan/XemSuaXoaSinhVien.fxml"));
+            FXMLLoader tabThemSVLoader = new FXMLLoader(getClass().getResource("/view/ThemSinhVien.fxml"));
+            FXMLLoader tabXemSVLoader = new FXMLLoader(getClass().getResource("/view/XemSuaXoaSinhVien.fxml"));
             tabThemSVLoader.load();
             tabXemSVLoader.load();
         } catch (IOException e) {

@@ -271,6 +271,7 @@ public class XemSuaXoaSinhVienController {
         confirm = alert.showAndWait();
         if (confirm.isPresent() && confirm.get() == ButtonType.CANCEL) {
             alert.close();
+            return;
         }
         
         int mssv = sinhVien.getMaSo();
@@ -381,7 +382,7 @@ public class XemSuaXoaSinhVienController {
             gioiTinh = false;
         }
         String tenLopQuanLi = lopQuanLiChoiceBox.getValue();
-
+        
         String tenKhoa = khoaComboBox.getValue();
 
         int selectedIndex = bangSinhVien.getSelectionModel().getFocusedIndex();
