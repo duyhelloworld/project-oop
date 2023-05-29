@@ -56,11 +56,6 @@ public class MonHoc {
     public void setMonTienQuyet(Integer ma_mon_tien_quyet) {
         this.ma_mon_tien_quyet = ma_mon_tien_quyet;
     }
-
-    public String laMonBatBuoc() {
-        return this.mon_bat_buoc ? "bắt buộc" : "tự chọn" ;
-    }
-
     public Boolean getMonBatBuoc() {
         return this.mon_bat_buoc;
     }
