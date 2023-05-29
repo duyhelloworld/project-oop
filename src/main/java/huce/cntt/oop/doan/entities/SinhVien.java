@@ -88,10 +88,10 @@ public class SinhVien extends ConNguoi {
         super.getQueQuan() == null ||
         super.getDiaChiThuongTru() == null ||
         super.getSoDienThoai() == null ||
-        khoa == null || 
+        khoa == null || khoa.isBlank() ||
         ngayVaoTruong == null ||
         maLopQuanLi == null ||
-        tenLopQuanLi == null;
+        tenLopQuanLi == null || tenLopQuanLi.isBlank();
     }
 
 
@@ -112,9 +112,9 @@ public class SinhVien extends ConNguoi {
     @Override
     public String toString() {
         return super.toString() +
-            ", ngày vào trường = '" + getNgayVaoTruong() + "'" +
-            ", lớp quản lí = '" + getTenLopQuanLi() + "'" +
-            ", mã lớp quản lí = '" + getMaLopQuanLi() + "'" +
+            "\tNgày vào trường = '" + getNgayVaoTruong() + "'" +
+            "\tLớp quản lí = '" + getTenLopQuanLi() + "'" +
+            "\tmã lớp quản lí = '" + getMaLopQuanLi() + "'" +
             ", khoa = '" + getKhoa() + "''" +
             ", niên khoá = '" + getNienKhoa() + "'" +
             "}";
