@@ -53,7 +53,7 @@ public abstract class ConNguoi {
     }
 
     public void setNgaySinh(LocalDate ngay_sinh) {
-        if (!ngay_sinh.isBefore(LocalDate.now()) 
+        if (!ngay_sinh.isBefore(LocalDate.now())
             || !ngay_sinh.isAfter(LocalDate.of(1940, 1, 1))) {
             throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 5));
         }
@@ -89,6 +89,10 @@ public abstract class ConNguoi {
     }
 
     public void setEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return;
+        }
+        
         if (!email.matches("^.*@huce\\.edu\\.vn$")) {
             email += "@huce.edu.vn";
         }
