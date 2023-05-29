@@ -1,5 +1,6 @@
 package huce.cntt.oop.doan.service;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -144,5 +145,38 @@ public class MonHocService implements IMonHocService {
     public List<SinhVien> timSinhVienTheoLopMonHoc(Integer ma_lop_mon_hoc) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'timSinhVienTheoLopMonHoc'");
+    }
+    public List<MonHoc> fetchDataFromDatabase() {
+        List<MonHoc> monHocs = new ArrayList<>();
+
+        try {
+            // Tạo câu truy vấn
+            String query = "SELECT mh.MaMH, mh.TenMH, mh.SoTinChi, mh.BatBuoc, mh.MonTienQuyet, k.TenKhoa, mh.MoTa " +
+                    "FROM monhoc mh " +
+                    "INNER JOIN lopquanly lql ON mh.MaMH = lql.MaMH " +
+                    "INNER JOIN khoa k ON lql.MaKhoa = k.MaKhoa " +
+                    "INNER JOIN sinhvien sv ON lql.MaLop = sv.MaLop " +
+                    "INNER JOIN tinhdiem td ON sv.MaSV = td.MaSV";
+
+            // Tạo statement và thực thi truy vấn
+            PreparedStatement statement = access.getStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Lặp qua các dòng trong ResultSet
+            while (resultSet.next()) {
+                MonHoc monHoc = new MonHoc();  
+                monHoc.setMaMonHoc(resultSet.getInt("ma_mon_hoc"));   
+                monHoc.setTenMonHoc(resultSet.getString("ten_mon_hoc"));
+                monHoc.setMonBatBuoc(resultSet.getBoolean("mon_bat_buoc"));   
+                monHoc.setMonTienQuyet(resultSet.getInt("mon_tien_quyet"));   
+                monHoc.setSoTinChi(resultSet.getInt("so_tin_chi"));    
+                monHoc.setTenKhoa(resultSet.getString("ten_khoa"));
+                monHoc.setMoTa(resultSet.getString("mo_ta"));
+                monHocs.add(monHoc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return monHocs;
     }
 }
