@@ -1,10 +1,13 @@
 package huce.cntt.oop.doan.controller;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.mysql.cj.xdevapi.Statement;
 
@@ -20,9 +23,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class QLMHController {
     @FXML
-    private TableView<Integer> tableView;
+    private TableView<String> tableView;
     @FXML
-    private TableColumn<MonHoc, String> cotMaMon;
+    private TableColumn<MonHoc, Integer> cotMaMon;
     @FXML
     private TableColumn<MonHoc, String> cotTenMon;
     @FXML
@@ -64,7 +67,8 @@ public class QLMHController {
     @FXML
     private Button thoat;
     @FXML
-    private void initialize() {
+    public void initialize(URL url, ResourceBundle rb) {
+        // Khởi tạo và cấu hình TableView và các cột
         cotMaMon.setCellValueFactory(new PropertyValueFactory<>("maMon"));
         cotTenMon.setCellValueFactory(new PropertyValueFactory<>("tenMon"));
         cotSoTinChi.setCellValueFactory(new PropertyValueFactory<>("soTinChi"));
@@ -73,41 +77,52 @@ public class QLMHController {
         cotKhoa.setCellValueFactory(new PropertyValueFactory<>("khoa"));
         cotMoTa.setCellValueFactory(new PropertyValueFactory<>("moTa"));
 
-        // Gọi phương thức để lấy dữ liệu từ cơ sở dữ liệu và hiển thị nó trong
-        // TableView
-        loadDataFromDatabase();
+        // Gọi phương thức để lấy dữ liệu từ cơ sở dữ liệu và hiển thị lên TableView
+        List<MonHoc> items = fetchDataFromDatabase();
+        tableView.getItems();
     }
 
-    private void loadDataFromDatabase() {
-        List<MonHoc> itemList = new ArrayList<>();
-    
-        // Kết nối cơ sở dữ liệu
-        Connection connection = DriverManager.getConnection("1670603812210@@127.0.0.1@3306@qlsinhvien", "hiep", "kaizu6789");
-    
-        // Chuẩn bị và thực thi truy vấn
-        String query = "SELECT mh.MaMH, mh.TenMH, mh.SoTinChi, mh.BatBuoc, mh.MonTienQuyet, k.TenKhoa"+
-        "FROM monhoc mh"+
-        "INNER JOIN lopquanly lql"+
-        "INNER JOIN khoa k"+
-        "INNER JOIN sinhvien sv"+
-        "INNER JOIN tinhdiem td"+
-        "GROUP BY mh.`MaMH`";
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
-    
-        // Lặp qua kết quả truy vấn và tạo đối tượng Item cho mỗi hàng
-        while (resultSet.next()) {
-            MonHoc item = new MonHoc();
-            item.setMaMonHoc(resultSet.getString("ma_mon"));
-            item.setTenMon(resultSet.getString("ten_mon"));
-            // Thiết lập các thuộc tính khác của Item
-    
-            // Thêm Item vào danh sách
-            itemList.add(item);
+    private List<MonHoc> fetchDataFromDatabase() {
+        List<MonHoc> items = new ArrayList<>();
+
+        try {
+            // Kết nối tới cơ sở dữ liệu
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/qlsinhvien", "hiep","kaizu6789");
+
+            // Tạo câu truy vấn
+            String query = "SELECT mh.MaMH, mh.TenMH, mh.SoTinChi, mh.BatBuoc, mh.MonTienQuyet, k.TenKhoa, mh.MoTa " +
+                    "FROM monhoc mh " +
+                    "INNER JOIN lopquanly lql ON mh.MaMH = lql.MaMH " +
+                    "INNER JOIN khoa k ON lql.MaKhoa = k.MaKhoa " +
+                    "INNER JOIN sinhvien sv ON lql.MaLop = sv.MaLop " +
+                    "INNER JOIN tinhdiem td ON sv.MaSV = td.MaSV";
+
+            // Tạo statement và thực thi truy vấn
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Lặp qua các dòng trong ResultSet
+            while (resultSet.next()) {
+                String maMon = resultSet.getString("MaMH");
+                String tenMon = resultSet.getString("TenMH");
+                int soTinChi = resultSet.getInt("SoTinChi");
+                boolean batBuoc = resultSet.getBoolean("BatBuoc");
+                String monTienQuyet = resultSet.getString("MonTienQuyet");
+                String khoa = resultSet.getString("TenKhoa");
+                String moTa = resultSet.getString("MoTa");
+
+                // Tạo đối tượng Item từ dữ liệu trong ResultSet
+                MonHoc item = new MonHoc(maMon, tenMon, soTinChi, batBuoc, monTienQuyet, khoa, moTa);
+                items.add(item);
+            }
+
+            // Đóng kết nối và statement
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    
-        // Đóng kết nối và gán danh sách Item cho TableView
-        connection.close();
-        tableView.getItems().setAll(itemList);
+
+        return items;
     }
 }
