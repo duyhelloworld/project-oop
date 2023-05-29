@@ -1,4 +1,4 @@
--- Active: 1683203836476@@127.0.0.1@3306@doanoop
+-- Active: 1670603812210@@127.0.0.1@3306@doanoop
 
 --                          XEM
 
@@ -50,3 +50,9 @@ SELECT ten_lop_quanli
 FROM LopQuanLi 
 INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa
 WHERE khoa.ten_khoa = Công Nghệ Thông Tin;
+
+--lấy thông tin môn học
+SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.ma_mon_tien_quyet, k.ten_khoa, mh.mo_ta
+FROM MonHoc mh
+INNER JOIN LopQuanLi lql ON mh.ma_mon_hoc = lql.ma_mon_hoc
+INNER JOIN Khoa k ON lql.ma_khoa = k.ma_khoa;
