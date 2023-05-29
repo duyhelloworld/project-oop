@@ -24,7 +24,7 @@ public class GiangVien extends ConNguoi {
     }
 
     public void setPassword(String password) {
-        if (Pattern.matches("^(?=.*[A-Za-z0-9])(?!.*\\s).{8}$", password)) {
+        if (Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", password)) {
             this.password = password;
         }
     }
