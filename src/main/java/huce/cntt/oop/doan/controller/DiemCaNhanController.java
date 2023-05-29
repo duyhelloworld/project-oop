@@ -164,7 +164,7 @@ public class DiemCaNhanController {
         try {
             SinhVien sinhVien = sinhVienService.timKiemSinhVienTheoMaSo(mssv);
             if (sinhVien == null) {
-                throw new IllegalArgumentException("Không tồn tại sinh viên này!");
+                throw new Exception("Không tồn tại sinh viên này!");
             }
             hoTenTextField.setText(sinhVien.getHoTen().toString());
             khoaTextField.setText(sinhVien.getKhoa());
@@ -173,10 +173,10 @@ public class DiemCaNhanController {
             data.clear();
             data.setAll(listDCN);
         } catch (Exception e) {
+            e.printStackTrace();
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
-            e.printStackTrace();
         }
     }
 

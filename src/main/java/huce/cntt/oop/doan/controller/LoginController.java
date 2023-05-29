@@ -1,7 +1,5 @@
 package huce.cntt.oop.doan.controller;
 
-import java.util.regex.Pattern;
-
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.service.GiangVienService;
 import javafx.fxml.FXML;
@@ -24,6 +22,8 @@ public class LoginController {
     @FXML
     private Label nutQuenMatKhau;
 
+    public static Boolean thanhCongDangNhap;
+
     private Alert alert;
     private GiangVienService giangVienService;
 
@@ -41,6 +41,7 @@ public class LoginController {
             alert.setContentText("Chức năng này chưa được hỗ trợ!\nXin thông cảm ");
             alert.show();
         });
+        thanhCongDangNhap = false;
 
         nutDangNhap.setOnAction(e -> {
             if (!nutDangNhap.isPressed()) {
@@ -49,7 +50,7 @@ public class LoginController {
                     boolean thanhCong = giangVienService
                         .checkLogin(giangVien.getMaSo(), giangVien.getPassword());
                     if (thanhCong) {
-                        chuyenHuong();
+                        thanhCongDangNhap = true;
                     } else {
                         throw new Exception("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
                     }
@@ -78,9 +79,5 @@ public class LoginController {
         }
         
         return giangVien;
-    }
-
-    private void chuyenHuong() {
-        System.out.println("Redirect ... ");
     }
 }
