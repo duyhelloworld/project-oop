@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="63.0" layoutY="51.0" prefHeight="27.0" prefWidth="163.0" text="Thông tin cá nhân">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="110.0" text="Mã SV:" />
+      <Label layoutX="100.0" layoutY="150.0" text="Họ tên:" />
+      <Label layoutX="440.0" layoutY="110.0" text="Lớp quản lí:" />
+      <Label layoutX="440.0" layoutY="150.0" text="Khoa:" />
+      <TextField fx:id="maSVTextField" editable="true" layoutX="160.0" layoutY="106.0" />
+      <TextField fx:id="hoTenTextField" layoutX="160.0" layoutY="146.0" />
+      <TextField fx:id="lopQuanLiTextField" layoutX="540.0" layoutY="110.0" />
+      <TextField fx:id="khoaTextField" layoutX="540.0" layoutY="150.0" />
+      <Button fx:id="nutXemDiem" layoutX="870.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" text="Xem bảng điểm" />
+      <Button fx:id="nutLoadLai" layoutX="1020.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" text="Load lại" />
+      <Label layoutX="518.0" layoutY="30.0" prefHeight="27.0" prefWidth="558.0" text="Danh sách các môn học và kết quả học tập">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Label>
+      <TableView fx:id="bangDiemCaNhan" layoutX="1.0" layoutY="208.0" prefHeight="301.0" prefWidth="1207.0">
+        <columns>
+            <TableColumn fx:id="cotMaMon" prefWidth="70.0" text="Mã môn">
+               <cellValueFactory>
+                  <PropertyValueFactory property="maMon" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotTenMon" prefWidth="240.0" text="Tên môn học/học phần">
+               <cellValueFactory>
+                  <PropertyValueFactory property="tenMon" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotSoTinChi" prefWidth="80.0" text="Số Tín Chỉ">
+               <cellValueFactory>
+                  <PropertyValueFactory property="soTinChi" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemChuyenCan" prefWidth="120.0" text="Điểm Chuyên Cần">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemChuyenCan" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemQuaTrinh" prefWidth="120.0" text="Điểm Quá Trình">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemQuaTrinh" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemGiuaKi" prefWidth="120.0" text="Điểm Giữa Kì">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemGiuaKi" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemCuoiKi" prefWidth="120.0" text="Điểm Cuối Kì">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemCuoiKi" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemTongKet" prefWidth="120.0" text="Điểm Tổng Kết">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemTongKet" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemTongKetHe4" prefWidth="120.0" text="Điểm TK (4)">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemTongKetHe4" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotDiemChu" prefWidth="100.0" text="Điểm Chữ">
+               <cellValueFactory>
+                  <PropertyValueFactory property="diemChu" />
+               </cellValueFactory>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <Label layoutX="100.0" layoutY="535.0" text="Điểm trung bình:" />
+      <Label layoutX="100.0" layoutY="568.0" text="Điểm trung bình (hệ 4):" />
+      <Label layoutX="100.0" layoutY="601.0" text="Xếp loại học lực tích lũy:" />
+      <Label layoutX="655.0" layoutY="535.0" text="Điểm trung bình tích lũy            :" />
+      <Label layoutX="655.0" layoutY="568.0" text="Điểm trung bình tích lũy (hệ 4)  :" />
+      <Label layoutX="655.0" layoutY="601.0" text="Xếp loại học lực học kỳ             :" />
+      <TextField fx:id="diemTBTextField" layoutX="260.0" layoutY="535.0" prefHeight="25.0" prefWidth="110.0" />
+      <TextField fx:id="diemTBhe4TextField" layoutX="260.0" layoutY="564.0" prefHeight="25.0" prefWidth="110.0" />
+      <TextField fx:id="hocLucTextField" layoutX="260.0" layoutY="597.0" prefHeight="25.0" prefWidth="110.0" />
+      <TextField fx:id="diemTBTLTextField" layoutX="845.0" layoutY="531.0" prefHeight="25.0" prefWidth="110.0" />
+      <TextField fx:id="diemTBTLhe4TextField" layoutX="845.0" layoutY="564.0" prefHeight="25.0" prefWidth="110.0" />
+      <TextField fx:id="hocLucTLTextField" layoutX="845.0" layoutY="597.0" prefHeight="25.0" prefWidth="110.0" />
+   </children>
+</Pane>

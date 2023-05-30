@@ -1,6 +1,7 @@
 package huce.cntt.oop.doan.entities;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import huce.cntt.oop.doan.entities.parents.ConNguoi;
 
@@ -8,6 +9,12 @@ import huce.cntt.oop.doan.entities.parents.ConNguoi;
 public class GiangVien extends ConNguoi {
 
     private String password;
+
+    public void setMaSoString(String maSoGV) {
+        if (maSoGV.matches("^\\d+$")) {
+            this.setMaSo(Integer.parseInt(maSoGV));
+        }
+    }
 
     public GiangVien() {
     }
@@ -17,10 +24,9 @@ public class GiangVien extends ConNguoi {
     }
 
     public void setPassword(String password) {
-        if (password.length() < 8) {
-            throw new IllegalArgumentException("'password' length is not enough!");
+        if (Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", password)) {
+            this.password = password;
         }
-        this.password = password;
     }
 
     @Override

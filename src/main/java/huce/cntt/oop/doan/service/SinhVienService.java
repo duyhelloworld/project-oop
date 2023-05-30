@@ -8,17 +8,26 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.SinhVien;
-import huce.cntt.oop.doan.entities.dto.DTOSinhVien;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 
 public class SinhVienService implements ISinhVienService {
+    private SinhVienService() {}
+    private static SinhVienService service;
+
+    public static SinhVienService getInstance(){
+        if (service == null) {
+           service = new SinhVienService();
+        }
+        return service;
+    }
+
 
     private final DataAccess access = DataAccess.getInstance();
 
     @Override
-    public List<DTOSinhVien> layTatCaSinhVien() {
+    public List<SinhVien> layTatCaSinhVien() {
         PreparedStatement statement = access.getStatement("SELECT " +
         "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, khoa.ma_khoa, lopquanli.ma_lop_quan_li " + 
         "FROM `SinhVien` " +
@@ -26,12 +35,12 @@ public class SinhVienService implements ISinhVienService {
         "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = lopquanli_sinhvien.ma_lop_quan_li " + 
         "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
         "ORDER BY sinhvien.mssv");
-        List<DTOSinhVien> listSinhVien = new ArrayList<DTOSinhVien>();
-        DTOSinhVien temp = null;    
+        List<SinhVien> listSinhVien = new ArrayList<SinhVien>();
+        SinhVien temp = null;    
 
         try (ResultSet result = statement.executeQuery()) {
             while (result.next()) {
-                temp = new DTOSinhVien();
+                temp = new SinhVien();
                 temp.setMaSo(result.getInt("mssv"));
                 temp.setHoTen(new HoTen(result.getString("ho_ten")));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
@@ -54,9 +63,11 @@ public class SinhVienService implements ISinhVienService {
     }
 
     @Override
-    public DTOSinhVien timKiemSinhVienTheoMaSo(Integer maso) {
-        DTOSinhVien temp = new DTOSinhVien();
-        PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien " +
+    public SinhVien timKiemSinhVienTheoMaSo(Integer maso) {
+        SinhVien temp = new SinhVien();
+        PreparedStatement statement = access.getStatement("SELECT " +
+        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, khoa.ma_khoa, lopquanli.ma_lop_quan_li " + 
+        "FROM SinhVien " +
         "INNER JOIN lopquanli_sinhvien ON lopquanli_sinhvien.mssv = sinhvien.mssv " + 
         "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = lopquanli_sinhvien.ma_lop_quan_li "+ "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " 
         + " WHERE sinhvien.mssv = ?");
@@ -80,7 +91,6 @@ public class SinhVienService implements ISinhVienService {
                 temp.setMaLopQuanLi(result.getInt("ma_lop_quan_li"));
                 temp.setMaKhoa(result.getInt("ma_khoa"));
             }
-            access.closeConnection(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -88,17 +98,19 @@ public class SinhVienService implements ISinhVienService {
     }
 
     @Override
-    public List<DTOSinhVien> timKiemSinhVienTheoTen(String ten) {
-        List<DTOSinhVien> kq = new ArrayList<DTOSinhVien>();
-        PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien " + 
+    public List<SinhVien> timKiemSinhVienTheoTen(String ten) {
+        List<SinhVien> kq = new ArrayList<SinhVien>();
+        PreparedStatement statement = access.getStatement("SELECT " +
+        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, khoa.ma_khoa, lopquanli.ma_lop_quan_li " + 
+        "FROM SinhVien " + 
         "INNER JOIN lopquanli_sinhvien ON lopquanli_sinhvien.mssv = sinhvien.mssv " + 
         "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = lopquanli_sinhvien.ma_lop_quan_li "+ "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " 
         + "WHERE ho_ten LIKE ?");
-
+        
+        SinhVien temp = new SinhVien();
         try {
             statement.setString(1, "%" + ten + "%");
             ResultSet result = statement.executeQuery();
-            DTOSinhVien temp = new DTOSinhVien();
             while (result.next()) {
                 temp.setMaSo(result.getInt("mssv"));
                 temp.setHoTen(new HoTen(result.getString("ho_ten")));
@@ -115,9 +127,7 @@ public class SinhVienService implements ISinhVienService {
                 temp.setMaLopQuanLi(result.getInt("ma_lop_quan_li"));
                 temp.setMaKhoa(result.getInt("ma_khoa"));
                 kq.add(temp);
-                temp = null;
             }
-            access.closeConnection(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         } 
@@ -125,15 +135,20 @@ public class SinhVienService implements ISinhVienService {
     }
 
     @Override
-    public DTOSinhVien timKiemSinhVienTheoEmail(String email) {
-        DTOSinhVien kq = new DTOSinhVien();
+    public SinhVien timKiemSinhVienTheoEmail(String email) {
+        SinhVien kq = new SinhVien();
 
         if (!email.contains("@")) {
             email = email.concat("@huce.edu.vn");
         }
 
         try {
-            PreparedStatement statement = access.getStatement("SELECT * FROM SinhVien WHERE email = ?");
+            PreparedStatement statement = access.getStatement("SELECT " +
+        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, khoa.ma_khoa, lopquanli.ma_lop_quan_li " + 
+        "FROM SinhVien " +
+        "INNER JOIN lopquanli_sinhvien ON lopquanli_sinhvien.mssv = sinhvien.mssv " + 
+        "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = lopquanli_sinhvien.ma_lop_quan_li "+ "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
+        "WHERE email = ?");
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
@@ -209,28 +224,17 @@ public class SinhVienService implements ISinhVienService {
         if (rowAffected != 1) {
             throw new SQLException("Có 1 số lỗi xảy ra với hệ thống. Hãy quay lại sau!");
         }
-        access.closeConnection(statement);
     }
 
     @Override
-    public void xoaSinhVienTheoMaSo(List<Integer> cacMSSV) throws SQLException {
-        String query = "DELETE FROM SinhVien WHERE mssv IN (";
-        for (int i = 0; i < cacMSSV.size(); i++) {
-            if (i > 0) {
-                query += ",";
-            }
-            query += "?";
-        }
-        query += ")";
+    public boolean xoaSinhVienTheoMaSo(Integer mssv) throws SQLException {
+        String query = "DELETE FROM SinhVien WHERE mssv = " + mssv;
         PreparedStatement statement = access.getStatement(query);
-
-        for (int i = 0; i < cacMSSV.size(); i++) {
-            statement.setInt(i + 1, cacMSSV.get(i));
-        }
         
         int rowAffected = statement.executeUpdate();
-        if (rowAffected != cacMSSV.size()) {
+        if (rowAffected != 1) {
             throw new SQLException("Có lỗi trong quá trình xoá. Hãy thoát phiên và đăng nhập lại");
         }
+        return true;
     }
 }
