@@ -12,4 +12,6 @@ public interface IMonHocService {
     public List<MonHoc> timKiemMonHocTheoTen(String ten);
 
     public void capNhatThongTinMonHoc(Integer maMon,  MonHoc monHocTruyenVao);
+
+    public void xoaMonHoc(Integer maSo);
 }

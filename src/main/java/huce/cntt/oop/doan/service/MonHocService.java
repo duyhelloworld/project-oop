@@ -14,6 +14,7 @@ public class MonHocService implements IMonHocService {
     private DataAccess access = DataAccess.getInstance();
 
     private MonHocService() {}
+    
     private static MonHocService service;
 
     public static MonHocService getInstance(){
@@ -141,5 +142,11 @@ public class MonHocService implements IMonHocService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void xoaMonHoc(Integer maSo) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'xoaMonHoc'");
     }
 }
