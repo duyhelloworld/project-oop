@@ -1,5 +1,5 @@
 -- Active: 1683203836476@@127.0.0.1@3306@doanoop2
-use doanoop;
+USE doanoop;
 
 INSERT INTO khoa (ten_khoa) VALUES
     ("Công Nghệ Thông Tin"),
