@@ -8,6 +8,8 @@ import huce.cntt.oop.doan.entities.SinhVien;
 public interface ISinhVienService {
     public List<SinhVien> layTatCaSinhVien();
 
+    public Integer tongSoSinhVien();
+
     public SinhVien timKiemSinhVienTheoMaSo(Integer maso);
 
     public List<SinhVien> timKiemSinhVienTheoTen(String ten);
