@@ -42,6 +42,14 @@ ORDER BY sinhvien.mssv;
 INSERT INTO SinhVien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ma_lop_quan_li)
 VALUE (?, ?, ?, ?, ?, ?, ?, ?);
 
+SELECT 
+monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, ghi_chu
+FROM diemsinhvien
+INNER JOIN lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc
+INNER JOIN monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc
+-- WHERE diemsinhvien.mssv = 2
+ORDER BY monhoc.ma_mon_hoc;
+
 -- Danh sách giảng viên
 SELECT * FROM giangvien;
 -- DELETE FROM LopQuanLi_SinhVien WHERE mssv = 13;
