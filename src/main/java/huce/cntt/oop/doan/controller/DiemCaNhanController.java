@@ -1,7 +1,6 @@
 package huce.cntt.oop.doan.controller;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import huce.cntt.oop.doan.entities.DiemCaNhan;
 import huce.cntt.oop.doan.entities.SinhVien;
@@ -67,6 +66,8 @@ public class DiemCaNhanController {
     private TableColumn<DiemCaNhan, Integer> cotMaMon;
     @FXML
     private TableColumn<DiemCaNhan, String> cotTenMon;
+    @FXML
+    private TableColumn<DiemCaNhan, String> cotTenLopMon;
     @FXML
     private TableColumn<DiemCaNhan, Integer> cotSoTinChi;
     @FXML
@@ -135,6 +136,7 @@ public class DiemCaNhanController {
     private void showBangDiemCaNhan(){
         cotMaMon.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Integer>("maMon"));
         cotTenMon.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, String>("tenMon"));
+        cotTenLopMon.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, String>("tenLopMon"));
         cotSoTinChi.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Integer>("soTinChi"));
         cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemChuyenCan"));
         cotDiemGiuaKi.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemGiuaKi"));
@@ -186,11 +188,10 @@ public class DiemCaNhanController {
             return null;
         }
         try {
-            if (Pattern.matches("^\\d+$", string)) {
-                Integer mssv = Integer.parseInt(string);
-                return mssv;
-            }
-        } catch (Exception e) {
+            Integer mssv = Integer.parseInt(string);
+            return mssv;
+        } catch (NumberFormatException e) {
+            alert.setAlertType(AlertType.ERROR);
             alert.setContentText("Mã số sai định dạng!!!");
             alert.show();
         }
