@@ -25,12 +25,11 @@ public class DiemCaNhanService implements IDiemCaNhanService {
 
     @Override
     public List<DiemCaNhan> layTatCaDiemCaNhan() {
-        String query = "SELECT " +
-        "monhoc.ma_mon_hoc, ten_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki " +
-        "FROM MonHoc "+
-        "INNER JOIN lopmonhoc ON LopMonHoc.ma_mon_hoc = MonHoc.ma_mon_hoc " +
-        "INNER JOIN diemsinhvien ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc " +
-        "INNER JOIN sinhvien ON sinhvien.mssv = diemsinhvien.mssv " +
+        String query = "SELECT " + 
+        "monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki " +
+        "FROM diemsinhvien " + 
+        "INNER JOIN lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc " +
+        "INNER JOIN monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc " + 
         "ORDER BY monhoc.ma_mon_hoc";
         PreparedStatement statement = access.getStatement(query);
         listDiemCaNhan = new ArrayList<>();
@@ -40,6 +39,7 @@ public class DiemCaNhanService implements IDiemCaNhanService {
                 DiemCaNhan diemCaNhan = new DiemCaNhan();
                 diemCaNhan.setMaMon(result.getInt("ma_mon_hoc"));
                 diemCaNhan.setTenMon(result.getString("ten_mon_hoc"));
+                diemCaNhan.setTenLopMon(result.getString("ten_lop_mon_hoc"));
                 diemCaNhan.setSoTinChi(result.getInt("so_tin_chi"));
                 diemCaNhan.setDiemChuyenCan(result.getFloat("diem_chuyen_can"));
                 diemCaNhan.setDiemGiuaKi(result.getFloat("diem_giua_ki"));
@@ -54,13 +54,12 @@ public class DiemCaNhanService implements IDiemCaNhanService {
 
     @Override
     public List<DiemCaNhan> layDiemCaNhanTheoMaSo(Integer maSo) {
-        String query = "SELECT " +
-        "monhoc.ma_mon_hoc, ten_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki " +
-        "FROM MonHoc "+
-        "INNER JOIN lopmonhoc ON LopMonHoc.ma_mon_hoc = MonHoc.ma_mon_hoc " +
-        "INNER JOIN diemsinhvien ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc " +
-        "INNER JOIN sinhvien ON sinhvien.mssv = diemsinhvien.mssv " +
-        "WHERE sinhvien.mssv = " + maSo + " " +
+        String query = "SELECT " + 
+        "monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki " +
+        "FROM diemsinhvien " + 
+        "INNER JOIN lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc " +
+        "INNER JOIN monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc " + 
+        "WHERE diemsinhvien.mssv = " + maSo + " " +
         "ORDER BY monhoc.ma_mon_hoc";
         PreparedStatement statement = access.getStatement(query);
         listDiemCaNhan = new ArrayList<>();
@@ -70,6 +69,7 @@ public class DiemCaNhanService implements IDiemCaNhanService {
                 DiemCaNhan diemCaNhan = new DiemCaNhan();
                 diemCaNhan.setMaMon(result.getInt("ma_mon_hoc"));
                 diemCaNhan.setTenMon(result.getString("ten_mon_hoc"));
+                diemCaNhan.setTenLopMon(result.getString("ten_lop_mon_hoc"));
                 diemCaNhan.setSoTinChi(result.getInt("so_tin_chi"));
                 diemCaNhan.setDiemChuyenCan(result.getFloat("diem_chuyen_can"));
                 diemCaNhan.setDiemGiuaKi(result.getFloat("diem_giua_ki"));

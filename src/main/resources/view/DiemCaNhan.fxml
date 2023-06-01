@@ -38,9 +38,14 @@
                   <PropertyValueFactory property="maMon" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="cotTenMon" prefWidth="240.0" text="Tên môn học/học phần">
+            <TableColumn fx:id="cotTenMon" prefWidth="120.0" text="Tên môn học">
                <cellValueFactory>
                   <PropertyValueFactory property="tenMon" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotTenLopMon" prefWidth="80.0" text="Lớp môn học">
+               <cellValueFactory>
+                  <PropertyValueFactory property="tenLopMon" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="cotSoTinChi" prefWidth="80.0" text="Số Tín Chỉ">

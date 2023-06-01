@@ -81,7 +81,7 @@ public class SinhVienService implements ISinhVienService {
                 temp.setNgaySinh(
                         result.getDate("ngay_sinh").toLocalDate());
                 temp.setQueQuan(new DiaChi(result.getString("que_quan")));
-                temp.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_hien_tai")));
+                temp.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_thuong_tru")));
                 temp.setSoDienThoai(result.getString("so_dien_thoai"));
                 temp.setEmail(result.getString("email"));
                 temp.setNgayVaoTruong(result.getDate("ngay_vao_truong").toLocalDate());
