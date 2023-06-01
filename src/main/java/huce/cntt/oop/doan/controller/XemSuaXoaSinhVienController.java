@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
@@ -34,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 
 public class XemSuaXoaSinhVienController {
 
@@ -156,7 +156,17 @@ public class XemSuaXoaSinhVienController {
 
         nutLuu.setOnAction(e -> luu());
         nutQuayLai.setOnAction(e -> quayLai());
-        nutTimKiem.setOnAction(e -> timKiem());
+        nutTimKiem.setOnAction(e -> {
+            if (!nutTimKiem.isPressed()) {
+                timKiem();
+            }
+        });
+
+        searchComboBox.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                timKiem();
+            }
+        });
         nutXoa.setOnAction(e -> xoa());
     }
 
@@ -179,14 +189,11 @@ public class XemSuaXoaSinhVienController {
             e.printStackTrace();
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
-            alert.show();
         }
+        alert.show();
     }
 
     private void timKiem() {
-        if (nutTimKiem.isPressed()) {
-            return;
-        }
         String searchString = searchTextField.getText();
         soLuotTimKiem++;
         if (searchString.isBlank()) {
@@ -202,43 +209,44 @@ public class XemSuaXoaSinhVienController {
             }
         }
 
+        alert.setAlertType(AlertType.ERROR);
         switch (searchComboBox.getSelectionModel().getSelectedItem()) {
             case "Tên sinh viên":
                 data.clear();
                 data.setAll(sinhVienService.timKiemSinhVienTheoTen(searchString));
                 break;
             case "Mã số":
-                if (Pattern.matches("^\\d+$", searchString)) {
+                try {
                     int mssv = Integer.parseInt(searchString);
-                    if (mssv < 1 || mssv >= 100) {
-                        // MAX sv tạm thời là 100
-                        alert.setContentText("Lỗi : vượt khoảng sinh viên đang học tại trường!");
+                    int soSinhVienHienTai = sinhVienService.tongSoSinhVien();
+                    if (mssv < 1 || mssv >= soSinhVienHienTai) {
+                        alert.setContentText("Lỗi : vượt khoảng sinh viên đang học tại trường!\nHiện tại có " + soSinhVienHienTai + " sinh viên.");
                         alert.show();
-                        break;
+                        return;
                     }
                     data.clear();
                     data.setAll(sinhVienService.timKiemSinhVienTheoMaSo(mssv));
-                } else {
+                } catch (NumberFormatException e) {
                     alert.setContentText("Giá trị không đúng");
                     alert.show();
+                    return;
                 }
-                break;
             case "Email":
                 try {
                     SinhVien sv = new SinhVien();
                     sv.setEmail(searchString);
                     data.clear();
-                    data.setAll(sinhVienService.timKiemSinhVienTheoEmail(searchString));
+                    data.addAll(sinhVienService.timKiemSinhVienTheoEmail(searchString));
                 } catch (Exception e) {
                     alert.setContentText(e.getMessage());
                     alert.show();
-                    break;
+                    return;
                 }
-                break;
+                return;
             default:
-                break;
-        }
-
+                return;
+            }
+            alert.close();
     }
 
     private void quayLai() {
@@ -285,7 +293,7 @@ public class XemSuaXoaSinhVienController {
                     lopService.xoaSinhVienKhoiLopMonHoc(mssv);
                 }
             }
-            // Sinh viên học ít hơn 1 môn thì xoá ngay, ko warn
+            // Sinh viên học 0 môn thì xoá ngay, ko warn
             lopService.xoaSinhVienKhoiLopQuanLi(mssv);
             boolean xoaThanhCong = sinhVienService.xoaSinhVienTheoMaSo(mssv);
             if (xoaThanhCong) {

@@ -99,9 +99,6 @@ public class ThemSinhVienController {
             lopQuanLiComboBox.setItems(O_lopQuanLi);
         });
 
-        // Cấm xoá lớp quản lí : để mã lớp quản lí trong db luôn trích ra là chỉ số ở
-        // đây
-        // --> hàm get của tôi đỡ phải SELECT 2 trường
         nutLuu.setOnAction(e -> {
             if (!nutLuu.isPressed()) {
                 themSinhVien();
@@ -109,9 +106,7 @@ public class ThemSinhVienController {
         });
     }
 
-    // Lấy dữ liệu
     void themSinhVien() {
-
         // đã try catch các lỗi
         try {
             SinhVien sinhVien = kiemTraDuLieu();
@@ -121,7 +116,6 @@ public class ThemSinhVienController {
             }
             int mssv = sinhVienService.themMoiSinhVien(sinhVien);
             sinhVien.setMaSo(mssv);
-            lopService.themSinhVienVaoLopQuanLi(mssv, sinhVien.getMaLopQuanLi());
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
         } catch (NullPointerException e) {
@@ -155,6 +149,7 @@ public class ThemSinhVienController {
         String lopQuanLi = lopQuanLiComboBox.getValue();
         String khoa = khoaComboBox.getValue();
 
+        // Chi so lop quan li = ma lop quan li
         int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
 
         SinhVien sinhVien = new SinhVien();
