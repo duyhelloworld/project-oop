@@ -115,6 +115,7 @@
         </TableView>
         <Button fx:id="nutTimKiem" layoutX="791.0" layoutY="28.0" mnemonicParsing="false"
             text="Tìm kiếm" />
+        <Label layoutX="870.0" layoutY="30.0" text="Click tìm kiếm 3 lần để reload lại trang!" />
         <Button fx:id="nutXoa" layoutX="1105.0" layoutY="29.0" mnemonicParsing="false"
             prefHeight="26.0" prefWidth="89.0" text="Xóa SV">
             <font>
