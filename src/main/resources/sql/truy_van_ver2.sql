@@ -56,6 +56,11 @@ SELECT * FROM giangvien;
 SELECT COUNT(*) FROM diemsinhvien WHERE mssv = 1;
 
 SELECT 
+ma_lop_quan_li
+FROM lopquanli 
+INNER JOIN KHOA ON lopquanli.ma_khoa = khoa.ma_khoa
+WHERE ten_lop_quan_li = "66IT5" AND ten_khoa = "Công nghệ thông tin";
+SELECT 
 sinhvien.mssv, ho_ten, khoa.ten_khoa, ten_monhoc, ten_lop_monhoc, so_buoi_diem_danh, diem_giua_ki, diem_cuoi_ki, ghi_chu
 FROM sinhvien
 INNER JOIN diemsinhvien ON sinhvien.mssv = diemsinhvien.mssv
