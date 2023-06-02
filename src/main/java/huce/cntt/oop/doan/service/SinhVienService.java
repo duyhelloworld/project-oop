@@ -167,15 +167,11 @@ public class SinhVienService implements ISinhVienService {
 
 
     @Override
-    public Integer themMoiSinhVien(SinhVien sinhVien) throws SQLException, IllegalArgumentException {
+    public Integer themMoiSinhVien(SinhVien sinhVien) throws SQLException {
         int maSoSinhVien = 0;
-        if (sinhVien.getMaSo() != null) {
-            throw new IllegalArgumentException("Lỗi : không được chèn mã số sinh viên " 
-            + "khi thêm mới!!!");
-        }
         PreparedStatement statement = access.getStatement("INSERT INTO SinhVien " 
         + "(ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, " + 
-        "ngay_vao_truong, ma_lop_quan_li) VALUE (?, ?, ?, ?, ?, ?, ?, ?)");
+        "ngay_vao_truong, ma_lop_quan_li) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, sinhVien.getHoTen().toString());
         statement.setBoolean(2, sinhVien.getGioiTinh());
         statement.setDate(3, sinhVien.getNgaySinhVoiKieuSQL());
@@ -194,7 +190,7 @@ public class SinhVienService implements ISinhVienService {
                 maSoSinhVien = resultSet.getInt(1);
             }
         } else {
-            throw new SQLException("Sinh viên này chưa chèn thành công!");
+            throw new IllegalArgumentException("Sinh viên này chưa chèn thành công!");
         }
         return maSoSinhVien;
     }
@@ -235,7 +231,7 @@ public class SinhVienService implements ISinhVienService {
         
         int rowAffected = statement.executeUpdate();
         if (rowAffected != 1) {
-            throw new SQLException("Có lỗi trong quá trình xoá. Hãy thoát phiên và đăng nhập lại");
+            throw new IllegalArgumentException("Có lỗi trong quá trình xoá. Hãy thoát phiên và đăng nhập lại");
         }
         return true;
     }
