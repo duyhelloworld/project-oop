@@ -3,81 +3,128 @@ package huce.cntt.oop.doan.entities;
 import java.util.Objects;
 
 public class MonHoc {
-    private static final int MAX_SO_TIN_CHI = 3;
+    // private static final int MAX_SO_TIN_CHI = 3;
 
-    private Integer ma_mon_hoc;
+    private Integer maMon;
 
-    private String ten_mon_hoc;
+    private String tenMon;
 
-    private Integer so_tin_chi;
+    private Integer soTinChi;
     
-    private Integer ma_mon_tien_quyet;
+    private String monTienQuyet;
 
-    private Boolean mon_bat_buoc;
+    private Boolean batBuoc;
 
-    private String ten_khoa;
+    private String khoa;
 
-    private String mo_ta;
+    private String moTa;
 
     public MonHoc() {
     }
 
-    public Integer getMaMonHoc() {
-        return this.ma_mon_hoc;
+    public MonHoc(Integer maMon, String tenMon, Integer soTinChi, String monTienQuyet, Boolean batBuoc, String khoa, String moTa) {
+        this.maMon = maMon;
+        this.tenMon = tenMon;
+        this.soTinChi = soTinChi;
+        this.monTienQuyet = monTienQuyet;
+        this.batBuoc = batBuoc;
+        this.khoa = khoa;
+        this.moTa = moTa;
     }
 
-    public void setMaMonHoc(Integer ma_mon_hoc) {
-        this.ma_mon_hoc = ma_mon_hoc;
+    public Integer getMaMon() {
+        return this.maMon;
     }
 
-    public String getTenMonHoc() {
-        return this.ten_mon_hoc;
+    public void setMaMon(Integer maMon) {
+        this.maMon = maMon;
     }
 
-    public void setTenMonHoc(String ten_mon_hoc) {
-        this.ten_mon_hoc = ten_mon_hoc;
+    public String getTenMon() {
+        return this.tenMon;
+    }
+
+    public void setTenMon(String tenMon) {
+        this.tenMon = tenMon;
     }
 
     public Integer getSoTinChi() {
-        return this.so_tin_chi;
+        return this.soTinChi;
     }
 
-    public void setSoTinChi(Integer so_tin_chi) {
-        if (so_tin_chi < 0 || so_tin_chi > MAX_SO_TIN_CHI) {
-            throw new IllegalArgumentException("number 'so_tin_chi' < 0");            
-        }
-        this.so_tin_chi = so_tin_chi;
+    public void setSoTinChi(Integer soTinChi) {
+        this.soTinChi = soTinChi;
     }
 
-    public Integer getMaMonTienQuyet() {
-        return this.ma_mon_tien_quyet;
+    public String getMonTienQuyet() {
+        return this.monTienQuyet;
     }
 
-    public void setMonTienQuyet(Integer ma_mon_tien_quyet) {
-        this.ma_mon_tien_quyet = ma_mon_tien_quyet;
-    }
-    public Boolean getMonBatBuoc() {
-        return this.mon_bat_buoc;
+    public void setMonTienQuyet(String monTienQuyet) {
+        this.monTienQuyet = monTienQuyet;
     }
 
-    public void setMonBatBuoc(Boolean mon_bat_buoc) {
-        this.mon_bat_buoc = mon_bat_buoc;
+    public Boolean isBatBuoc() {
+        return this.batBuoc;
     }
 
-    public String getTenKhoa() {
-        return this.ten_khoa;
+    public Boolean getBatBuoc() {
+        return this.batBuoc;
     }
 
-    public void setTenKhoa(String ten_khoa) {
-        this.ten_khoa = ten_khoa;
+    public void setBatBuoc(Boolean batBuoc) {
+        this.batBuoc = batBuoc;
     }
 
-    public String getMoTa(){
-        return mo_ta;
+    public String getKhoa() {
+        return this.khoa;
     }
 
-    public void setMoTa(String mo_ta){
-        this.mo_ta = mo_ta;
+    public void setKhoa(String khoa) {
+        this.khoa = khoa;
+    }
+
+    public String getMoTa() {
+        return this.moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public MonHoc maMon(Integer maMon) {
+        setMaMon(maMon);
+        return this;
+    }
+
+    public MonHoc tenMon(String tenMon) {
+        setTenMon(tenMon);
+        return this;
+    }
+
+    public MonHoc soTinChi(Integer soTinChi) {
+        setSoTinChi(soTinChi);
+        return this;
+    }
+
+    public MonHoc monTienQuyet(String monTienQuyet) {
+        setMonTienQuyet(monTienQuyet);
+        return this;
+    }
+
+    public MonHoc batBuoc(Boolean batBuoc) {
+        setBatBuoc(batBuoc);
+        return this;
+    }
+
+    public MonHoc khoa(String khoa) {
+        setKhoa(khoa);
+        return this;
+    }
+
+    public MonHoc moTa(String moTa) {
+        setMoTa(moTa);
+        return this;
     }
 
     @Override
@@ -88,24 +135,23 @@ public class MonHoc {
             return false;
         }
         MonHoc monHoc = (MonHoc) o;
-        return Objects.equals(ma_mon_hoc, monHoc.ma_mon_hoc) 
-            && Objects.equals(ten_mon_hoc, monHoc.ten_mon_hoc) 
-            && Objects.equals(so_tin_chi, monHoc.so_tin_chi) 
-            && Objects.equals(ma_mon_tien_quyet, monHoc.ma_mon_tien_quyet) 
-            && Objects.equals(mon_bat_buoc, monHoc.mon_bat_buoc) 
-            && Objects.equals(ten_khoa, monHoc.ten_khoa) 
-            && Objects.equals(mo_ta, monHoc.mo_ta);
+        return Objects.equals(maMon, monHoc.maMon) && Objects.equals(tenMon, monHoc.tenMon) && Objects.equals(soTinChi, monHoc.soTinChi) && Objects.equals(monTienQuyet, monHoc.monTienQuyet) && Objects.equals(batBuoc, monHoc.batBuoc) && Objects.equals(khoa, monHoc.khoa) && Objects.equals(moTa, monHoc.moTa);
     }
+
+
+    
+
+    
 
     @Override
     public String toString() {
         return "{" +
-            " mã môn học = '" + getMaMonHoc() + "'" +
-            ", tên môn học = '" + getTenMonHoc() + "'" +
+            " mã môn học = '" + getMaMon() + "'" +
+            ", tên môn học = '" + getTenMon() + "'" +
             ", số tín chỉ = '" + getSoTinChi() + "'" +
-            ", môn tiên quyết = '" + getMaMonTienQuyet() + "'" +
-            ", môn bắt buộc = '" + getMonBatBuoc() + "'" +
-            ", khoa = '" + getTenKhoa() + "'" +
+            ", môn tiên quyết = '" + getMonTienQuyet() + "'" +
+            ", bắt buộc = '" + getBatBuoc() + "'" +
+            ", khoa = '" + getKhoa() + "'" +
             ", mô tả = '" + getMoTa() + "'" +
             "}";
     }

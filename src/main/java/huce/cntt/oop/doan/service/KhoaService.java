@@ -74,5 +74,9 @@ public class KhoaService implements IKhoaService {
         return kq;
     }
 
+    public void xoaMonKhoa(int maMon) throws SQLException{
+        PreparedStatement statement = access.getStatement("DELETE FROM khoa_monhoc WHERE ma_mon_hoc = " + maMon);
+        int rowAffected = statement.executeUpdate();
+    }
     
 }
