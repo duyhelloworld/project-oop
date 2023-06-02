@@ -76,18 +76,18 @@ public class ThemSinhVienController {
 
     @FXML
     private void initialize() {
-        alert = new Alert(AlertType.NONE);
+        alert = new Alert(AlertType.INFORMATION);
         ToggleGroup namHayNu = new ToggleGroup();
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
 
-        hoTenTextField.setPromptText("..............");
+        hoTenTextField.setPromptText("ít nhất 3 từ...");
         queQuanTextField.setPromptText("xã ..., huyện..., tỉnh ...");
         diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận ...");
         soDienThoaiTextField.setPromptText("10 chữ số");
-        ngaySinhDatePicker.setPromptText("...");
-        ngayVaoTruongDatePicker.setPromptText("...");
-        emailTextField.setPromptText("Đã hỗ trợ tự điền domain '@huce.edu.vn'");
+        ngaySinhDatePicker.setPromptText("dd/MM/yyyy");
+        ngayVaoTruongDatePicker.setPromptText("dd/MM/yyyy");
+        emailTextField.setPromptText("...");
 
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
         ObservableList<String> O_khoa = FXCollections.observableArrayList(tenCacKhoa);
@@ -112,30 +112,29 @@ public class ThemSinhVienController {
             SinhVien sinhVien = kiemTraDuLieu();
             if (sinhVien.hasNullElement()) {
                 System.out.println(sinhVien);
-                throw new NullPointerException();
+                throw new NullPointerException("Bạn đang điền thiếu 1 trường nào đó!\nHãy kiểm tra lại");
             }
+            
             int mssv = sinhVienService.themMoiSinhVien(sinhVien);
             sinhVien.setMaSo(mssv);
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
+            alert.show();
         } catch (NullPointerException e) {
             alert.setAlertType(AlertType.WARNING);
-            alert.setContentText("Bạn đang điền thiếu 1 trường nào đó!\nHãy kiểm tra lại");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            alert.setAlertType(AlertType.ERROR);
-            alert.setContentText(e.getLocalizedMessage());
-            e.printStackTrace();
+            alert.setContentText(e.getMessage()); 
+            alert.show();
         } catch (IllegalArgumentException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("Lỗi thông tin.\n" + e.getMessage());
+            alert.show();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        alert.show();
     }
 
     // Tab1
-    private SinhVien kiemTraDuLieu() throws IllegalArgumentException {
+    private SinhVien kiemTraDuLieu() throws Exception {
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
         DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
@@ -146,11 +145,8 @@ public class ThemSinhVienController {
         LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
 
         Boolean gioiTinh = nam.isSelected();
-        String lopQuanLi = lopQuanLiComboBox.getValue();
-        String khoa = khoaComboBox.getValue();
-
-        // Chi so lop quan li = ma lop quan li
-        int maLopQuanLi = khoaComboBox.getSelectionModel().getSelectedIndex();
+        String tenLopQuanLi = lopQuanLiComboBox.getValue();
+        String tenKhoa = khoaComboBox.getValue();
 
         SinhVien sinhVien = new SinhVien();
         sinhVien.setMaSo(null);
@@ -161,10 +157,14 @@ public class ThemSinhVienController {
         sinhVien.setDiaChiThuongTru(diaChiHienTai);
         sinhVien.setSoDienThoai(soDienThoai);
         sinhVien.setEmail(email);
-        sinhVien.setTenLopQuanLi(lopQuanLi);
+        sinhVien.setTenLopQuanLi(tenLopQuanLi);
         sinhVien.setNgayVaoTruong(ngayVaoTruong);
-        sinhVien.setKhoa(khoa);
-        sinhVien.setMaLopQuanLi(maLopQuanLi);
+        sinhVien.setKhoa(tenKhoa);
+        Integer maLop = lopService.checkKhoa(tenLopQuanLi, tenKhoa);
+        if (maLop == null) {
+            throw new IllegalArgumentException("Có lỗi ở khoa và lớp quản lí!");
+        }
+        sinhVien.setMaLopQuanLi(maLop);
         return sinhVien;
     }
 }

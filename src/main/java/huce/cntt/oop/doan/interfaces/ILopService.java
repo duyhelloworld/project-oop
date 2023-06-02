@@ -15,4 +15,6 @@ public interface ILopService {
     public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws Exception;
 
     public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws Exception;
+
+    public Integer checkKhoa(String tenLopQuanLi, String tenKhoa);
 }

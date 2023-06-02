@@ -82,5 +82,24 @@ public class LopService implements ILopService {
             throw new SQLException("Không tồn tại sinh viên mang mã số này");
         }
         access.closeConnection(statement);
+    }
+
+    @Override
+    public Integer checkKhoa(String tenLopQuanLi, String tenKhoa) {
+        PreparedStatement statement = access.getStatement("SELECT " +
+        "ma_lop_quan_li " +
+        "FROM lopquanli " + 
+        "INNER JOIN KHOA ON lopquanli.ma_khoa = khoa.ma_khoa " + 
+        "WHERE ten_lop_quan_li = '" + tenLopQuanLi + "'' AND ten_khoa = '" + tenKhoa + "'");
+
+        try {
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }    
 }
