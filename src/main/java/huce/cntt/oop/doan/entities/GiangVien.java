@@ -13,7 +13,9 @@ public class GiangVien extends ConNguoi {
     public void setMaSoString(String maSoGV) {
         if (maSoGV.matches("^\\d+$")) {
             this.setMaSo(Integer.parseInt(maSoGV));
+            return;
         }
+        throw new NumberFormatException("Dãy nhập vào sai định dạng!");
     }
 
     public GiangVien() {
@@ -24,9 +26,11 @@ public class GiangVien extends ConNguoi {
     }
 
     public void setPassword(String password) {
-        if (Pattern.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", password)) {
+        if (Pattern.matches("^(?=.*[A-Za-z0-9])(?!.*\\s).{8,}$", password)) {
             this.password = password;
+            return;
         }
+        throw new IllegalArgumentException("Mật khẩu thiếu sức sống (> 8 kí tự, không chứa khoảng trắng)");
     }
 
     @Override
