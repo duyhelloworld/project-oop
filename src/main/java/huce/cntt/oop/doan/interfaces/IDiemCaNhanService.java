@@ -7,8 +7,6 @@ import huce.cntt.oop.doan.entities.DiemCaNhan;
 public interface IDiemCaNhanService {
 
     // Xem
-    public List<DiemCaNhan> layTatCaDiemCaNhan();
-
     public List<DiemCaNhan> layDiemCaNhanTheoMaSo(Integer maSo);
 
 }

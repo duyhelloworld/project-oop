@@ -92,8 +92,6 @@ public class DiemCaNhanController {
     public void initialize() {
         alert = new Alert(AlertType.NONE);
         data = FXCollections.observableArrayList();
-        // Khởi tạo thì lấy điểm cá nhân của mọi sinh viên
-        data.addAll(diemCaNhanService.layTatCaDiemCaNhan());
 
         showBangDiemCaNhan();
         renderDiemTrungBinhTichLuy();
@@ -114,7 +112,6 @@ public class DiemCaNhanController {
         nutLoadLai.setOnAction(e -> {
             if (!nutLoadLai.isPressed()) {
                 data.clear();
-                data.addAll(diemCaNhanService.layTatCaDiemCaNhan());
                 hoTenTextField.clear();
                 khoaTextField.clear();
                 lopQuanLiTextField.clear();
@@ -166,7 +163,7 @@ public class DiemCaNhanController {
         try {
             SinhVien sinhVien = sinhVienService.timKiemSinhVienTheoMaSo(mssv);
             if (sinhVien == null) {
-                throw new Exception("Không tồn tại sinh viên này!");
+                throw new IllegalArgumentException("Không tồn tại sinh viên này!");
             }
             hoTenTextField.setText(sinhVien.getHoTen().toString());
             khoaTextField.setText(sinhVien.getKhoa());
@@ -174,10 +171,14 @@ public class DiemCaNhanController {
             List<DiemCaNhan> listDCN = diemCaNhanService.layDiemCaNhanTheoMaSo(mssv);
             data.clear();
             data.setAll(listDCN);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
+            alert.show();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("Có lỗi xảy ra!");
             alert.show();
         }
     }
