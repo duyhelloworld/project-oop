@@ -34,7 +34,7 @@ public class SinhVien extends ConNguoi {
     public void setNgayVaoTruong(LocalDate ngayVaoTruong) {
         LocalDate now = LocalDate.now();
 
-        if (!ngayVaoTruong.isBefore(now.plusDays(1))
+        if (!ngayVaoTruong.isBefore(now)
             || !ngayVaoTruong.isAfter(LocalDate.of(1966, 1, 1))) {
             throw new IllegalArgumentException("Ngày vào trường trong khoảng 1966 - " + now.getYear());
         }
@@ -81,19 +81,18 @@ public class SinhVien extends ConNguoi {
     }
 
     public boolean hasNullElement() {
-        return super.getHoTen() == null ||
-        super.getGioiTinh() == null ||
-        super.getEmail() == null ||
-        super.getNgaySinh() == null ||
-        super.getQueQuan() == null ||
-        super.getDiaChiThuongTru() == null ||
-        super.getSoDienThoai() == null ||
+        return super.getHoTen() == null || super.getHoTen().toString().isBlank() ||
+        super.getGioiTinh() == null || 
+        super.getEmail() == null || super.getEmail().isBlank() ||
+        super.getNgaySinh() == null || 
+        super.getQueQuan() == null || super.getQueQuan().toString().isBlank() || 
+        super.getDiaChiThuongTru() == null || super.getDiaChiThuongTru().toString().isBlank() ||
+        super.getSoDienThoai() == null || super.getSoDienThoai().isBlank() ||
         khoa == null || khoa.isBlank() ||
-        ngayVaoTruong == null ||
+        ngayVaoTruong == null || 
         maLopQuanLi == null ||
         tenLopQuanLi == null || tenLopQuanLi.isBlank();
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -112,11 +111,10 @@ public class SinhVien extends ConNguoi {
     @Override
     public String toString() {
         return super.toString() +
-            "\tNgày vào trường = '" + getNgayVaoTruong() + "'" +
-            "\tLớp quản lí = '" + getTenLopQuanLi() + "'" +
-            "\tmã lớp quản lí = '" + getMaLopQuanLi() + "'" +
-            ", khoa = '" + getKhoa() + "''" +
-            ", niên khoá = '" + getNienKhoa() + "'" +
+            "\tNgày vào trường = " + getNgayVaoTruong() +
+            "\tLớp quản lí = " + getTenLopQuanLi() +
+            "\tKhoa = " + getKhoa() +
+            "\tNiên khoá = " + getNienKhoa() + 
             "}";
         }
 }
