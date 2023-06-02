@@ -11,14 +11,19 @@ import javafx.scene.layout.Pane;
 public class LoadLogin {
     private static String fxmlPath = "/view/Login.fxml";
 
-    public static Scene loadLogin() throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
-        LoginController controller = new LoginController();
-        loader.setController(controller);
+    public static Scene loadLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
+            LoginController controller = new LoginController();
+            loader.setController(controller);
 
-        // CSS
-        
-        Pane root = loader.load();
-        return new Scene(root);
+            // CSS
+            
+            Pane root = loader.load();
+            return new Scene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }    
 }

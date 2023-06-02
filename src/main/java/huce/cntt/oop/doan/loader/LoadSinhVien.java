@@ -11,14 +11,19 @@ import javafx.scene.layout.Pane;
 public class LoadSinhVien {
     private static String path = "/view/SinhVien.fxml";
 
-    public static Scene loadSinhVien() throws IOException { 
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-        SinhVienController controller = new SinhVienController();
-        loader.setController(controller);
+    public static Scene loadSinhVien() { 
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
+            SinhVienController controller = new SinhVienController();
+            loader.setController(controller);
 
-        // CSS
-        
-        Pane root = loader.load();
-        return new Scene(root);
+            // CSS
+            
+            Pane root = loader.load();
+            return new Scene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

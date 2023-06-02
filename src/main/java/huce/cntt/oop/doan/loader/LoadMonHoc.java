@@ -10,11 +10,16 @@ import javafx.scene.layout.Pane;
 public class LoadMonHoc {
     private static String path = "/view/SinhVien.fxml";
 
-    public static Scene loadMonHoc() throws IOException { 
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-        // CSS
-        
-        Pane root = loader.load();
-        return new Scene(root);
+    public static Scene loadMonHoc() { 
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
+            // CSS
+            
+            Pane root = loader.load();
+            return new Scene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
