@@ -1,7 +1,7 @@
 package huce.cntt.oop.doan.controller;
 
 import huce.cntt.oop.doan.entities.GiangVien;
-import huce.cntt.oop.doan.service.GiangVienService;
+import huce.cntt.oop.doan.service.LoginService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public class LoginController {
     @FXML
@@ -25,10 +26,10 @@ public class LoginController {
     public static Boolean thanhCongDangNhap;
 
     private Alert alert;
-    private GiangVienService giangVienService;
+    private LoginService loginService;
 
     public LoginController() {
-        this.giangVienService = GiangVienService.getInstance();
+        this.loginService = LoginService.getInstance();
     }
 
     @FXML
@@ -45,43 +46,60 @@ public class LoginController {
 
         nutDangNhap.setOnAction(e -> {
             if (!nutDangNhap.isPressed()) {
-                try {
-                    GiangVien giangVien = layThongTin();
-                    boolean thanhCong = giangVienService
-                        .checkLogin(giangVien.getMaSo(), giangVien.getPassword());
-                    if (thanhCong) {
-                        thanhCongDangNhap = true;
-                        System.out.println("Login OK!");
-                    } 
-                    // else {
-                        // throw new IllegalArgumentException("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
-                    // }
-                } catch (Exception ex) {
-                    // alert.setContentText(ex.getMessage());
-                    // alert.show();
-                    ex.printStackTrace();
-                }
+                login();
             }
+        });
+
+        matKhauField.setOnKeyPressed(ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                login();
+            }                
         });
     }
 
-    private GiangVien layThongTin() throws Exception {
+    private void login() {
+        try {
+            GiangVien giangVien = layThongTin();
+            boolean thanhCong = loginService
+                .checkLogin(giangVien.getMaSo(), giangVien.getPassword());
+            if (thanhCong) {
+                thanhCongDangNhap = true;
+                if (loginService.checkAdmin(giangVien.getMaSo())) {
+                    redirect(true);
+                } else {
+                    redirect(false);
+                }
+            } 
+            else {
+                throw new IllegalArgumentException("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
+            }
+        } catch (IllegalArgumentException ex) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText(ex.getMessage());
+            alert.show();
+        }
+    }
+
+    private GiangVien layThongTin() throws IllegalArgumentException {
         GiangVien giangVien = new GiangVien();
         String maGiangVien = maGiangVienField.getText();
         String matKhau = matKhauField.getText();
+        if (maGiangVien == null || maGiangVien.isBlank()) {
+            throw new IllegalArgumentException("Thiếu mã giảng viên !");
+        }
+        if (matKhau == null || matKhau.isBlank()) {
+            throw new IllegalArgumentException("Thiếu mật khẩu !");
+        }
 
         giangVien.setMaSoString(maGiangVien);
-        // if (giangVien.getMaSo() == null) {
-        //     throw new Exception("Dãy nhập vào sai định dạng!");
-        // }
-        System.out.println(giangVien.getMaSo());
-
         giangVien.setPassword(matKhau);
-        System.out.println(giangVien.getPassword());
-        // if (giangVien.getPassword() == null) {
-            // throw new Exception("Mật khẩu thiếu sức sống (> 8 kí tự, không chứa khoảng trắng)");
-        // }
-        
+
         return giangVien;
+    }
+
+    public void redirect(boolean isAdmin) {
+        System.out.println(isAdmin);
+        // if (isAdmin) {
+        // }
     }
 }
