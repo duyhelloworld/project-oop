@@ -5,18 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
-import huce.cntt.oop.doan.interfaces.IAdminService;
+import huce.cntt.oop.doan.interfaces.ILoginService;
 
-public class GiangVienService implements IAdminService {
+public class LoginService implements ILoginService {
 
     private DataAccess access = DataAccess.getInstance();
 
-    private GiangVienService() {}
-    private static GiangVienService instance;
+    private LoginService() {}
+    private static LoginService instance;
 
-    public static GiangVienService getInstance() {
+    public static LoginService getInstance() {
         if (instance == null) {
-            instance = new GiangVienService();
+            instance = new LoginService();
         }
         return instance;
     }
@@ -30,7 +30,7 @@ public class GiangVienService implements IAdminService {
             if (result.next()) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -42,7 +42,7 @@ public class GiangVienService implements IAdminService {
         try {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return rs.getInt(0) == maSo;
+                return rs.getInt(1) == maSo;
             }
         } catch (SQLException e) {
             e.printStackTrace();
