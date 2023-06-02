@@ -32,10 +32,9 @@ CREATE TABLE GiangVien (
     ngay_sinh DATE,
     dia_chi_hien_tai VARCHAR(200),
     que_quan VARCHAR(200),
-    email VARCHAR(40),
-    so_dien_thoai VARCHAR(10),
-    mat_khau VARCHAR(20),
-    UNIQUE(email, so_dien_thoai)
+    email VARCHAR(40) UNIQUE,
+    so_dien_thoai VARCHAR(10) UNIQUE,
+    mat_khau VARCHAR(20)
 );
 
 CREATE TABLE LopMonHoc (
@@ -43,7 +42,7 @@ CREATE TABLE LopMonHoc (
     ten_lop_mon_hoc CHAR(10),
     ma_mon_hoc INT,
     ma_gv INT,
-    UNIQUE(ten_lop_mon_hoc),
+    UNIQUE(ma_lop_mon_hoc, ten_lop_mon_hoc),
     Foreign Key (ma_mon_hoc) REFERENCES MonHoc(ma_mon_hoc),
     Foreign Key (ma_gv) REFERENCES GiangVien(ma_gv)
 );
@@ -65,10 +64,9 @@ CREATE TABLE SinhVien (
     ngay_sinh DATE,
     dia_chi_thuong_tru VARCHAR(200),
     que_quan VARCHAR(200), 
-    email VARCHAR(30), 
-    so_dien_thoai CHAR(10),
+    email VARCHAR(30) UNIQUE, 
+    so_dien_thoai CHAR(10) UNIQUE,
     ngay_vao_truong DATE,
-    UNIQUE(email, so_dien_thoai),
     Foreign Key (ma_lop_quan_li) REFERENCES LopQuanLi(ma_lop_quan_li)
 );
 
