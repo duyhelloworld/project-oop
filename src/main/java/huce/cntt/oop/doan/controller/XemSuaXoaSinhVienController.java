@@ -16,6 +16,7 @@ import huce.cntt.oop.doan.interfaces.ISinhVienService;
 import huce.cntt.oop.doan.service.KhoaService;
 import huce.cntt.oop.doan.service.LopService;
 import huce.cntt.oop.doan.service.SinhVienService;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -64,7 +65,7 @@ public class XemSuaXoaSinhVienController {
     @FXML
     private TableColumn<SinhVien, LocalDate> cotNgaySinh;
     @FXML
-    private TableColumn<SinhVien, Boolean> cotGioiTinh;
+    private TableColumn<SinhVien, String> cotGioiTinh;
     @FXML
     private TableColumn<SinhVien, String> cotQueQuan;
     @FXML
@@ -310,7 +311,7 @@ public class XemSuaXoaSinhVienController {
         cotMaSoSV.setCellValueFactory(new PropertyValueFactory<SinhVien, Integer>("maSo"));
         cotHoTen.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
         cotNgaySinh.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
-        cotGioiTinh.setCellValueFactory(new PropertyValueFactory<>("gioiTinh"));
+        cotGioiTinh.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGioiTinhString()));
         cotQueQuan.setCellValueFactory(new PropertyValueFactory<>("queQuan"));
         cotDiaChiThuongTru.setCellValueFactory(new PropertyValueFactory<>("diaChiThuongTru"));
         cotKhoa.setCellValueFactory(new PropertyValueFactory<>("khoa"));
@@ -356,6 +357,8 @@ public class XemSuaXoaSinhVienController {
         soDienThoaiTextField.clear();
         soDienThoaiTextField.setPromptText("");
         ngayVaoTruongDatePicker.setPromptText("");
+        gioiTinhToggle.selectToggle(null);
+        khoaComboBox.getEditor().clear();
     }
 
     private SinhVien layGiaTriPromptHoacText() {
