@@ -53,9 +53,9 @@ public abstract class ConNguoi {
     }
 
     public void setNgaySinh(LocalDate ngay_sinh) {
-        if (!ngay_sinh.isBefore(LocalDate.now())
+        if (!ngay_sinh.isBefore(LocalDate.now().minusYears(10))
             || !ngay_sinh.isAfter(LocalDate.of(1940, 1, 1))) {
-            throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 5));
+            throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 10));
         }
         this.ngaySinh = ngay_sinh;
     }
@@ -66,6 +66,10 @@ public abstract class ConNguoi {
 
     public Boolean getGioiTinh() {
         return this.gioiTinh;
+    }
+
+    public String getGioiTinhString() {
+        return getGioiTinh() ? "nam" : "nữ"; 
     }
 
     public void setGioiTinh(Boolean gioiTinh) {
@@ -93,10 +97,11 @@ public abstract class ConNguoi {
             return;
         }
         
-        if (!email.matches("^.*@huce\\.edu\\.vn$")) {
-            email += "@huce.edu.vn";
+        if (email.matches(".*@.*")) {
+            this.email = email;
+            return;
         }
-        this.email = email;
+        throw new IllegalArgumentException("Email sai định dạng\nViết lại với kí tự '@' !");
     }
 
     public String getEmail() {
@@ -131,15 +136,14 @@ public abstract class ConNguoi {
 
     @Override
     public String toString() {
-        return "{" +
-                " mã số = '" + getMaSo() + "'" +
-                ", họ tên = '" + getHoTen() + "'" +
-                ", giới tính = '" + (getGioiTinh() ? "nam" : "nữ" ) + "'" +
-                ", ngày sinh = '" + getNgaySinh() + "'" +
-                ", địa chỉ hiện tại = '" + getDiaChiThuongTru() + "'" +
-                ", quê quán = '" + getQueQuan() + "'" +
-                ", email = '" + getEmail() + "'" +
-                ", số điện thoại = '" + getSoDienThoai() + "'"
-                ;
+        return
+                "\tMã số = " + getMaSo() + "\n" +
+                "\tHọ tên = " + getHoTen() + "\n" +
+                "\tGiới tính = " + getGioiTinhString() + "\n" +
+                "\tNgày sinh = " + getNgaySinh() + "\n" +
+                "\tĐịa chỉ hiện tại = " + getDiaChiThuongTru() + "\n" +
+                "\tQuê quán = " + getQueQuan() + "\n" +
+                "\tEmail = " + getEmail() + "\n" +
+                "\tSố điện thoại = " + getSoDienThoai() + "\n";
     }
 }
