@@ -18,7 +18,8 @@ VALUES
     (7,'Lập trình web', 3, 1, NULL, 'Môn học giảng dạy về phát triển ứng dụng web.'),
     (8,'Kỹ thuật truyền thông', 4, 1, NULL, 'Môn học giúp hiểu về các phương pháp truyền thông hiện đại.'),
     (9,'Trí tuệ nhân tạo', 3, 1, NULL, 'Môn học tập trung vào lĩnh vực trí tuệ nhân tạo.'),
-    (10,'Học máy', 4, 1, 'Trí tuệ nhân tạo', 'Môn học nâng cao về học máy và thuật toán machine learning.');
+    (10,'Học máy', 4, 1, 'Trí tuệ nhân tạo', 'Môn học nâng cao về học máy và thuật toán machine learning.'),
+    (11, 'Triết học Mác-Lênin', 3, 1, NULL, 'Môn học mang lại kiến thức về tư tưởng triết học của Mác và Lênin');
 INSERT INTO Khoa_MonHoc (ma_mon_hoc, ma_khoa)
 VALUES
     (1, 1),
@@ -75,8 +76,25 @@ VALUES
     (20, 'Phùng Văn U', 1, '1986-06-28', 'Số 16, Đường Hàng Than, Quận Hoàn Kiếm, Hà Nội', 'Thành phố Hà Nội', 'phungvanu@example.com', '2345678901', 'password20');
 INSERT INTO lopmonhoc(ma_lop_mon_hoc, ten_lop_mon_hoc, ma_mon_hoc, ma_gv)
 VALUES
-;
-INSERT INTO SinhVien (mssv, ho_ten, gioi_tinh, ma_lop_quan_ly, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong)
+    (1, '66IT1', 4, 15),
+    (2, '66IT2', 5, 17),
+    (3, '66IT3', 6, 4),
+    (4, '66IT4', 2 ,20),
+    (5, '66IT5', 11, 1),
+    (6,"66IT1", 1, 1),
+    (7,"66IT3", 4, 15),
+    (8,"66KT2", 2, 3),
+    (9,"66KT1", 3, 5),
+    (10,"66IT2", 4, 15);
+
+INSERT INTO diemsinhvien (ma_lop_mon_hoc,mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, ghi_chu)
+VALUES  (1, 1, 9.5, 7.8, 9.0, "hoc lai lan 1"),
+        (2, 2, 7.5, 6.5, 6.9, ""),
+        (2, 1, 8.0, 4.5, 4.0, ""),
+        (2, 4, 6.0, 1.0, 1.0, "vi pham quy che"),
+        (4, 5, 4.4, 7.5, 9.0, ""),
+        (4, 6, 7.6, 8.5, 2.5, "");
+INSERT INTO SinhVien (mssv, ho_ten, gioi_tinh, ma_lop_quan_li, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong)
 VALUES
     (1, 'Trần Thị B', 0, 1, '2000-02-02', 'Số 20, Đường Trần Phú, Quận Hai Bà Trưng, Hà Nội', 'Hà Nội', 'tranthib@example.com', '2345678901', '2021-09-01'),
     (2, 'Lê Văn C', 1, 2, '2000-03-03', 'Số 30, Đường Lý Thường Kiệt, Quận Hoàn Kiếm, Hà Nội', 'Hà Nội', 'levanc@example.com', '3456789012', '2021-09-01'),
@@ -108,10 +126,10 @@ VALUES
     (28, 'Vũ Thị DD', 0, 3, '2000-04-28', 'Số 280, Đường Phạm Hùng, Quận Cầu Giấy, Hà Nội', 'Hà Nội', 'vuthidd@example.com', '0123456789', '2021-09-01'),
     (29, 'Lê Văn EE', 1, 4, '2000-05-29', 'Số 290, Đường Tây Kết, Quận Nam Từ Liêm, Hà Nội', 'Hà Nội', 'levanee@example.com', '1234567890', '2021-09-01'),
     (30, 'Trương Thị FF', 0, 5, '2000-06-30', 'Số 300, Đường Đặng Thai Mai, Quận Hoàng Mai, Hà Nội', 'Hà Nội', 'truongthiff@example.com', '2345678901', '2021-09-01');
-INSERT INTO lopquanli(ma_lop_quan_li, ma_gv, ma_khoa, ten_lop_quan_li)
+INSERT INTO LopQuanLi (ma_gv, ten_lop_quan_li, ma_khoa)
 VALUES
-    (1, , , ),
-    (2, , , ),
-    (3, , , ),
-    (4, , , ),
-    (5, , , );
+    (1, '66IT5', 1),
+    (2, '66IT4', 1),
+    (3, '66IT2', 1),
+    (4, '67KT3', 3),
+    (5, '64IT1', 1);

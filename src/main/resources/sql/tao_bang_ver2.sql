@@ -1,5 +1,5 @@
 -- Active: 1670603812210@@127.0.0.1@3306@doanoop
-CREATE DATABASE DoAnOOP;
+-- CREATE DATABASE DoAnOOP;
 USE DoAnOOP;
 # Thuc the
 CREATE TABLE Khoa (
@@ -41,13 +41,21 @@ CREATE TABLE GiangVien (
 
 CREATE TABLE LopMonHoc (
     ma_lop_mon_hoc INT PRIMARY KEY AUTO_INCREMENT,
-    ten_lop_mon_hoc CHAR(10) UNIQUE,
+    ten_lop_mon_hoc CHAR(10),
     ma_mon_hoc INT,
     ma_gv INT,
     Foreign Key (ma_mon_hoc) REFERENCES MonHoc(ma_mon_hoc),
     Foreign Key (ma_gv) REFERENCES GiangVien(ma_gv)
 );
 
+CREATE TABLE LopQuanLi (
+    ma_lop_quan_li INT PRIMARY KEY AUTO_INCREMENT,
+    ma_gv INT,
+    ma_khoa INT,
+    ten_lop_quan_li VARCHAR(20) UNIQUE,
+    Foreign Key (ma_khoa) REFERENCES khoa(ma_khoa),
+    Foreign Key (ma_gv) REFERENCES giangvien(ma_gv)
+);
 CREATE TABLE SinhVien (
     mssv INT PRIMARY KEY AUTO_INCREMENT,
     ho_ten VARCHAR(100),
@@ -61,14 +69,6 @@ CREATE TABLE SinhVien (
     ngay_vao_truong DATE,
     CONSTRAINT UK_SinhVien UNIQUE(email, so_dien_thoai),
     Foreign Key (ma_lop_quan_li) REFERENCES LopQuanLi(ma_lop_quan_li)
-);
-CREATE TABLE LopQuanLi (
-    ma_lop_quan_li INT PRIMARY KEY AUTO_INCREMENT,
-    ma_gv INT,
-    ma_khoa INT,
-    ten_lop_quan_li VARCHAR(20) UNIQUE,
-    Foreign Key (ma_khoa) REFERENCES khoa(ma_khoa),
-    Foreign Key (ma_gv) REFERENCES giangvien(ma_gv)
 );
 
 -- CREATE TABLE NhanVienDaoTao (
