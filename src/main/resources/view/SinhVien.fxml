@@ -23,14 +23,14 @@
       <TabPane fx:id="tabPane" layoutX="4.0" layoutY="4.0" prefHeight="1080.0" prefWidth="1920.0"
          tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab fx:id="tabThemSinhVien" text="Thêm Sinh Viên">
-               <content>
-                  <fx:include source="ThemSinhVien.fxml" />
-               </content>
-            </Tab>
             <Tab fx:id="tabSuaXoaSinhVien" text="Sửa/Xóa Sinh Viên">
                <content>
                   <fx:include source="XemSuaXoaSinhVien.fxml" />
+               </content>
+            </Tab>
+            <Tab fx:id="tabThemSinhVien" text="Thêm Sinh Viên">
+               <content>
+                  <fx:include source="ThemSinhVien.fxml" />
                </content>
             </Tab>
          </tabs>
