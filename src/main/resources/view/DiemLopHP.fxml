@@ -24,8 +24,8 @@
       <TableView accessibleRole="CHECK_BOX" layoutX="4.0" layoutY="186.0" prefHeight="330.0" prefWidth="1206.0">
         <columns>
           <TableColumn prefWidth="83.33334064483643" text="MSSV" />
-          <TableColumn prefWidth="228.0000228881836" text="Họ, tên đệm" />
-            <TableColumn prefWidth="116.6666259765625" text="Tên" />
+          <TableColumn prefWidth="228.0" text="Họ, tên đệm" />
+            <TableColumn prefWidth="116.0" text="Tên" />
             <TableColumn minWidth="0.0" prefWidth="87.99996948242188" text="Lớp QL" />
             <TableColumn prefWidth="110.66668701171875" text="Điểm chuyên cần" />
             <TableColumn prefWidth="85.99993896484375" text="Điểm QT" />
