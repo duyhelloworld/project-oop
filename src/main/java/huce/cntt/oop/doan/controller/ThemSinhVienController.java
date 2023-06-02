@@ -1,7 +1,8 @@
 package huce.cntt.oop.doan.controller;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 import huce.cntt.oop.doan.entities.SinhVien;
@@ -24,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.util.StringConverter;
 
 public class ThemSinhVienController {
 
@@ -85,8 +87,13 @@ public class ThemSinhVienController {
         queQuanTextField.setPromptText("xã ..., huyện..., tỉnh ...");
         diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận ...");
         soDienThoaiTextField.setPromptText("10 chữ số");
+
         ngaySinhDatePicker.setPromptText("dd/MM/yyyy");
         ngayVaoTruongDatePicker.setPromptText("dd/MM/yyyy");
+
+        formatDate(ngaySinhDatePicker, "dd/MM/yyyy", "dd/MM/yy");
+        formatDate(ngayVaoTruongDatePicker, "dd/MM/yyyy", "dd/MM/yy");
+
         emailTextField.setPromptText("...");
 
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
@@ -107,25 +114,18 @@ public class ThemSinhVienController {
     }
 
     void themSinhVien() {
-        // đã try catch các lỗi
+        alert.setAlertType(AlertType.ERROR);
         try {
-            SinhVien sinhVien = kiemTraDuLieu();
-            if (sinhVien.hasNullElement()) {
-                System.out.println(sinhVien);
-                throw new NullPointerException("Bạn đang điền thiếu 1 trường nào đó!\nHãy kiểm tra lại");
-            }
-            
+            SinhVien sinhVien = kiemTraDuLieu();            
             int mssv = sinhVienService.themMoiSinhVien(sinhVien);
             sinhVien.setMaSo(mssv);
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
             alert.show();
         } catch (NullPointerException e) {
-            alert.setAlertType(AlertType.WARNING);
             alert.setContentText(e.getMessage()); 
             alert.show();
         } catch (IllegalArgumentException e) {
-            alert.setAlertType(AlertType.ERROR);
             alert.setContentText("Lỗi thông tin.\n" + e.getMessage());
             alert.show();
         } catch (Exception e) {
@@ -133,7 +133,6 @@ public class ThemSinhVienController {
         }
     }
 
-    // Tab1
     private SinhVien kiemTraDuLieu() throws Exception {
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
@@ -143,6 +142,17 @@ public class ThemSinhVienController {
         
         LocalDate ngaySinh = ngaySinhDatePicker.getValue();
         LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
+
+        if (hoTen == null || hoTen.toString().isBlank() ||
+            queQuan == null || queQuan.toString().isBlank() ||
+            diaChiHienTai == null || diaChiHienTai.toString().isBlank() || 
+            soDienThoai == null || soDienThoai.isBlank() || 
+            email == null || email.isBlank()) {
+            throw new NullPointerException("Bạn đang điền thiếu 1 trường nào đó!\nHãy kiểm tra lại");
+        }
+        if (ngaySinh == null || ngayVaoTruong == null) {
+            throw new IllegalArgumentException("Format ngày không thành công!");
+        }
 
         Boolean gioiTinh = nam.isSelected();
         String tenLopQuanLi = lopQuanLiComboBox.getValue();
@@ -166,5 +176,25 @@ public class ThemSinhVienController {
         }
         sinhVien.setMaLopQuanLi(maLop);
         return sinhVien;
+    }
+
+    private void formatDate(DatePicker datePicker, String shortFormat, String longFormat) {
+        DateTimeFormatter dateFormatter = new DateTimeFormatterBuilder()
+                .appendPattern(shortFormat)
+                .optionalStart()
+                .appendPattern(longFormat)
+                .toFormatter();
+
+        datePicker.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(LocalDate date) {
+                return (date != null) ? dateFormatter.format(date) : "";
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                return (string != null && !string.isEmpty()) ? LocalDate.parse(string, dateFormatter) : null;
+            }
+        });
     }
 }
