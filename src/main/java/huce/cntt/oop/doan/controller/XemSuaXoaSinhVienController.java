@@ -183,7 +183,7 @@ public class XemSuaXoaSinhVienController {
             data.setAll(loadDanhSachSinhVien());
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Sinh Viên đã cập nhật : \n" + sinhVien.toString());
-            alert.setHeight(500);
+            alert.setHeight(400);
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,6 +210,7 @@ public class XemSuaXoaSinhVienController {
         }
 
         alert.setAlertType(AlertType.ERROR);
+        clearDataDaNhap();
         switch (searchComboBox.getSelectionModel().getSelectedItem()) {
             case "Tên sinh viên":
                 data.clear();
@@ -285,16 +286,11 @@ public class XemSuaXoaSinhVienController {
         int mssv = sinhVien.getMaSo();
         try {
             int soLopMonDangTheoHoc = lopService.laySoLopMonHocDangHoc(mssv);
-            if (soLopMonDangTheoHoc > 0) {
-                // Sinh viên học nhiều hơn 1 môn thì warn ở diemsinhvien
-                alert.setContentText("Sinh viên này đang theo học tại " + soLopMonDangTheoHoc + " lớp môn học.\nVẫn tiếp tục?");
-                confirm = alert.showAndWait();
-                if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-                    lopService.xoaSinhVienKhoiLopMonHoc(mssv);
-                }
+            alert.setContentText("Sinh viên này đang theo học tại " + soLopMonDangTheoHoc + " lớp môn học.\nVẫn tiếp tục?");
+            confirm = alert.showAndWait();
+            if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+                lopService.xoaSinhVienKhoiLopMonHoc(mssv);
             }
-            // Sinh viên học 0 môn thì xoá ngay, ko warn
-            lopService.xoaSinhVienKhoiLopQuanLi(mssv);
             boolean xoaThanhCong = sinhVienService.xoaSinhVienTheoMaSo(mssv);
             if (xoaThanhCong) {
                 alert.setAlertType(AlertType.INFORMATION);
