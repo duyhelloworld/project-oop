@@ -14,19 +14,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Scene QLsinhVien = LoadSinhVien.loadSinhVien();
-        primaryStage.setScene(QLsinhVien);
+        // Scene QLsinhVien = LoadSinhVien.loadSinhVien();
+        // primaryStage.setScene(QLsinhVien);
 
         // Scene QLdiemCaNhan = LoadDiemCaNhan.loadDiemCaNhan();
         // primaryStage.setScene(QLdiemCaNhan);
 
-        // Scene login = LoadLogin.loadLogin();
-        // primaryStage.setScene(login);
-
-        // Scene trangChu = LoadTrangChu.loadTrangChu();
-        // primaryStage.setScene(trangChu);
-        
-        primaryStage.setTitle("HUCE student management system");
+        Scene login = LoadLogin.getScene(primaryStage);
+        primaryStage.setScene(login);
+        primaryStage.setTitle("HUCE app");
         primaryStage.show();
     }
 
