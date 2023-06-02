@@ -21,19 +21,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 public class DiemCaNhanController {
     private IDiemCaNhanService diemCaNhanService;
     private ISinhVienService sinhVienService;
+    private Stage stage;
 
     public DiemCaNhanController() {
         this.diemCaNhanService = DiemCaNhanService.getInstance();
         this.sinhVienService = SinhVienService.getInstance();
     }
 
-    public DiemCaNhanController(IDiemCaNhanService diemCaNhanService, ISinhVienService sinhVienService){
-        this.diemCaNhanService = diemCaNhanService;
-        this.sinhVienService = sinhVienService;
+    public DiemCaNhanController(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML

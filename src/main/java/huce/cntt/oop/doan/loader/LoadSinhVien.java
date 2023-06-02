@@ -7,14 +7,15 @@ import huce.cntt.oop.doan.controller.SinhVienController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class LoadSinhVien {
     private static String path = "/view/SinhVien.fxml";
 
-    public static Scene loadSinhVien() { 
+    public static Scene loadSinhVien(Stage stage) { 
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-            SinhVienController controller = new SinhVienController();
+            SinhVienController controller = new SinhVienController(stage);
             loader.setController(controller);
 
             // CSS

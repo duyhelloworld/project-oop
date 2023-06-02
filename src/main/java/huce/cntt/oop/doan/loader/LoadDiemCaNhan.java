@@ -7,14 +7,15 @@ import huce.cntt.oop.doan.controller.DiemCaNhanController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class LoadDiemCaNhan {
     private static String path = "/view/DiemCaNhan.fxml";
 
-    public static Scene loadDiemCaNhan() { 
+    public static Scene loadDiemCaNhan(Stage stage) { 
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-            DiemCaNhanController controller = new DiemCaNhanController();
+            DiemCaNhanController controller = new DiemCaNhanController(stage);
             loader.setController(controller);
 
             // CSS
