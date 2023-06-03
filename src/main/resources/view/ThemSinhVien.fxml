@@ -6,19 +6,17 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" 
-     xmlns="http://javafx.com/javafx/19"   xmlns:fx="http://javafx.com/fxml/1" 
-    prefHeight="727.0" prefWidth="1209.0" fx:controller="huce.cntt.oop.doan.controller.ThemSinhVienController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" 
+     xmlns="http://javafx.com/javafx/17"   xmlns:fx="http://javafx.com/fxml/1" 
+    prefHeight="727.0" prefWidth="1209.0" >
     <children>
         <Label layoutX="36.0" layoutY="36.0" prefHeight="27.0" prefWidth="170.0"
             text="Thông tin Sinh Viên">
@@ -78,4 +76,4 @@
         <ComboBox fx:id="lopQuanLiComboBox" editable="true" layoutX="781.0"
             layoutY="502.0" prefHeight="26.0" prefWidth="239.0" />
     </children>
-</AnchorPane>
+</Pane>

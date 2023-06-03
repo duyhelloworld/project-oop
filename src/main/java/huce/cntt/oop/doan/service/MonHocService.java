@@ -13,7 +13,7 @@ import huce.cntt.oop.doan.interfaces.IMonHocService;
 public class MonHocService implements IMonHocService {
     private DataAccess access = DataAccess.getInstance();
 
-    public MonHocService() {}
+    private MonHocService() {}
     private static MonHocService service;
 
     public static MonHocService getInstance(){
@@ -204,52 +204,4 @@ public class MonHocService implements IMonHocService {
         }
         return true;
     }
-    // @Override
-    // public List<SinhVien> timSinhVienTheoLopQuanLi(Integer ma_lop_quan_li) {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'timSinhVienTheoLopQuanLi'");
-    // }
-
-
-    // @Override
-    // public List<SinhVien> timSinhVienTheoLopMonHoc(Integer ma_lop_mon_hoc) {
-    //     // TODO Auto-generated method stub
-    //     throw new UnsupportedOperationException("Unimplemented method 'timSinhVienTheoLopMonHoc'");
-    // }
-
-
-    
-    
-    // public List<MonHoc> fetchDataFromDatabase() {
-    //     List<MonHoc> monHocs = new ArrayList<>();
-
-    //     try {
-    //         // Tạo câu truy vấn
-    //         String query = "SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta " +
-    //                 "FROM monhoc mh " +
-    //                 "INNER JOIN Khoa_MonHoc kmh ON kmh.ma_mon_hoc = mh.ma_mon_hoc "+
-    //                 "INNER JOIN Khoa k ON k.ma_khoa = kmh.ma_khoa";
-
-    //         // Tạo statement và thực thi truy vấn
-    //         PreparedStatement statement = access.getStatement(query);
-    //         ResultSet resultSet = statement.executeQuery();
-
-    //         // Lặp qua các dòng trong ResultSet
-    //         while (resultSet.next()) {
-    //             MonHoc monHoc = new MonHoc();  
-    //             monHoc.setMaMon(resultSet.getInt("ma_mon_hoc"));   
-    //             monHoc.setTenMonHoc(resultSet.getString("ten_mon_hoc"));
-    //             monHoc.setMonBatBuoc(resultSet.getBoolean("mon_bat_buoc"));   
-    //             monHoc.setMonTienQuyet(resultSet.getInt("mon_tien_quyet"));   
-    //             monHoc.setSoTinChi(resultSet.getInt("so_tin_chi"));    
-    //             monHoc.setTenKhoa(resultSet.getString("ten_khoa"));
-    //             monHoc.setMoTa(resultSet.getString("mo_ta"));
-
-    //             monHocs.add(monHoc);
-    //         }
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    //     return monHocs;
-    // }
 }

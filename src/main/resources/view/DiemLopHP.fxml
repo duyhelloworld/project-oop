@@ -13,7 +13,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="413.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUẢN LÍ ĐIỂM THEO LỚP HỌC PHẦN" textAlignment="CENTER" wrappingWidth="387.47010803222656">
          <font>

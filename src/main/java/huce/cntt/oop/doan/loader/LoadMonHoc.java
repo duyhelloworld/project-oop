@@ -3,7 +3,6 @@ package huce.cntt.oop.doan.loader;
 import java.io.IOException;
 
 import huce.cntt.oop.doan.App;
-import huce.cntt.oop.doan.service.SinhVienService;
 import huce.cntt.oop.doan.controller.QLMHController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

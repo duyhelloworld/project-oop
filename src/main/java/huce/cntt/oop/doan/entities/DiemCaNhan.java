@@ -5,6 +5,7 @@ import java.util.Objects;
 public class DiemCaNhan {
     private Integer maMon;
     private String tenMon;
+    private String tenLopMon;
     private Integer soTinChi;
     private Float diemChuyenCan;
     private Float diemGiuaKi;
@@ -33,6 +34,14 @@ public class DiemCaNhan {
 
     public void setTenMon(String tenMon) {
         this.tenMon = tenMon;
+    }
+
+    public String getTenLopMon() {
+        return this.tenLopMon;
+    }
+
+    public void setTenLopMon(String tenLopMon) {
+        this.tenLopMon = tenLopMon;
     }
 
     public Integer getSoTinChi() {
@@ -116,6 +125,7 @@ public class DiemCaNhan {
         return "ĐIỂM CÁ NHÂN\t:\n" +
             "\tMã Môn = " + getMaMon() +  "\n" +
             "\tTên Môn = '" + getTenMon() + "'" + "\n" +
+            "\tLớp Môn Học = '" + getTenLopMon() + "'" + "\n" +
             "\tĐiểm Chuyên Cần = " + getDiemChuyenCan() + "\n" +
             "\tĐiểm Giữa Kì = " + getDiemGiuaKi() + "\n" +
             "\tĐiểm Cuối Kì = " + getDiemCuoiKi() + "\n" +

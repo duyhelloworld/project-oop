@@ -3,22 +3,20 @@ package huce.cntt.oop.doan.loader;
 import java.io.IOException;
 
 import huce.cntt.oop.doan.App;
-import huce.cntt.oop.doan.controller.HomeSinhVienController;
-import huce.cntt.oop.doan.entities.GiangVien;
+import huce.cntt.oop.doan.controller.DiemLopHP;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-public class LoadSinhVien {
-    private static String path = "/view/HomeSinhVien.fxml";
+public class LoadDiemHocPhan {
+    private static String path = "/view/DiemLopHP.fxml";
 
-    public static Scene loadSinhVien(Stage stage, GiangVien giangVien) { 
+    public static Scene loadDiemLopHP() { 
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-            HomeSinhVienController homeController = new HomeSinhVienController(stage, giangVien);
-            loader.setController(homeController);
-            
+            DiemLopHP controller = new DiemLopHP();
+            loader.setController(controller);
+
             // CSS
             
             Pane root = loader.load();

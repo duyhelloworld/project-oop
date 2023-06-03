@@ -9,7 +9,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1213.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="63.0" layoutY="51.0" prefHeight="27.0" prefWidth="163.0" text="Thông tin cá nhân">
          <font>
@@ -24,8 +24,9 @@
       <TextField fx:id="hoTenTextField" layoutX="160.0" layoutY="146.0" />
       <TextField fx:id="lopQuanLiTextField" layoutX="540.0" layoutY="110.0" />
       <TextField fx:id="khoaTextField" layoutX="540.0" layoutY="150.0" />
-      <Button fx:id="nutXemDiem" layoutX="870.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" text="Xem bảng điểm" />
-      <Button fx:id="nutLoadLai" layoutX="1020.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" text="Load lại" />
+      <Button fx:id="nutXemDiem" layoutX="870.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Xem bảng điểm" />
+      <Button fx:id="nutRefresh" layoutX="970.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Refresh" />
+      <Button fx:id="nutQuayLai" layoutX="1070.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Quay lại" />
       <Label layoutX="518.0" layoutY="30.0" prefHeight="27.0" prefWidth="558.0" text="Danh sách các môn học và kết quả học tập">
          <font>
             <Font name="System Bold" size="27.0" />
@@ -38,9 +39,14 @@
                   <PropertyValueFactory property="maMon" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="cotTenMon" prefWidth="240.0" text="Tên môn học/học phần">
+            <TableColumn fx:id="cotTenMon" prefWidth="120.0" text="Tên môn học">
                <cellValueFactory>
                   <PropertyValueFactory property="tenMon" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotTenLopMon" prefWidth="80.0" text="Lớp môn học">
+               <cellValueFactory>
+                  <PropertyValueFactory property="tenLopMon" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="cotSoTinChi" prefWidth="80.0" text="Số Tín Chỉ">
