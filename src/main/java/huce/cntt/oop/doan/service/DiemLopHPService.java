@@ -83,7 +83,6 @@ public class DiemLopHPService implements IDiemLopService{
                 temp.setDiemCuoiKi(result.getFloat("diem_cuoi_ki"));
                 temp.setDiemTongKet(result.getFloat("diem_tong_ket"));
                 temp.setDiemTongKetHe4(result.getFloat("diem_he_so_4"));
-                temp.setDiemChu(result.getString("diem_chu"));
                 kq.add(temp);
             }
             // access.closeConnection(statement);
@@ -179,7 +178,6 @@ public class DiemLopHPService implements IDiemLopService{
                 temp.setDiemCuoiKi(result.getFloat("diem_cuoi_ki"));
                 temp.setDiemTongKet(result.getFloat("diem_tong_ket"));
                 temp.setDiemTongKetHe4(result.getFloat("diem_he_so_4"));
-                temp.setDiemChu(result.getString("diem_chu"));
                 kq.add(temp);
             }
             // access.closeConnection(statement);

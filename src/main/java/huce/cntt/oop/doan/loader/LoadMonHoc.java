@@ -13,17 +13,22 @@ import javafx.stage.Stage;
 public class LoadMonHoc {
     private static String path = "/view/MonHoc.fxml";
 
-    public static Scene loadMonHoc(Stage stage, GiangVien giangVien) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(App.class.getResource(path));
-    
-        QLMHController controller = new QLMHController(stage, giangVien);
-        loader.setController(controller);
+    public static Scene loadMonHoc(Stage stage, GiangVien giangVien) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource(path));
+        
+            QLMHController controller = new QLMHController(stage, giangVien);
+            loader.setController(controller);
 
-        // CSS
-    
-        Pane root = loader.load();
-    
-        return new Scene(root);
+            // CSS
+        
+            Pane root = loader.load();
+        
+            return new Scene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

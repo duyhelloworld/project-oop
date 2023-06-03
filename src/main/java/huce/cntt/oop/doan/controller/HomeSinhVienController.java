@@ -263,7 +263,9 @@ public class HomeSinhVienController {
     }
 
     private void quayLai() {
-        if (coThayDoiChuaLuu()) {
+        if (chuaThayDoi()) {
+            quayLaiHome();
+        } else {
             alert.setAlertType(AlertType.CONFIRMATION);
             alert.setContentText("Bạn có thay đổi chưa lưu.\nLưu ?");
             Optional<ButtonType> confirm = alert.showAndWait();
@@ -271,8 +273,6 @@ public class HomeSinhVienController {
                 luu();
                 quayLaiHome();
             }
-        } else {
-            quayLaiHome();
         }
     }
 
@@ -473,18 +473,18 @@ public class HomeSinhVienController {
         stage.show();
     }
 
-    private boolean coThayDoiChuaLuu() {
-        HoTen hoTen = new HoTen(hoTenTextField.getText());
-        DiaChi queQuan = new DiaChi(queQuanTextField.getText());
-        DiaChi diaChiThuongTru = new DiaChi(diaChiThuongTruTextField.getText());
+    private boolean chuaThayDoi() {
+        String hoTen = hoTenTextField.getText();
+        String queQuan = queQuanTextField.getText();
+        String diaChiThuongTru = diaChiThuongTruTextField.getText();
         String soDienThoai = soDienThoaiTextField.getText();
         String email = emailTextField.getText();
         return 
-            (hoTen != null || !hoTen.toString().isBlank()) ||
-            (queQuan != null || !queQuan.toString().isBlank()) ||
-            (diaChiThuongTru != null || !diaChiThuongTru.toString().isBlank()) || 
-            (soDienThoai != null || !soDienThoai.isBlank()) || 
-            (email != null || !email.isBlank());
+            (hoTen == null || hoTen.isBlank()) ||
+            (queQuan == null || queQuan.isBlank()) ||
+            (diaChiThuongTru == null || diaChiThuongTru.isBlank()) || 
+            (soDienThoai == null || soDienThoai.isBlank()) || 
+            (email == null || email.isBlank());
     }
 
     private void doiSceneSangThemSinhVien(){

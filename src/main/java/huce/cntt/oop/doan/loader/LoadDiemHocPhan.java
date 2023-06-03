@@ -3,18 +3,20 @@ package huce.cntt.oop.doan.loader;
 import java.io.IOException;
 
 import huce.cntt.oop.doan.App;
-import huce.cntt.oop.doan.controller.DiemLopHP;
+import huce.cntt.oop.doan.controller.DiemLopHPController;
+import huce.cntt.oop.doan.entities.GiangVien;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class LoadDiemHocPhan {
     private static String path = "/view/DiemLopHP.fxml";
 
-    public static Scene loadDiemLopHP() { 
+    public static Scene loadDiemLopHP(Stage stage, GiangVien giangVien) { 
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-            DiemLopHP controller = new DiemLopHP();
+            DiemLopHPController controller = new DiemLopHPController(stage, giangVien);
             loader.setController(controller);
 
             // CSS

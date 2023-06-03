@@ -159,8 +159,6 @@ public class ThemSinhVienController {
         Optional<ButtonType> confirm = alert.showAndWait();
         if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
             quayLaiHome();
-        } else {
-            return;
         }
     }
 

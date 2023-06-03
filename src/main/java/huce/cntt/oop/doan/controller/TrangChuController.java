@@ -4,6 +4,7 @@ import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadDiemCaNhan;
 import huce.cntt.oop.doan.loader.LoadDiemHocPhan;
+import huce.cntt.oop.doan.loader.LoadMonHoc;
 import huce.cntt.oop.doan.loader.LoadSinhVien;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -103,19 +104,16 @@ public class TrangChuController {
         if (nutMonHoc.isPressed()) {
             return;
         }
-        // Scene monHoc = LoadMonHoc.loadMonHoc();
-        // stage.setScene(monHoc);
-        // stage.show();
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setContentText("Failed");
-        alert.show();
+        Scene monHoc = LoadMonHoc.loadMonHoc(stage, giangVien);
+        stage.setScene(monHoc);
+        stage.show();
     }
 
     private void loadDiemHocPhan() {
         if (nutLopHocPhan.isPressed()) {
             return;
         }
-        Scene lopHocPhan = LoadDiemHocPhan.loadDiemLopHP();
+        Scene lopHocPhan = LoadDiemHocPhan.loadDiemLopHP(stage, giangVien);
         stage.setScene(lopHocPhan);
         stage.show();
     }

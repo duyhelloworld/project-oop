@@ -3,6 +3,7 @@ package huce.cntt.oop.doan.controller;
 import java.util.List;
 import java.util.Optional;
 
+import huce.cntt.oop.doan.entities.DiemChu;
 import huce.cntt.oop.doan.entities.DiemLopHP;
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 public class DiemLopHPController {
     private Stage stage;
     private GiangVien giangVien;
+    private final DiemLopHPService service = DiemLopHPService.getInstance();
 
     public DiemLopHPController(Stage stage, GiangVien giangVien){
         this.stage = stage;
@@ -47,11 +49,11 @@ public class DiemLopHPController {
     @FXML
     private TableColumn<DiemLopHP, Float> cotDiemQT;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotKT;
+    private TableColumn<DiemLopHP, Float> cotDiemKT;
     @FXML
     private TableColumn<DiemLopHP, Float> cotGPA;
     @FXML
-    private TableColumn<DiemLopHP, String> cotDiemChu;
+    private TableColumn<DiemLopHP, DiemChu> cotDiemChu;
     // @FXML
     // private TableColumn<DiemLopHP, > cot;
     @FXML
@@ -68,22 +70,20 @@ public class DiemLopHPController {
     private Button thoat;
 
     private ObservableList<DiemLopHP> observableList;
-
-    private DiemLopHPService service;
     
     @FXML
     public void initialize(){
         timKiemTheo.getItems().addAll("Mã môn", "Tên môn");
         lop.getItems().addAll();
-        cotMSSV.setCellValueFactory(new PropertyValueFactory<>("mssv"));
-        cotHoTen.setCellValueFactory(new PropertyValueFactory<>("ho_ten"));
-        cotLopQL.setCellValueFactory(new PropertyValueFactory<>("ten_lop_quan_li"));
-        cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<>("diem_chuyen_can"));
-        cotDiemGK.setCellValueFactory(new PropertyValueFactory<>("diem_giua_ki"));
-        cotDiemQT.setCellValueFactory(new PropertyValueFactory<>("diem_qt"));
-        cotKT.setCellValueFactory(new PropertyValueFactory<>("diem_cuoi_ki"));
-        cotGPA.setCellValueFactory(new PropertyValueFactory<>("diem_he_so_4"));
-        cotDiemChu.setCellValueFactory(new PropertyValueFactory<>("diem_chu"));
+        cotMSSV.setCellValueFactory(new PropertyValueFactory<>("MSSV"));
+        cotHoTen.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
+        cotLopQL.setCellValueFactory(new PropertyValueFactory<>("lopQL"));
+        cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<>("diemChuyenCan"));
+        cotDiemGK.setCellValueFactory(new PropertyValueFactory<>("diemGK"));
+        cotDiemQT.setCellValueFactory(new PropertyValueFactory<>("diemQT"));
+        cotDiemKT.setCellValueFactory(new PropertyValueFactory<>("diemKT"));
+        cotGPA.setCellValueFactory(new PropertyValueFactory<>("GPA"));
+        cotDiemChu.setCellValueFactory(new PropertyValueFactory<>("diemChu"));
 
         List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();

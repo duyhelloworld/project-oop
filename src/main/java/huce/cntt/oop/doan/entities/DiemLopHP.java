@@ -11,25 +11,11 @@ public class DiemLopHP {
     private Float diemCuoiKi;
     private Float diemTongKet;
     private Float diemTongKetHe4;
-    private String diemChu;
+    private DiemChu diemChu;
     private String tenLopMonHoc;
     private Integer maLopHP;
 
     public DiemLopHP() {
-    }
-
-    public DiemLopHP(Integer MSSV, String hoVaTen, String lopQL, Float diemChuyenCan, Float diemGiuaKi, Float diemQuaTrinh, Float diemCuoiKi, Float diemTongKet, Float diemTongKetHe4, String diemChu, String tenLopMonHoc, Integer maLopHP) {
-        this.MSSV = MSSV;
-        this.hoVaTen = hoVaTen;
-        this.lopQL = lopQL;
-        this.diemChuyenCan = diemChuyenCan;
-        this.diemGiuaKi = diemGiuaKi;
-        this.diemQuaTrinh = diemQuaTrinh;
-        this.diemCuoiKi = diemCuoiKi;
-        this.diemTongKet = diemTongKet;
-        this.diemTongKetHe4 = diemTongKetHe4;
-        this.diemChu = diemChu;
-        this.tenLopMonHoc = tenLopMonHoc;
     }
 
 
@@ -51,12 +37,7 @@ public class DiemLopHP {
         return this.tenLopMonHoc;
     }
 
-    public DiemLopHP tenLopMonHoc(String tenLopMonHoc) {
-        setTenLopMonHoc(tenLopMonHoc);
-        return this;
-    }
-
-    public void setTenLopMonHoc(String tenLopMonhoc){
+    public void setTenLopMonHoc(String tenLopMonHoc){
         this.tenLopMonHoc = tenLopMonHoc;
     }
 
@@ -133,61 +114,11 @@ public class DiemLopHP {
     }
 
     public String getDiemChu() {
-        return this.diemChu;
+        return DiemChu.tuDiemSo(diemTongKet).toString();
     }
 
-    public void setDiemChu(String diemChu) {
+    public void setDiemChu(DiemChu diemChu) {
         this.diemChu = diemChu;
-    }
-
-    public DiemLopHP MSSV(Integer MSSV) {
-        setMSSV(MSSV);
-        return this;
-    }
-
-    public DiemLopHP hoVaTen(String hoVaTen) {
-        setHoVaTen(hoVaTen);
-        return this;
-    }
-
-    public DiemLopHP lopQL(String lopQL) {
-        setLopQL(lopQL);
-        return this;
-    }
-
-    public DiemLopHP diemChuyenCan(Float diemChuyenCan) {
-        setDiemChuyenCan(diemChuyenCan);
-        return this;
-    }
-
-    public DiemLopHP diemGiuaKi(Float diemGiuaKi) {
-        setDiemGiuaKi(diemGiuaKi);
-        return this;
-    }
-
-    public DiemLopHP diemQuaTrinh(Float diemQuaTrinh) {
-        setDiemQuaTrinh(diemQuaTrinh);
-        return this;
-    }
-
-    public DiemLopHP diemCuoiKi(Float diemCuoiKi) {
-        setDiemCuoiKi(diemCuoiKi);
-        return this;
-    }
-
-    public DiemLopHP diemTongKet(Float diemTongKet) {
-        setDiemTongKet(diemTongKet);
-        return this;
-    }
-
-    public DiemLopHP diemTongKetHe4(Float diemTongKetHe4) {
-        setDiemTongKetHe4(diemTongKetHe4);
-        return this;
-    }
-
-    public DiemLopHP diemChu(String diemChu) {
-        setDiemChu(diemChu);
-        return this;
     }
 
     @Override
