@@ -27,61 +27,61 @@
       <TextField fx:id="monHoc" layoutX="146.0" layoutY="103.0" prefHeight="25.0" prefWidth="150.0" />
       <TableView fx:id="tableView" accessibleRole="CHECK_BOX" layoutX="4.0" layoutY="186.0" prefHeight="330.0" prefWidth="1206.0">
         <columns>
-            <TableColumn fx:id = "cotMSSV" prefWidth="83.33334064483643" text="MSSV" >
+            <TableColumn fx:id = "cotMSSV" prefWidth="90.33334064483643" text="MSSV" >
                <cellValueFactory>
                   <PropertyValueFactory property="MSSV" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotHoTen" prefWidth="344.6666488647461" text="Họ và tên" >
+            <TableColumn fx:id = "cotHoTen" prefWidth="350.6666488647461" text="Họ và tên" >
                <cellValueFactory>
                   <PropertyValueFactory property="hoTen" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotLopQL" minWidth="0.0" prefWidth="87.99996948242188" text="Lớp QL" >
+            <TableColumn fx:id = "cotLopQL" minWidth="0.0" prefWidth="94.99996948242188" text="Lớp QL" >
                <cellValueFactory>
                   <PropertyValueFactory property="lopQL" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemChuyenCan" prefWidth="110.66668701171875" text="Điểm chuyên cần" >
+            <TableColumn fx:id = "cotDiemChuyenCan" prefWidth="117.66668701171875" text="Điểm chuyên cần" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemChuyenCan" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemGK" prefWidth="85.99993896484375" text="Điểm GK" >
+            <TableColumn fx:id = "cotDiemGK" prefWidth="92.99993896484375" text="Điểm GK" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemGK" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemQT" prefWidth="71.33331298828125" text="Điểm QT" >
+            <TableColumn fx:id = "cotDiemQT" prefWidth="78.33331298828125" text="Điểm QT" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemQT" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemKT" prefWidth="78.00003051757812" text="Điểm KT" >
+            <TableColumn fx:id = "cotDiemKT" prefWidth="85.00003051757812" text="Điểm KT" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemKT" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemTK" prefWidth="104.66665649414062" text="Điểm tổng kết" >
+            <TableColumn fx:id = "cotDiemTK" prefWidth="111.66665649414062" text="Điểm tổng kết" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemTongKet" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotGPA" prefWidth="106.0" text="Thang điểm 4" >
+            <TableColumn fx:id = "cotGPA" prefWidth="113.3333740234375" text="Thang điểm 4" >
                <cellValueFactory>
                   <PropertyValueFactory property="GPA" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemChu" prefWidth="67.3333740234375" text="Điểm chữ" >
+            <TableColumn fx:id = "cotDiemChu" prefWidth="67" text="Điểm chữ" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemChu" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotXoa" prefWidth="61.3333740234375" text="Xóa" >
+            <!-- <TableColumn fx:id = "cotXoa" prefWidth="61.3333740234375" text="Xóa" >
                <cellValueFactory>
                   <PropertyValueFactory property="xoa" />
                </cellValueFactory>
-            </TableColumn>
+            </TableColumn> -->
         </columns>
       </TableView>
       <Button fx:id = "xoa" layoutX="1028.0" layoutY="85.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="160.0" text="Xóa" />
