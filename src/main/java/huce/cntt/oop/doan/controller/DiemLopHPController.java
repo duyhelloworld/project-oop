@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import huce.cntt.oop.doan.entities.DiemLopHP;
+import huce.cntt.oop.doan.entities.GiangVien;
+import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -17,8 +21,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class DiemLopHPController {
+    private Stage stage;
+    private GiangVien giangVien;
+
+    public DiemLopHPController(Stage stage, GiangVien giangVien){
+        this.stage = stage;
+        this.giangVien = giangVien;
+    }
+
     @FXML
     private TableView<DiemLopHP> tableView;
     @FXML
@@ -72,7 +85,7 @@ public class DiemLopHPController {
         cotGPA.setCellValueFactory(new PropertyValueFactory<>("diem_he_so_4"));
         cotDiemChu.setCellValueFactory(new PropertyValueFactory<>("diem_chu"));
 
-        List<DiemLopHP> diem = layTatCaDiem();
+        List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
         observableList.addAll(diem);
         tableView.setItems(observableList);
@@ -130,6 +143,12 @@ public class DiemLopHPController {
         //     }
         // });
         xoa.setOnAction(e -> xoa());
+
+        thoat.setOnAction(e -> {
+            if (!thoat.isPressed()) {
+                thoat();
+            }
+        });
     }
     
     public void setItemsForChoiceBox(String tenMon) {
@@ -142,6 +161,12 @@ public class DiemLopHPController {
         for (DiemLopHP diemLopHP : danhSachLopHP) {
             lop.getItems().add(diemLopHP.getTenLopMonHoc());
         }
+    }
+
+    private void thoat() {
+        Scene trangChu = LoadTrangChu.loadTrangChu(stage, VaiTro.GIANGVIEN, giangVien);
+        stage.setScene(trangChu);
+        stage.show();
     }
 
     private void xoa() {

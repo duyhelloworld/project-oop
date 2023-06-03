@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.MonHoc;
+import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.KhoaService;
 import huce.cntt.oop.doan.service.MonHocService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -23,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 public class QLMHController {
     @FXML
@@ -78,12 +83,14 @@ public class QLMHController {
 
     private ObservableList<MonHoc> observableList;
 
-    private MonHocService service;
-    private KhoaService khoaService;
+    private final MonHocService service = MonHocService.getInstance();
+    private final KhoaService khoaService = KhoaService.getInstance();
+    private Stage stage;
+    private GiangVien giangVien;
 
-    public QLMHController() {
-        this.service = MonHocService.getInstance();
-        this.khoaService = KhoaService.getInstance();
+    public QLMHController(Stage stage, GiangVien giangVien) {
+        this.giangVien = giangVien;
+        this.stage = stage;
     }
 
     @FXML
@@ -105,6 +112,12 @@ public class QLMHController {
         observableList = FXCollections.observableArrayList();
         observableList.addAll(monHocs);
         tableView.setItems(observableList);
+
+        thoat.setOnAction(e -> {
+            if (!thoat.isPressed()) {
+                thoat();
+            }
+        });
 
         timKiemMonHoc.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -260,5 +273,11 @@ public class QLMHController {
 
     private List<MonHoc> layTatCaMonHoc() {
         return service.layTatCaMonHoc();
+    }
+
+    private void thoat() {
+        Scene trangChu = LoadTrangChu.loadTrangChu(stage, VaiTro.NVDT, giangVien);
+        stage.setScene(trangChu);
+        stage.show();
     }
 }
