@@ -4,12 +4,13 @@ import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadDiemCaNhan;
 import huce.cntt.oop.doan.loader.LoadDiemHocPhan;
-import huce.cntt.oop.doan.loader.LoadMonHoc;
 import huce.cntt.oop.doan.loader.LoadSinhVien;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class TrangChuController {
@@ -84,7 +85,7 @@ public class TrangChuController {
         if (nutSinhVien.isPressed()) {
             return;
         }
-        Scene sinhVien = LoadSinhVien.loadSinhVien(stage);
+        Scene sinhVien = LoadSinhVien.loadSinhVien(stage, giangVien);
         stage.setScene(sinhVien);
         stage.show();
     }
@@ -93,7 +94,7 @@ public class TrangChuController {
         if (nutDiemCaNhan.isPressed()) {
             return;
         }
-        Scene diemCaNhan = LoadDiemCaNhan.loadDiemCaNhan(stage);
+        Scene diemCaNhan = LoadDiemCaNhan.loadDiemCaNhan(stage, giangVien);
         stage.setScene(diemCaNhan);
         stage.show();
     }
@@ -102,9 +103,12 @@ public class TrangChuController {
         if (nutMonHoc.isPressed()) {
             return;
         }
-        Scene monHoc = LoadMonHoc.loadMonHoc();
-        stage.setScene(monHoc);
-        stage.show();
+        // Scene monHoc = LoadMonHoc.loadMonHoc();
+        // stage.setScene(monHoc);
+        // stage.show();
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setContentText("Failed");
+        alert.show();
     }
 
     private void loadDiemHocPhan() {
@@ -115,5 +119,4 @@ public class TrangChuController {
         stage.setScene(lopHocPhan);
         stage.show();
     }
-
 }
