@@ -3,15 +3,19 @@ package huce.cntt.oop.doan.controller;
 import java.util.List;
 
 import huce.cntt.oop.doan.entities.DiemCaNhan;
+import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.SinhVien;
+import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
+import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemCaNhanService;
 import huce.cntt.oop.doan.service.SinhVienService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -24,17 +28,14 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class DiemCaNhanController {
-    private IDiemCaNhanService diemCaNhanService;
-    private ISinhVienService sinhVienService;
+    private IDiemCaNhanService diemCaNhanService = DiemCaNhanService.getInstance();
+    private ISinhVienService sinhVienService = SinhVienService.getInstance();
     private Stage stage;
+    private GiangVien giangVien;
 
-    public DiemCaNhanController() {
-        this.diemCaNhanService = DiemCaNhanService.getInstance();
-        this.sinhVienService = SinhVienService.getInstance();
-    }
-
-    public DiemCaNhanController(Stage stage) {
+    public DiemCaNhanController(Stage stage, GiangVien giangVien) {
         this.stage = stage;
+        this.giangVien = giangVien;
     }
 
     @FXML
@@ -56,7 +57,9 @@ public class DiemCaNhanController {
     @FXML
     private TextField hocLucTLTextField;
     @FXML
-    private Button nutLoadLai;
+    private Button nutRefresh;
+    @FXML
+    private Button nutQuayLai;
     @FXML
     private TextField lopQuanLiTextField;
     @FXML 
@@ -110,13 +113,24 @@ public class DiemCaNhanController {
             }
         });
 
-        nutLoadLai.setOnAction(e -> {
-            if (!nutLoadLai.isPressed()) {
+        nutRefresh.setOnAction(e -> {
+            if (!nutRefresh.isPressed()) {
                 data.clear();
                 hoTenTextField.clear();
                 khoaTextField.clear();
                 lopQuanLiTextField.clear();
                 maSVTextField.clear();
+            }
+        });
+
+        nutQuayLai.setOnAction(e -> {
+            if (!nutQuayLai.isPressed()) {
+                quayLaiHome();
+            }
+        });
+        layScene().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                quayLaiHome();
             }
         });
 
@@ -242,5 +256,15 @@ public class DiemCaNhanController {
         } else {
             return "Kém";
         }
+    }
+
+    private Scene layScene(){
+        return LoadTrangChu.loadTrangChu(stage, VaiTro.NVDT, giangVien);
+    }
+
+    private void quayLaiHome() {
+        Scene home = layScene();
+        stage.setScene(home);
+        stage.show();
     }
 }
