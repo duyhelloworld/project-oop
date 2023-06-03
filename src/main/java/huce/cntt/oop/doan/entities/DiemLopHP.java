@@ -13,11 +13,12 @@ public class DiemLopHP {
     private Float diemTongKetHe4;
     private String diemChu;
     private String tenLopMonHoc;
+    private Integer maLopHP;
 
     public DiemLopHP() {
     }
 
-    public DiemLopHP(Integer MSSV, String hoVaTen, String lopQL, Float diemChuyenCan, Float diemGiuaKi, Float diemQuaTrinh, Float diemCuoiKi, Float diemTongKet, Float diemTongKetHe4, String diemChu, String tenLopMonHoc) {
+    public DiemLopHP(Integer MSSV, String hoVaTen, String lopQL, Float diemChuyenCan, Float diemGiuaKi, Float diemQuaTrinh, Float diemCuoiKi, Float diemTongKet, Float diemTongKetHe4, String diemChu, String tenLopMonHoc, Integer maLopHP) {
         this.MSSV = MSSV;
         this.hoVaTen = hoVaTen;
         this.lopQL = lopQL;
@@ -30,6 +31,21 @@ public class DiemLopHP {
         this.diemChu = diemChu;
         this.tenLopMonHoc = tenLopMonHoc;
     }
+
+
+    public Integer getMaLopHP() {
+        return this.maLopHP;
+    }
+
+    public void setMaLopHP(Integer maLopHP) {
+        this.maLopHP = maLopHP;
+    }
+
+    public DiemLopHP maLopHP(Integer maLopHP) {
+        setMaLopHP(maLopHP);
+        return this;
+    }
+
 
     public String getTenLopMonHoc(){
         return this.tenLopMonHoc;
