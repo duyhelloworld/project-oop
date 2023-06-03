@@ -1,29 +1,28 @@
 package huce.cntt.oop.doan.loader;
 
-import java.io.IOException;
-
 import huce.cntt.oop.doan.App;
-import huce.cntt.oop.doan.controller.HomeSinhVienController;
+import huce.cntt.oop.doan.controller.TrangChuController;
 import huce.cntt.oop.doan.entities.GiangVien;
+import huce.cntt.oop.doan.entities.VaiTro;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class LoadSinhVien {
-    private static String path = "/view/HomeSinhVien.fxml";
+public class LoadTrangChu {
+    private static String path = "/view/TrangChu.fxml";
 
-    public static Scene loadSinhVien(Stage stage, GiangVien giangVien) { 
+    public static Scene loadTrangChu(Stage stage, VaiTro vaiTro, GiangVien giangVien) { 
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
-            HomeSinhVienController homeController = new HomeSinhVienController(stage, giangVien);
-            loader.setController(homeController);
-            
+            TrangChuController trangChuController = new TrangChuController(vaiTro, giangVien, stage);
+            loader.setController(trangChuController);
+
             // CSS
-            
+        
             Pane root = loader.load();
             return new Scene(root);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

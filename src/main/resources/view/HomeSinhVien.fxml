@@ -16,10 +16,9 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="722.0" prefWidth="1206.0"
-    fx:controller="huce.cntt.oop.doan.controller.XemSuaXoaSinhVienController"
+<Pane prefHeight="722.0" prefWidth="1206.0"
     maxHeight="-Infinity" maxWidth="-Infinity"
-    xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
     <children>
         <Label layoutX="67.0" layoutY="31.0" text="Nhập thông tin:">
             <font>
@@ -115,6 +114,7 @@
         </TableView>
         <Button fx:id="nutTimKiem" layoutX="791.0" layoutY="28.0" mnemonicParsing="false"
             text="Tìm kiếm" />
+        <Label layoutX="870.0" layoutY="30.0" text="Click tìm kiếm 3 lần để reload lại trang!" />
         <Button fx:id="nutXoa" layoutX="1105.0" layoutY="29.0" mnemonicParsing="false"
             prefHeight="26.0" prefWidth="89.0" text="Xóa SV">
             <font>
@@ -167,9 +167,11 @@
         <ChoiceBox fx:id="lopQuanLiChoiceBox" layoutX="826.0" layoutY="522.0" prefHeight="25.0"
             prefWidth="267.0" />
 
+        <Button fx:id="nutThem" layoutX="740.0" layoutY="587.0" mnemonicParsing="false"
+            prefHeight="25.0" prefWidth="80.0" text="Thêm" />
         <Button fx:id="nutLuu" layoutX="826.0" layoutY="587.0" mnemonicParsing="false"
             prefHeight="25.0" prefWidth="92.0" text="Lưu" />
         <Button fx:id="nutQuayLai" layoutX="1002.0" layoutY="587.0" mnemonicParsing="false"
             prefHeight="25.0" prefWidth="83.0" text="Quay lại" />
     </children>
-</AnchorPane>
+</Pane>

@@ -27,11 +27,14 @@ public class LopService implements ILopService {
     public List<String> layTenCacLopQuanLiTheoKhoa(String tenKhoa) {
         List<String> kq = new ArrayList<>();
         try {
-            PreparedStatement statement = access.getStatement("SELECT ten_lop_quan_li FROM LopQuanLi INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa WHERE khoa.ten_khoa = ?");
+            PreparedStatement statement = access.getStatement("SELECT " + 
+            "ten_lop_quan_li FROM LopQuanLi " +
+            "INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa " +
+            "WHERE ten_khoa = ?");
             statement.setString(1, tenKhoa);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-               kq.add(resultSet.getString("ten_lop_quan_li"));
+                kq.add(resultSet.getString("ten_lop_quan_li"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,20 +43,8 @@ public class LopService implements ILopService {
     }
 
     @Override
-    public void themSinhVienVaoLopQuanLi(Integer mssv, Integer maLopQuanLi) throws SQLException {
-        PreparedStatement statement = access.getStatement("INSERT INTO `lopquanli_sinhvien` (ma_lop_quan_li, mssv) VALUES (?, ?)");
-            statement.setInt(1, maLopQuanLi);
-            statement.setInt(2, mssv);
-
-            int soDongAnhHuong = statement.executeUpdate();
-            if (soDongAnhHuong != 1) {
-                throw new SQLException("Có lỗi trong lúc chèn");
-            }
-    }
-
-    @Override
-    public void capNhatLopQuanLi(SinhVien SinhVien) throws SQLException {
-        PreparedStatement statement = access.getStatement("UPDATE Lopquanli_SinhVien SET ma_lop_quan_li = " + SinhVien.getMaLopQuanLi() + " WHERE mssv = " + SinhVien.getMaSo());
+    public void capNhatLopQuanLi(SinhVien SinhVien) throws Exception {
+        PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ma_lop_quan_li = " + SinhVien.getMaLopQuanLi() + " WHERE mssv = " + SinhVien.getMaSo());
         int rowAffected = statement.executeUpdate();
         if (rowAffected != 1) {
             throw new SQLException("Có 1 số lỗi xảy ra với hệ thống. Hãy quay lại sau!");
@@ -62,20 +53,20 @@ public class LopService implements ILopService {
     }
 
     @Override
-    public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws SQLException {
-        PreparedStatement statement = access.getStatement("DELETE FROM LopQuanLi_SinhVien WHERE mssv = " + mssv);
+    public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws Exception {
+        PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ma_lop_quan_li = NULL WHERE mssv = " + mssv);
         int rowAffected = statement.executeUpdate();
         if (rowAffected < 1) {
-            throw new SQLException("Không tồn tại sinh viên mang mã số này");
-        }
+            throw new IllegalArgumentException("Không tồn tại sinh viên mang mã số này");
+        } 
         access.closeConnection(statement);
     }
 
     @Override
-    public int laySoLopMonHocDangHoc(Integer mssv) throws SQLException {
+    public int laySoLopMonHocDangHoc(Integer mssv) throws Exception {
         PreparedStatement statement = access.getStatement("SELECT COUNT(*) FROM diemsinhvien WHERE mssv = " + mssv);
-        ResultSet resultSet = statement.executeQuery();
         int count = 0;
+        ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             count = resultSet.getInt(1);
         }
@@ -84,12 +75,31 @@ public class LopService implements ILopService {
     }
 
     @Override
-    public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws SQLException {
+    public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws Exception {
         PreparedStatement statement = access.getStatement("DELETE FROM diemsinhvien WHERE mssv = " + mssv);
         int rowAffected = statement.executeUpdate();
         if (rowAffected < 1) {
             throw new SQLException("Không tồn tại sinh viên mang mã số này");
         }
         access.closeConnection(statement);
+    }
+
+    @Override
+    public Integer checkKhoa(String tenLopQuanLi, String tenKhoa) {
+        PreparedStatement statement = access.getStatement("SELECT " +
+        "ma_lop_quan_li " +
+        "FROM lopquanli " + 
+        "INNER JOIN KHOA ON lopquanli.ma_khoa = khoa.ma_khoa " + 
+        "WHERE ten_lop_quan_li = '" + tenLopQuanLi + "'' AND ten_khoa = '" + tenKhoa + "'");
+
+        try {
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }    
 }
