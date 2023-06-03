@@ -41,7 +41,7 @@ public class DataAccess {
             if (properties.containsKey("url")) {
                 url = properties.getProperty("url");
             } else {
-                url = "jdbc:mysql://localhost:3306/" + dbName;
+                url = "jdbc:mysql://localhost/" + dbName;
             }
 
             conn = DriverManager.getConnection(url, usr, pss);

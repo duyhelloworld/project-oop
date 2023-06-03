@@ -3,10 +3,6 @@ package huce.cntt.oop.doan;
 import java.io.IOException;
 
 import huce.cntt.oop.doan.loader.LoadMonHoc;
-import huce.cntt.oop.doan.loader.LoadDiemCaNhan;
-import huce.cntt.oop.doan.loader.LoadLogin;
-import huce.cntt.oop.doan.loader.LoadSinhVien;
-import huce.cntt.oop.doan.loader.LoadHome;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,6 +13,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         // Scene home = LoadSinhVien.loadSinhVien();
         Scene home = LoadMonHoc.loadMonHoc();
+        // Scene home = LoadDiemHP.loadDiemHP();
         primaryStage.setScene(home);
         // Scene QLsinhVien = LoadSinhVien.loadSinhVien();
         // primaryStage.setScene(QLsinhVien);
@@ -24,8 +21,11 @@ public class App extends Application {
         // Scene QLdiemCaNhan = LoadDiemCaNhan.loadDiemCaNhan();
         // primaryStage.setScene(QLdiemCaNhan);
 
-        Scene login = LoadLogin.loadLogin();
-        primaryStage.setScene(login);
+        // Scene QLMH = LoadMonHoc.loadMonHoc();
+        // primaryStage.setScene(QLMH);
+
+        // Scene login = LoadLogin.loadLogin();
+        // primaryStage.setScene(login);
 
         // Scene trangChu = LoadHome.loadTrangChu();
         // primaryStage.setScene(trangChu);
@@ -36,5 +36,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        // System.out.println(MonHocService.getInstance().timKiemMonHocTheoTen("Lập trình C++"));
     }
 }

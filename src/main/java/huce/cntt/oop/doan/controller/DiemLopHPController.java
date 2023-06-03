@@ -72,7 +72,7 @@ public class DiemLopHPController {
         cotGPA.setCellValueFactory(new PropertyValueFactory<>("diem_he_so_4"));
         cotDiemChu.setCellValueFactory(new PropertyValueFactory<>("diem_chu"));
 
-        List<DiemLopHP> diem = layTatCaDiem();
+        List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
         observableList.addAll(diem);
         tableView.setItems(observableList);

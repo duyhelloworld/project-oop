@@ -163,8 +163,7 @@ public class DiemLopHPService implements IDiemLopService{
             "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc "+
             "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc "+
             "INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv "+
-            "INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li "
-            
+            "INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li "            
         );
         try {
             ResultSet result = statement.executeQuery();
