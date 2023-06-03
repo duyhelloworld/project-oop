@@ -9,6 +9,8 @@ import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,9 +53,9 @@ public class DiemLopHPController {
     @FXML
     private TableColumn<DiemLopHP, Float> cotDiemKT;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotGPA;
+    private TableColumn<DiemLopHP, String> cotGPA;
     @FXML
-    private TableColumn<DiemLopHP, DiemChu> cotDiemChu;
+    private TableColumn<DiemLopHP, String> cotDiemChu;
     // @FXML
     // private TableColumn<DiemLopHP, > cot;
     @FXML
@@ -79,11 +81,11 @@ public class DiemLopHPController {
         cotHoTen.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
         cotLopQL.setCellValueFactory(new PropertyValueFactory<>("lopQL"));
         cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<>("diemChuyenCan"));
-        cotDiemGK.setCellValueFactory(new PropertyValueFactory<>("diemGK"));
-        cotDiemQT.setCellValueFactory(new PropertyValueFactory<>("diemQT"));
-        cotDiemKT.setCellValueFactory(new PropertyValueFactory<>("diemKT"));
-        cotGPA.setCellValueFactory(new PropertyValueFactory<>("GPA"));
-        cotDiemChu.setCellValueFactory(new PropertyValueFactory<>("diemChu"));
+        cotDiemGK.setCellValueFactory(new PropertyValueFactory<>("diemGiuaKi"));
+        cotDiemQT.setCellValueFactory(new PropertyValueFactory<>("diemQuaTrinh"));
+        cotDiemKT.setCellValueFactory(new PropertyValueFactory<>("diemKetThuc"));
+        cotGPA.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemHe4().toString()));
+        cotDiemChu.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemChu()));
 
         List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
@@ -154,10 +156,8 @@ public class DiemLopHPController {
     public void setItemsForChoiceBox(String tenMon) {
         List<DiemLopHP> danhSachLopHP = service.layDanhSachLopHPTheoMon(tenMon);
 
-        // Xóa items cũ của ChoiceBox (nếu có)
         lop.getItems().clear();
 
-        // Thêm items mới vào ChoiceBox
         for (DiemLopHP diemLopHP : danhSachLopHP) {
             lop.getItems().add(diemLopHP.getTenLopMonHoc());
         }

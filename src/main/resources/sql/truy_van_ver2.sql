@@ -1,4 +1,4 @@
--- Active: 1670603812210@@127.0.0.1@3306@doanoop
+-- Active: 1683203836476@@127.0.0.1@3306@doanoop
 use doanoop;
 
 SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta 
@@ -93,3 +93,11 @@ SELECT lmh.ten_lop_mon_hoc
 FROM monhoc mh
 INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 WHERE mh.ten_mon_hoc = 'Lập trình C++';
+
+SELECT 
+sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki
+FROM MonHoc mh
+INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
+INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
+INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv
+INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li;
