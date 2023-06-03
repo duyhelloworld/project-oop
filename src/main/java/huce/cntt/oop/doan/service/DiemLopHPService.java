@@ -24,13 +24,12 @@ public class DiemLopHPService implements IDiemLopService{
 
     @Override
     public boolean xoaDiemLopHP(Integer MSSV) throws SQLException {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'xoaDiemLopHP'");
     }
 
     @Override
     public List<DiemLopHP> capNhatDiemLopHP(Integer mssv, Float diem) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'capNhatDiemLopHP'");
     }
     
@@ -39,27 +38,7 @@ public class DiemLopHPService implements IDiemLopService{
     public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop) {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement(
-            "SELECT sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, ROUND((dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2, 2) as diem_qt, dsv.diem_cuoi_ki, Round((0.3*(dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2  + 0.7*dsv.diem_cuoi_ki), 2) as diem_tong_ket, "+
-            "CASE "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 8.5 THEN 'A' "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 8.0 THEN 'B+' "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 7.0 THEN 'B' "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 6.5 THEN 'C+' "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 5.5 THEN 'C' "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 5.0 THEN 'D+' "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 4.0 THEN 'D' "+
-                    "ELSE 'F' "+
-                "END AS diem_chu, "+
-                "CASE "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 8.5 THEN 4.0 "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 8.0 THEN 3.5 "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 7.0 THEN 3.0 "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 6.5 THEN 2.5 "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 5.5 THEN 2.0 "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 5.0 THEN 1.5 "+
-                    "WHEN ((0.3 * (dsv.diem_chuyen_can + dsv.diem_giua_ki) / 2) + (0.7 * dsv.diem_cuoi_ki)) >= 4.0 THEN 1.0 "+
-                    "ELSE 0.0 "+
-                "END AS diem_he_so_4  "+
+            "SELECT sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki"+
             "FROM monhoc mh "+
             "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc "+
             "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc "+

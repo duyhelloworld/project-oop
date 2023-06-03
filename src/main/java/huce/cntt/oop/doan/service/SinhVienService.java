@@ -78,8 +78,7 @@ public class SinhVienService implements ISinhVienService {
                 temp.setMaSo(maso);
                 temp.setHoTen(new HoTen(result.getString("ho_ten")));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
-                temp.setNgaySinh(
-                        result.getDate("ngay_sinh").toLocalDate());
+                temp.setNgaySinh(result.getDate("ngay_sinh").toLocalDate());
                 temp.setQueQuan(new DiaChi(result.getString("que_quan")));
                 temp.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_thuong_tru")));
                 temp.setSoDienThoai(result.getString("so_dien_thoai"));
@@ -114,8 +113,7 @@ public class SinhVienService implements ISinhVienService {
                 temp.setMaSo(result.getInt("mssv"));
                 temp.setHoTen(new HoTen(result.getString("ho_ten")));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
-                temp.setNgaySinh(
-                    result.getDate("ngay_sinh").toLocalDate());
+                temp.setNgaySinh(result.getDate("ngay_sinh").toLocalDate());
                 temp.setQueQuan(new DiaChi(result.getString("que_quan")));
                 temp.setDiaChiThuongTru(new DiaChi(result.getString("dia_chi_thuong_tru")));
                 temp.setEmail(result.getString("email"));
