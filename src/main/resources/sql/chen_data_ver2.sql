@@ -23,8 +23,8 @@ VALUES
     ("66IT2", 4);
 
 INSERT INTO GiangVien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_hien_tai, que_quan, email, so_dien_thoai, mat_khau) VALUES
-    ('Nguyễn Văn An', 1, '1990-01-01', '1, 3, Quang Trung, Hà Đông', 'Trung Lương, Bình Lục, Hà Nam', 'nguyenvanan@huce.edu.vn', '0123456789', '00010001'),
-    ('Nguyễn Thị Bình', 0, '1991-02-02', '1, Thành Công, Quang Trung, Ha Đông', 'Phố Hàng, Hoàn Kiếm, Hà Nội', 'nguyenthibinh@huce.edu.vn', '0987654321', '00010002'),
+    ('Nguyễn Văn An', 1, '1990-01-01', '1, 3, Quang Trung, Hà Đông', 'Trung Lương, Bình Lục, Hà Nam', 'nguyenvanan@huce.edu.vn', '0123456789', '11111111'),
+    ('Nguyễn Thị Bình', 0, '1991-02-02', '1, Thành Công, Quang Trung, Ha Đông', 'Phố Hàng, Hoàn Kiếm, Hà Nội', 'nguyenthibinh@huce.edu.vn', '0987654321', '22222222'),
     ('Trần Văn Cường', 1, '1992-03-03', '1, Nguyễn Trãi, Thanh Xuân', 'Đại La, Hai Bà Trưng, Hà Nội', 'tranvancuong@huce.edu.vn', '0369841527', '00010003'),
     ('Lê Thị Dung', 0, '1993-04-04', '2, Hoàng Diệu, Ba Đình', 'Kim Ngưu, Hai Bà Trưng, Hà Nội', 'lethidung@huce.edu.vn', '0765214896', '00010004'),
     ('Hoàng Thị Hoa', 0, '1995-06-06', '9, Nguyễn Chí Thanh, Đống Đa', 'Thái Bình, Thái Bình', 'hoangthihoa@huce.edu.vn', '0932154876', '00010006'),
