@@ -3,27 +3,27 @@ package huce.cntt.oop.doan.entities;
 import java.util.Objects;
 
 public class Khoa {
-    private Integer ma_khoa;
+    private Integer maKhoa;
 
-    private String ten_khoa;
+    private String tenKhoa;
 
     public Khoa() {
     }
 
     public Integer getMaKhoa() {
-        return this.ma_khoa;
+        return this.maKhoa;
     }
 
-    public void setMaKhoa(Integer ma_khoa) {
-        this.ma_khoa = ma_khoa;
+    public void setMaKhoa(Integer maKhoa) {
+        this.maKhoa = maKhoa;
     }
 
     public String getTenKhoa() {
-        return this.ten_khoa;
+        return this.tenKhoa;
     }
 
-    public void setTenKhoa(String ten_khoa) {
-        this.ten_khoa = ten_khoa;
+    public void setTenKhoa(String tenKhoa) {
+        this.tenKhoa = tenKhoa;
     }
 
     @Override
@@ -34,16 +34,15 @@ public class Khoa {
             return false;
         }
         Khoa khoa = (Khoa) o;
-        return Objects.equals(ma_khoa, khoa.ma_khoa) 
-        && Objects.equals(ten_khoa, khoa.ten_khoa);
+        return Objects.equals(maKhoa, khoa.maKhoa) 
+            && Objects.equals(tenKhoa, khoa.tenKhoa);
     }
 
     @Override
     public String toString() {
-        return "{" +
-            " mã khoa ='" + getMaKhoa() + "'" +
-            ", tên khoa='" + getTenKhoa() + "'" +
-            "}";
+        return
+            "\tMã khoa = " + getMaKhoa() + "\n" +
+            "\tTên khoa = " + getTenKhoa();
     }
     
 
