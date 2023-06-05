@@ -1,17 +1,23 @@
 package huce.cntt.oop.doan.controller;
 
+import java.util.Optional;
+
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadDiemCaNhan;
 import huce.cntt.oop.doan.loader.LoadDiemHocPhan;
+import huce.cntt.oop.doan.loader.LoadLogin;
 import huce.cntt.oop.doan.loader.LoadMonHoc;
 import huce.cntt.oop.doan.loader.LoadSinhVien;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class TrangChuController {
@@ -51,7 +57,7 @@ public class TrangChuController {
     @FXML
     private Button nutLopHocPhan;
     @FXML
-    private Button dangXuat;
+    private Button nutDangXuat;
 
     @FXML
     public void initialize() {
@@ -79,6 +85,9 @@ public class TrangChuController {
         });
         nutDiemCaNhan.setOnAction(e -> {
             loadDiemCaNhan();
+        });
+        nutDangXuat.setOnAction(e -> {
+            loadDangXuat();
         });
     }
 
@@ -116,5 +125,26 @@ public class TrangChuController {
         Scene lopHocPhan = LoadDiemHocPhan.loadDiemLopHP(stage, giangVien);
         stage.setScene(lopHocPhan);
         stage.show();
+    }
+
+    private void loadDangXuat() {
+        if (nutDangXuat.isPressed()) {
+            return;
+        }
+        String duongDanAnhDangXuat = getClass().getResource("/dang-xuat-khoi-trai-dat.jpg").toExternalForm();
+        Image image = new Image(duongDanAnhDangXuat);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(500);
+        imageView.setPreserveRatio(true);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText("");
+        alert.getDialogPane().setGraphic(imageView);
+        alert.setHeight(340);
+        Optional<ButtonType> dangXuat = alert.showAndWait();
+        if (dangXuat.isPresent() && dangXuat.get() == ButtonType.OK) {
+            Scene loginn = LoadLogin.loadLoginScreen(stage);
+            stage.setScene(loginn);
+            stage.show();
+        }
     }
 }
