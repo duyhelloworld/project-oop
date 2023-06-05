@@ -1,7 +1,7 @@
 package huce.cntt.oop.doan.entities;
 import java.util.Objects;
 
-public class DiemLopHP {
+public class DiemLopHocPhan {
     private Integer MSSV;
     private String hoTen;
     private String lopQL;
@@ -15,9 +15,8 @@ public class DiemLopHP {
     private String tenLopMonHoc;
     private Integer maLopHP;
 
-    public DiemLopHP() {
+    public DiemLopHocPhan() {
     }
-
 
     public Integer getMaLopHP() {
         return this.maLopHP;
@@ -121,10 +120,10 @@ public class DiemLopHP {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof DiemLopHP)) {
+        if (!(o instanceof DiemLopHocPhan)) {
             return false;
         }
-        DiemLopHP diemLopHP = (DiemLopHP) o;
+        DiemLopHocPhan diemLopHP = (DiemLopHocPhan) o;
         return Objects.equals(MSSV, diemLopHP.MSSV) && Objects.equals(hoTen, diemLopHP.hoTen) && Objects.equals(lopQL, diemLopHP.lopQL) && Objects.equals(diemChuyenCan, diemLopHP.diemChuyenCan) && Objects.equals(diemGiuaKi, diemLopHP.diemGiuaKi) && Objects.equals(diemQuaTrinh, diemLopHP.diemQuaTrinh) && Objects.equals(diemCuoiKi, diemLopHP.diemCuoiKi) && Objects.equals(diemTongKet, diemLopHP.diemTongKet) && Objects.equals(diemHe4, diemLopHP.diemHe4) && Objects.equals(diemChu, diemLopHP.diemChu);
     }
 

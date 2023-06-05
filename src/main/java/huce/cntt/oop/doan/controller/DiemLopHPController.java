@@ -3,13 +3,11 @@ package huce.cntt.oop.doan.controller;
 import java.util.List;
 import java.util.Optional;
 
-import huce.cntt.oop.doan.entities.DiemChu;
-import huce.cntt.oop.doan.entities.DiemLopHP;
+import huce.cntt.oop.doan.entities.DiemLopHocPhan;
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,27 +35,25 @@ public class DiemLopHPController {
     }
 
     @FXML
-    private TableView<DiemLopHP> tableView;
+    private TableView<DiemLopHocPhan> tableView;
     @FXML
-    private TableColumn<DiemLopHP, Integer> cotMSSV;
+    private TableColumn<DiemLopHocPhan, Integer> cotMSSV;
     @FXML
-    private TableColumn<DiemLopHP, String> cotHoTen;
+    private TableColumn<DiemLopHocPhan, String> cotHoTen;
     @FXML
-    private TableColumn<DiemLopHP, String> cotLopQL;
+    private TableColumn<DiemLopHocPhan, String> cotLopQL;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotDiemChuyenCan;
+    private TableColumn<DiemLopHocPhan, Float> cotDiemChuyenCan;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotDiemGK;
+    private TableColumn<DiemLopHocPhan, Float> cotDiemGK;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotDiemQT;
+    private TableColumn<DiemLopHocPhan, Float> cotDiemQT;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotDiemKT;
+    private TableColumn<DiemLopHocPhan, Float> cotDiemKT;
     @FXML
-    private TableColumn<DiemLopHP, String> cotGPA;
+    private TableColumn<DiemLopHocPhan, String> cotGPA;
     @FXML
-    private TableColumn<DiemLopHP, String> cotDiemChu;
-    // @FXML
-    // private TableColumn<DiemLopHP, > cot;
+    private TableColumn<DiemLopHocPhan, String> cotDiemChu;
     @FXML
     private ComboBox<String> timKiemTheo;
     @FXML
@@ -71,7 +67,7 @@ public class DiemLopHPController {
     @FXML
     private Button thoat;
 
-    private ObservableList<DiemLopHP> observableList;
+    private ObservableList<DiemLopHocPhan> observableList;
     
     @FXML
     public void initialize(){
@@ -87,7 +83,7 @@ public class DiemLopHPController {
         cotGPA.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemHe4().toString()));
         cotDiemChu.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemChu()));
 
-        List<DiemLopHP> diem = service.layTatCaDiem();
+        List<DiemLopHocPhan> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
         observableList.addAll(diem);
         tableView.setItems(observableList);
@@ -154,11 +150,11 @@ public class DiemLopHPController {
     }
     
     public void setItemsForChoiceBox(String tenMon) {
-        List<DiemLopHP> danhSachLopHP = service.layDanhSachLopHPTheoMon(tenMon);
+        List<DiemLopHocPhan> danhSachLopHP = service.layDanhSachLopHPTheoMon(tenMon);
 
         lop.getItems().clear();
 
-        for (DiemLopHP diemLopHP : danhSachLopHP) {
+        for (DiemLopHocPhan diemLopHP : danhSachLopHP) {
             lop.getItems().add(diemLopHP.getTenLopMonHoc());
         }
     }
@@ -170,7 +166,7 @@ public class DiemLopHPController {
     }
 
     private void xoa() {
-        DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
+        DiemLopHocPhan diem = tableView.getSelectionModel().getSelectedItem();
 
         if (diem == null) {
             return;

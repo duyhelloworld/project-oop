@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
-import huce.cntt.oop.doan.entities.DiemLopHP;
+import huce.cntt.oop.doan.entities.DiemLopHocPhan;
 import huce.cntt.oop.doan.interfaces.IDiemLopService;
 
 public class DiemLopHPService implements IDiemLopService{
@@ -28,15 +28,15 @@ public class DiemLopHPService implements IDiemLopService{
     }
 
     @Override
-    public List<DiemLopHP> capNhatDiemLopHP(Integer mssv, Float diem) {
+    public List<DiemLopHocPhan> capNhatDiemLopHP(Integer mssv, Float diem) {
         
         throw new UnsupportedOperationException("Unimplemented method 'capNhatDiemLopHP'");
     }
     
 
     @Override
-    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop) {
-        List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
+    public List<DiemLopHocPhan> layDiemLopHPTheoTenMon(String tenMon, String tenLop) {
+        List<DiemLopHocPhan> kq = new ArrayList<DiemLopHocPhan>();
         PreparedStatement statement = access.getStatement(
             "SELECT sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki"+
             "FROM monhoc mh "+
@@ -45,14 +45,13 @@ public class DiemLopHPService implements IDiemLopService{
             "INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv "+
             "INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li "+
             "WHERE mh.ten_mon_hoc = ? AND lmh.ten_lop_mon_hoc = ?"
-            
         );
         try {
             statement.setString(1, "%" + tenMon + "%");
             statement.setString(0, "%" + tenLop + "%");
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                DiemLopHP temp = new DiemLopHP();
+                DiemLopHocPhan temp = new DiemLopHocPhan();
                 temp.setMSSV(result.getInt("mssv"));
                 temp.setHoTen(result.getString("ho_ten"));
                 temp.setLopQL(result.getString("ten_lop_quan_li"));
@@ -69,13 +68,13 @@ public class DiemLopHPService implements IDiemLopService{
     }
 
     @Override
-    public List<DiemLopHP> layDiemLopHPTheoMaMon(Integer maMon) {
+    public List<DiemLopHocPhan> layDiemLopHPTheoMaMon(Integer maMon) {
         throw new UnsupportedOperationException("Unimplemented method 'layDiemLopHPTheoMaMon'");
     }
 
     @Override
-    public List<DiemLopHP> layDanhSachLopHPTheoMon(String tenMon) {
-        List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
+    public List<DiemLopHocPhan> layDanhSachLopHPTheoMon(String tenMon) {
+        List<DiemLopHocPhan> kq = new ArrayList<DiemLopHocPhan>();
         PreparedStatement statement = access.getStatement(
             "SELECT lmh.ten_lop_mon_hoc " +
             "FROM monhoc mh " +
@@ -86,7 +85,7 @@ public class DiemLopHPService implements IDiemLopService{
             statement.setString(1, "%" + tenMon + "%");
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                DiemLopHP temp = new DiemLopHP();
+                DiemLopHocPhan temp = new DiemLopHocPhan();
                 temp.setTenLopMonHoc(result.getString("ten_lop_mon_hoc"));
                 kq.add(temp);
             }
@@ -109,8 +108,8 @@ public class DiemLopHPService implements IDiemLopService{
     }
 
     @Override
-    public List<DiemLopHP> layTatCaDiem() {
-        List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
+    public List<DiemLopHocPhan> layTatCaDiem() {
+        List<DiemLopHocPhan> kq = new ArrayList<DiemLopHocPhan>();
         PreparedStatement statement = access.getStatement("SELECT " +
         "sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki " +
         "FROM MonHoc mh " +
@@ -121,7 +120,7 @@ public class DiemLopHPService implements IDiemLopService{
         try {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                DiemLopHP temp = new DiemLopHP();
+                DiemLopHocPhan temp = new DiemLopHocPhan();
                 temp.setMSSV(result.getInt("mssv"));
                 temp.setHoTen(result.getString("ho_ten"));
                 temp.setLopQL(result.getString("ten_lop_quan_li"));

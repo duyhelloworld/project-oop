@@ -3,20 +3,20 @@ package huce.cntt.oop.doan.interfaces;
 import java.sql.SQLException;
 import java.util.List;
 
-import huce.cntt.oop.doan.entities.DiemLopHP;
+import huce.cntt.oop.doan.entities.DiemLopHocPhan;
 
 public interface IDiemLopService {
-    public List<DiemLopHP> layTatCaDiem();
+    public List<DiemLopHocPhan> layTatCaDiem();
 
-    public List<DiemLopHP> layDiemLopHPTheoMaMon(Integer maMon);
+    public List<DiemLopHocPhan> layDiemLopHPTheoMaMon(Integer maMon);
 
-    public List<DiemLopHP> layDanhSachLopHPTheoMon(String tenMon);
+    public List<DiemLopHocPhan> layDanhSachLopHPTheoMon(String tenMon);
     
     public boolean xoaDiemLopHP(Integer MSSV) throws SQLException;
 
-    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop);
+    public List<DiemLopHocPhan> layDiemLopHPTheoTenMon(String tenMon, String tenLop);
 
-    public List<DiemLopHP> capNhatDiemLopHP(Integer mssv, Float diem);
+    public List<DiemLopHocPhan> capNhatDiemLopHP(Integer mssv, Float diem);
 
     public boolean xoa(Integer maLop, Integer mssv) throws SQLException;
 }
