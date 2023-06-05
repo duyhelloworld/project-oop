@@ -2,6 +2,7 @@ package huce.cntt.oop.doan;
 
 import java.io.IOException;
 
+import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.loader.LoadLogin;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        Scene login = LoadLogin.getScene(primaryStage);
+        Scene login = LoadLogin.loadLoginScreen(primaryStage);
         primaryStage.setScene(login);
 
         primaryStage.setTitle("HUCE app");
@@ -21,6 +22,12 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-        // System.out.println(MonHocService.getInstance().timKiemMonHocTheoTen("Lập trình C++"));
+        SinhVien sinhVien = new SinhVien();
+        try {
+            sinhVien.setDiaChiThuongTru("1, 1, Hà Nam");
+            System.out.println(sinhVien);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
