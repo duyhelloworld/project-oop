@@ -77,8 +77,8 @@ public class QLMHController {
     @FXML
     private Button thoat;
 
-    private MonHoc monHoc;
-    private Alert alert;
+    // private MonHoc monHoc;
+    // private Alert alert;
     private ToggleGroup group;
 
     private ObservableList<MonHoc> observableList;
