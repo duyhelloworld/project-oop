@@ -8,5 +8,4 @@ public interface IDiemCaNhanService {
 
     // Xem
     public List<DiemCaNhan> layDiemCaNhanTheoMaSo(Integer maSo);
-
 }

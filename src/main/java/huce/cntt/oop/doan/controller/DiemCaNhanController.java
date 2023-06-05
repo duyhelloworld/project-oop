@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -88,13 +89,15 @@ public class DiemCaNhanController {
     private TableColumn<DiemCaNhan, Float> cotDiemTongKetHe4;
     @FXML
     private TableColumn<DiemCaNhan, String> cotDiemChu;
+    @FXML
+    private Label hocKi;
 
     private Alert alert;
     private ObservableList<DiemCaNhan> data;
 
     @FXML
     public void initialize() {
-        alert = new Alert(AlertType.NONE);
+        alert = new Alert(AlertType.INFORMATION);
         data = FXCollections.observableArrayList();
 
         showBangDiemCaNhan();
@@ -198,7 +201,7 @@ public class DiemCaNhanController {
         }
     }
 
-    private Integer layMaSoSV(){
+    private Integer layMaSoSV() {
         String string = maSVTextField.getText();
         if (string.isBlank()) {
             return null;
