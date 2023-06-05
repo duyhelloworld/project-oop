@@ -69,7 +69,7 @@
                         <PropertyValueFactory property="diaChiThuongTru" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotKhoa" editable="false" prefWidth="59.0" text="Khoa">
+                <TableColumn fx:id="cotTenKhoa" editable="false" prefWidth="59.0" text="Khoa">
                     <cellValueFactory>
                         <PropertyValueFactory property="khoa" />
                     </cellValueFactory>
@@ -90,7 +90,7 @@
                         <PropertyValueFactory property="nienKhoa" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotLopQuanLi" editable="false" prefWidth="95.0"
+                <TableColumn fx:id="cotTenLopQuanLi" editable="false" prefWidth="95.0"
                     text="Lớp quản lí">
                     <cellValueFactory>
                         <PropertyValueFactory property="tenLopQuanLi" />
@@ -100,12 +100,6 @@
                     text="MaLopQuanLi">
                     <cellValueFactory>
                         <PropertyValueFactory property="maLopQuanLi" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="cotMaKhoa" editable="false" prefWidth="3.0"
-                    text="MaKhoa">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="maKhoa" />
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="cotXoa" editable="false" visible="false" prefWidth="47.0" text="Xóa">
