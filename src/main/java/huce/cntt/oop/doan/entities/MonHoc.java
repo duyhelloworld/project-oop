@@ -22,16 +22,6 @@ public class MonHoc {
     public MonHoc() {
     }
 
-    public MonHoc(Integer maMon, String tenMon, Integer soTinChi, String monTienQuyet, Boolean batBuoc, String khoa, String moTa) {
-        this.maMon = maMon;
-        this.tenMon = tenMon;
-        this.soTinChi = soTinChi;
-        this.monTienQuyet = monTienQuyet;
-        this.batBuoc = batBuoc;
-        this.khoa = khoa;
-        this.moTa = moTa;
-    }
-
     public Integer getMaMon() {
         return this.maMon;
     }
@@ -92,41 +82,6 @@ public class MonHoc {
         this.moTa = moTa;
     }
 
-    public MonHoc maMon(Integer maMon) {
-        setMaMon(maMon);
-        return this;
-    }
-
-    public MonHoc tenMon(String tenMon) {
-        setTenMon(tenMon);
-        return this;
-    }
-
-    public MonHoc soTinChi(Integer soTinChi) {
-        setSoTinChi(soTinChi);
-        return this;
-    }
-
-    public MonHoc monTienQuyet(String monTienQuyet) {
-        setMonTienQuyet(monTienQuyet);
-        return this;
-    }
-
-    public MonHoc batBuoc(Boolean batBuoc) {
-        setBatBuoc(batBuoc);
-        return this;
-    }
-
-    public MonHoc khoa(String khoa) {
-        setKhoa(khoa);
-        return this;
-    }
-
-    public MonHoc moTa(String moTa) {
-        setMoTa(moTa);
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -135,13 +90,14 @@ public class MonHoc {
             return false;
         }
         MonHoc monHoc = (MonHoc) o;
-        return Objects.equals(maMon, monHoc.maMon) && Objects.equals(tenMon, monHoc.tenMon) && Objects.equals(soTinChi, monHoc.soTinChi) && Objects.equals(monTienQuyet, monHoc.monTienQuyet) && Objects.equals(batBuoc, monHoc.batBuoc) && Objects.equals(khoa, monHoc.khoa) && Objects.equals(moTa, monHoc.moTa);
+        return Objects.equals(maMon, monHoc.maMon) 
+            && Objects.equals(tenMon, monHoc.tenMon) 
+            && Objects.equals(soTinChi, monHoc.soTinChi) 
+            && Objects.equals(monTienQuyet, monHoc.monTienQuyet) 
+            && Objects.equals(batBuoc, monHoc.batBuoc) 
+            && Objects.equals(khoa, monHoc.khoa) 
+            && Objects.equals(moTa, monHoc.moTa);
     }
-
-
-    
-
-    
 
     @Override
     public String toString() {
