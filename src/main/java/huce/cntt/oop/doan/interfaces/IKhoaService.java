@@ -9,5 +9,5 @@ public interface IKhoaService {
 
     public List<Khoa> layTatCaCacKhoa();
 
-    public String layKhoaTheoMa(Integer ma_khoa);
+    public String layKhoaTheoMa(Integer maKhoa);
 }

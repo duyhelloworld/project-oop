@@ -1,15 +1,19 @@
 package huce.cntt.oop.doan.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.entities.exception.CapNhatException;
+import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
+import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
+import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
+import huce.cntt.oop.doan.entities.exception.EmailException;
+import huce.cntt.oop.doan.entities.exception.KhoaLopException;
+import huce.cntt.oop.doan.entities.exception.NgayGioException;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
@@ -71,7 +75,7 @@ public class HomeSinhVienController {
     @FXML
     private TableColumn<SinhVien, String> cotDiaChiThuongTru;
     @FXML
-    private TableColumn<SinhVien, String> cotKhoa;
+    private TableColumn<SinhVien, String> cotTenKhoa;
     @FXML
     private TableColumn<SinhVien, String> cotEmail;
     @FXML
@@ -79,11 +83,9 @@ public class HomeSinhVienController {
     @FXML
     private TableColumn<SinhVien, Integer> cotNienKhoa;
     @FXML
-    private TableColumn<SinhVien, String> cotLopQuanLi;
+    private TableColumn<SinhVien, String> cotTenLopQuanLi;
     @FXML
     private TableColumn<SinhVien, Integer> cotMaLopQuanLi;
-    @FXML
-    private TableColumn<SinhVien, Integer> cotMaKhoa;
 
     @FXML
     private TextField maSoTextField;
@@ -112,7 +114,6 @@ public class HomeSinhVienController {
     private DatePicker ngayVaoTruongDatePicker;
     @FXML
     private ChoiceBox<String> lopQuanLiChoiceBox;
-
     @FXML
     private TextField searchTextField;
     @FXML
@@ -129,12 +130,6 @@ public class HomeSinhVienController {
     private ObservableList<SinhVien> data;
     private Alert alert;
     private int soLuotTimKiem;
-
-    private final DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-            .appendOptional(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            .appendOptional(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            .toFormatter();
 
     @FXML
     private Button nutLuu;
@@ -167,12 +162,12 @@ public class HomeSinhVienController {
                 timKiem();
             }
         });
-
         searchComboBox.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 timKiem();
             }
         });
+
         nutXoa.setOnAction(e -> xoa());
 
         nutThem.setOnAction(e -> {
@@ -188,7 +183,7 @@ public class HomeSinhVienController {
         }
         sinhVien = layGiaTriPromptHoacText();
         try {
-            sinhVienService.capNhatThongTinSinhVien(sinhVien);
+            sinhVienService.capNhatThongTinSinhVien(sinhVien);            
             lopService.capNhatLopQuanLi(sinhVien);
             data.clear();
             clearDataDaNhap();
@@ -197,12 +192,11 @@ public class HomeSinhVienController {
             alert.setContentText("Sinh Viên đã cập nhật : \n" + sinhVien.toString());
             alert.setHeight(400);
             alert.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (CapNhatException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
+            alert.show();
         }
-        alert.show();
     }
 
     private void timKiem() {
@@ -230,7 +224,8 @@ public class HomeSinhVienController {
                 break;
             case "Mã số":
                 try {
-                    int mssv = Integer.parseInt(searchString);
+                    sinhVien.setMaSo(searchString);
+                    int mssv = sinhVien.getMaSo();
                     int soSinhVienHienTai = sinhVienService.tongSoSinhVien();
                     if (mssv < 1 || mssv >= soSinhVienHienTai) {
                         alert.setContentText("Lỗi : vượt khoảng sinh viên đang học tại trường!\nHiện tại có " + soSinhVienHienTai + " sinh viên.");
@@ -239,8 +234,8 @@ public class HomeSinhVienController {
                     }
                     data.clear();
                     data.setAll(sinhVienService.timKiemSinhVienTheoMaSo(mssv));
-                } catch (NumberFormatException e) {
-                    alert.setContentText("Giá trị không đúng");
+                } catch (ChuyenSoException e) {
+                    alert.setContentText(e.getMessage());
                     alert.show();
                     return;
                 }
@@ -255,8 +250,6 @@ public class HomeSinhVienController {
                     alert.show();
                     return;
                 }
-                return;
-            default:
                 return;
             }
             alert.close();
@@ -322,15 +315,14 @@ public class HomeSinhVienController {
         cotGioiTinh.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGioiTinhString()));
         cotQueQuan.setCellValueFactory(new PropertyValueFactory<>("queQuan"));
         cotDiaChiThuongTru.setCellValueFactory(new PropertyValueFactory<>("diaChiThuongTru"));
-        cotKhoa.setCellValueFactory(new PropertyValueFactory<>("khoa"));
+        cotTenKhoa.setCellValueFactory(new PropertyValueFactory<>("khoa"));
         cotEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         cotSoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
         cotNienKhoa.setCellValueFactory(new PropertyValueFactory<>("nienKhoa"));
-        cotLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("tenLopQuanLi"));
-        cotMaKhoa.setCellValueFactory(new PropertyValueFactory<>("maKhoa"));
+        cotTenLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("tenLopQuanLi"));
+
         cotMaLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("maLopQuanLi"));
         cotMaLopQuanLi.setVisible(false);
-        cotMaKhoa.setVisible(false);
         bangSinhVien.setItems(data);
 
         bangSinhVien.setRowFactory(tableView -> {
@@ -354,72 +346,50 @@ public class HomeSinhVienController {
     private void clearDataDaNhap() {
         maSoTextField.clear();
         hoTenTextField.clear();
-        hoTenTextField.setPromptText("");
-        ngaySinhDatePicker.setPromptText("");
         queQuanTextField.clear();
-        queQuanTextField.setPromptText("");
         diaChiThuongTruTextField.clear();
-        diaChiThuongTruTextField.setPromptText("");
         emailTextField.clear();
-        emailTextField.setPromptText("");
         soDienThoaiTextField.clear();
-        soDienThoaiTextField.setPromptText("");
-        ngayVaoTruongDatePicker.setPromptText("");
         gioiTinhToggle.selectToggle(null);
         khoaComboBox.getEditor().clear();
+        lopQuanLiChoiceBox.setValue(null);
+        ngaySinhDatePicker.setValue(null);
+        ngayVaoTruongDatePicker.setValue(null);
     }
 
     private SinhVien layGiaTriPromptHoacText() {
         sinhVien = new SinhVien();
         try {
             Integer maSo = Integer.valueOf(maSoTextField.getText());
-            HoTen hoTen = new HoTen(
-                hoTenTextField.getText().isEmpty() ? hoTenTextField.getPromptText() : hoTenTextField.getText());
-        DiaChi queQuan = new DiaChi(
-                queQuanTextField.getText().isEmpty() ? queQuanTextField.getPromptText() : queQuanTextField.getText());
-        DiaChi diaChiHienTai = new DiaChi(
-                diaChiThuongTruTextField.getText().isEmpty() ? diaChiThuongTruTextField.getPromptText()
-                        : diaChiThuongTruTextField.getText());
-        LocalDate ngaySinh = ngaySinhDatePicker.getValue();
-        if (ngaySinh == null && ngaySinhDatePicker.getPromptText() != null) {
-            ngaySinh = LocalDate.parse(ngaySinhDatePicker.getPromptText(), formatter);
-        }
-        String soDienThoai = soDienThoaiTextField.getText().isEmpty() ? soDienThoaiTextField.getPromptText()
-                : soDienThoaiTextField.getText();
-        String email = emailTextField.getText().isEmpty() ? emailTextField.getPromptText() : emailTextField.getText();
+            HoTen hoTen = new HoTen(hoTenTextField.getText());
+            DiaChi queQuan = new DiaChi(queQuanTextField.getText());
+            DiaChi diaChiThuongTru = new DiaChi(diaChiThuongTruTextField.getText());
+            LocalDate ngaySinh = ngaySinhDatePicker.getValue();
+            String soDienThoai = soDienThoaiTextField.getText();
+            String email = emailTextField.getText();
+            LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
+            Boolean gioiTinh = nam.isSelected();
+            if (nu.isSelected()) {
+                gioiTinh = false;
+            }
+            String tenLopQuanLi = lopQuanLiChoiceBox.getValue();
+            String tenKhoa = khoaComboBox.getValue();
+            Integer maLopQuanLi = lopService.checkKhoa(tenLopQuanLi, tenKhoa);
 
-        LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
-        if (ngayVaoTruong == null && ngayVaoTruongDatePicker.getPromptText() != null) {
-            ngayVaoTruong = LocalDate.parse(ngayVaoTruongDatePicker.getPromptText(), formatter);
-        }
-
-        Boolean gioiTinh = nam.isSelected();
-        if (nu.isSelected()) {
-            gioiTinh = false;
-        }
-        String tenLopQuanLi = lopQuanLiChoiceBox.getValue();
-        
-        String tenKhoa = khoaComboBox.getValue();
-
-        int selectedIndex = bangSinhVien.getSelectionModel().getFocusedIndex();
-        SinhVien sv = bangSinhVien.getItems().get(selectedIndex);
-
-        Integer maKhoa = sv.getMaKhoa(), maLopQuanLi = sv.getMaLopQuanLi();
-        
-        sinhVien.setMaSo(maSo);
-        sinhVien.setHoTen(hoTen);
-        sinhVien.setGioiTinh(gioiTinh);
-        sinhVien.setQueQuan(queQuan);
-        sinhVien.setDiaChiThuongTru(diaChiHienTai);
-        sinhVien.setSoDienThoai(soDienThoai);
-        sinhVien.setEmail(email);
-        sinhVien.setNgaySinh(ngaySinh);
-        sinhVien.setNgayVaoTruong(ngayVaoTruong);
-        sinhVien.setTenLopQuanLi(tenLopQuanLi);
-        sinhVien.setKhoa(tenKhoa);
-        sinhVien.setMaKhoa(maKhoa);
-        sinhVien.setMaLopQuanLi(maLopQuanLi);
-        } catch (IllegalArgumentException e) {
+            sinhVien.setMaSo(maSo);
+            sinhVien.setHoTen(hoTen);
+            sinhVien.setGioiTinh(gioiTinh);
+            sinhVien.setQueQuan(queQuan.toString());
+            sinhVien.setDiaChiThuongTru(diaChiThuongTru.toString());
+            sinhVien.setSoDienThoai(soDienThoai);
+            sinhVien.setEmail(email);
+            sinhVien.setNgaySinh(ngaySinh);
+            sinhVien.setNgayVaoTruong(ngayVaoTruong);
+            sinhVien.setTenLopQuanLi(tenLopQuanLi);
+            sinhVien.setKhoa(tenKhoa);
+            sinhVien.setMaLopQuanLi(maLopQuanLi);
+        } catch (ChuyenDiaChiException | ChuyenHoTenException | ChuyenSoException | NgayGioException | 
+        KhoaLopException | EmailException e) {
             alert = new Alert(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
@@ -431,14 +401,14 @@ public class HomeSinhVienController {
 
     private void renderSinhVienKhiClick(SinhVien sv) {
         maSoTextField.setText(sv.getMaSo().toString());
-        hoTenTextField.setPromptText(sv.getHoTen().toString());
-        ngaySinhDatePicker.setPromptText(sv.getNgaySinh().toString());
-        queQuanTextField.setPromptText(sv.getQueQuan().toString());
-        diaChiThuongTruTextField.setPromptText(sv.getDiaChiThuongTru().toString());
-        emailTextField.setPromptText(sv.getEmail());
-        soDienThoaiTextField.setPromptText(sv.getSoDienThoai());
+        hoTenTextField.setText(sv.getHoTen().toString());
+        ngaySinhDatePicker.setValue(sv.getNgaySinh());
+        queQuanTextField.setText(sv.getQueQuan().toString());
+        diaChiThuongTruTextField.setText(sv.getDiaChiThuongTru().toString());
+        emailTextField.setText(sv.getEmail());
+        soDienThoaiTextField.setText(sv.getSoDienThoai());
         khoaComboBox.setValue(sv.getKhoa());
-        ngayVaoTruongDatePicker.setPromptText(sv.getNgayVaoTruong().toString());
+        ngayVaoTruongDatePicker.setValue(sv.getNgayVaoTruong());
         if (sv.getGioiTinh()) {
             gioiTinhToggle.selectToggle(nam);
         } else {
@@ -458,13 +428,7 @@ public class HomeSinhVienController {
     }
 
     private List<SinhVien> loadDanhSachSinhVien() {
-        List<SinhVien> list = new ArrayList<>();
-        try {
-            list = sinhVienService.layTatCaSinhVien();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
+        return sinhVienService.layTatCaSinhVien();
     }
 
     private void quayLaiHome() {

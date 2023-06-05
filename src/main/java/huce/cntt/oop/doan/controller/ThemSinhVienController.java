@@ -2,20 +2,24 @@ package huce.cntt.oop.doan.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Optional;
 
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.SinhVien;
-import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
+import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
+import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
+import huce.cntt.oop.doan.entities.exception.EmailException;
+import huce.cntt.oop.doan.entities.exception.KhoaLopException;
+import huce.cntt.oop.doan.entities.exception.NgayGioException;
+import huce.cntt.oop.doan.entities.exception.ThieuGiaTriException;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
 import huce.cntt.oop.doan.interfaces.ILopService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 import huce.cntt.oop.doan.loader.LoadSinhVien;
-import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.KhoaService;
 import huce.cntt.oop.doan.service.LopService;
 import huce.cntt.oop.doan.service.SinhVienService;
@@ -33,13 +37,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 public class ThemSinhVienController {
 
     private final ISinhVienService sinhVienService = SinhVienService.getInstance();
     private final ILopService lopService = LopService.getInstance();
     private final IKhoaService khoaService = KhoaService.getInstance();
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private Stage stage;
     private GiangVien giangVien;
 
@@ -86,18 +90,15 @@ public class ThemSinhVienController {
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
 
-        hoTenTextField.setPromptText("ít nhất 3 từ...");
-        queQuanTextField.setPromptText("xã ..., huyện..., tỉnh ...");
+        hoTenTextField.setPromptText("...   ....   ...");
+        queQuanTextField.setPromptText("xã ..., huyện ..., tỉnh ...");
         diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận ...");
-        soDienThoaiTextField.setPromptText("10 chữ số");
-
+        soDienThoaiTextField.setPromptText("XXX XXX XXXX");
         ngaySinhDatePicker.setPromptText("dd/MM/yyyy");
         ngayVaoTruongDatePicker.setPromptText("dd/MM/yyyy");
 
-        formatDate(ngaySinhDatePicker, "dd/MM/yyyy", "dd/MM/yy");
-        formatDate(ngayVaoTruongDatePicker, "dd/MM/yyyy", "dd/MM/yy");
-
-        emailTextField.setPromptText("...");
+        formatDate(ngaySinhDatePicker);
+        formatDate(ngayVaoTruongDatePicker);
 
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
         ObservableList<String> O_khoa = FXCollections.observableArrayList(tenCacKhoa);
@@ -124,6 +125,7 @@ public class ThemSinhVienController {
                 }
             }
         });
+
         stage.setOnCloseRequest(e -> {
             if (coThayDoiChuaLuu()) {
                 canhBaoChuaLuu();
@@ -133,8 +135,8 @@ public class ThemSinhVienController {
         });
     }
 
+
     void themSinhVien() {
-        alert.setAlertType(AlertType.ERROR);
         try {
             SinhVien sinhVien = kiemTraDuLieu();            
             int mssv = sinhVienService.themMoiSinhVien(sinhVien);
@@ -142,11 +144,15 @@ public class ThemSinhVienController {
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Thêm sinh viên thành công!\nMã số sinh viên mới là " + mssv);
             alert.show();
-        } catch (NullPointerException e) {
+        } catch (NgayGioException | 
+                ChuyenDiaChiException | 
+                ChuyenHoTenException | 
+                ChuyenSoException | 
+                EmailException | 
+                ThieuGiaTriException | 
+                KhoaLopException e) {
+            alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage()); 
-            alert.show();
-        } catch (IllegalArgumentException e) {
-            alert.setContentText("Lỗi thông tin.\n" + e.getMessage());
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,51 +169,66 @@ public class ThemSinhVienController {
     }
 
     private boolean coThayDoiChuaLuu() {
-        HoTen hoTen = new HoTen(hoTenTextField.getText());
-        DiaChi queQuan = new DiaChi(queQuanTextField.getText());
-        DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
+        String hoTen = hoTenTextField.getText();
+        String queQuan = queQuanTextField.getText();
+        String diaChiHienTai = diaChiHienTaiTextField.getText();
         String soDienThoai = soDienThoaiTextField.getText();
         String email = emailTextField.getText();
         return 
-            (hoTen != null || !hoTen.toString().isBlank()) ||
-            (queQuan != null || !queQuan.toString().isBlank()) ||
-            (diaChiHienTai != null || !diaChiHienTai.toString().isBlank()) || 
-            (soDienThoai != null || !soDienThoai.isBlank()) || 
-            (email != null || !email.isBlank());
+            (hoTen != null && !hoTen.isBlank()) ||
+            (queQuan != null && !queQuan.isBlank()) ||
+            (diaChiHienTai != null && !diaChiHienTai.isBlank()) || 
+            (soDienThoai != null && !soDienThoai.isBlank()) || 
+            (email != null && !email.isBlank());
     }
 
-    private SinhVien kiemTraDuLieu() throws Exception {
+    private SinhVien kiemTraDuLieu() throws NgayGioException, ChuyenHoTenException,
+     ChuyenDiaChiException, ChuyenSoException, EmailException, ThieuGiaTriException, KhoaLopException {
         HoTen hoTen = new HoTen(hoTenTextField.getText());
         DiaChi queQuan = new DiaChi(queQuanTextField.getText());
         DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
         String soDienThoai = soDienThoaiTextField.getText();
         String email = emailTextField.getText();
-        
         LocalDate ngaySinh = ngaySinhDatePicker.getValue();
         LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
-
-        if (hoTen == null || hoTen.toString().isBlank() ||
-            queQuan == null || queQuan.toString().isBlank() ||
-            diaChiHienTai == null || diaChiHienTai.toString().isBlank() || 
-            soDienThoai == null || soDienThoai.isBlank() || 
-            email == null || email.isBlank()) {
-            throw new NullPointerException("Bạn đang điền thiếu 1 trường nào đó!\nHãy kiểm tra lại");
-        }
-        if (ngaySinh == null || ngayVaoTruong == null) {
-            throw new IllegalArgumentException("Format ngày không thành công!");
-        }
-
         Boolean gioiTinh = nam.isSelected();
         String tenLopQuanLi = lopQuanLiComboBox.getValue();
         String tenKhoa = khoaComboBox.getValue();
 
+        if (hoTen == null || hoTen.toString().isBlank()) {
+            throw new ThieuGiaTriException("họ tên");
+        }
+        if (ngaySinh == null) {
+            throw new ThieuGiaTriException("ngày sinh");
+        }
+        if (queQuan == null || queQuan.toString().isBlank()) {
+            throw new ThieuGiaTriException("quê quán");
+        }
+        if (diaChiHienTai == null || diaChiHienTai.toString().isBlank()) {
+            throw new ThieuGiaTriException("địa chỉ hiện tại");
+        }
+        if (soDienThoai == null || soDienThoai.isBlank()) {
+            throw new ThieuGiaTriException("số điện thoại");
+        }  
+        if (email == null || email.isBlank()) {
+            throw new ThieuGiaTriException("email");
+        }
+        if (tenLopQuanLi == null || tenLopQuanLi.isBlank()) {
+            throw new ThieuGiaTriException("lớp quản lí");
+        }
+        if (tenKhoa == null || tenKhoa.isBlank()) {
+            throw new ThieuGiaTriException("khoa");
+        }
+        if (ngayVaoTruong == null) {
+            throw new ThieuGiaTriException("ngày vào trường");
+        }
+
         SinhVien sinhVien = new SinhVien();
-        sinhVien.setMaSo(null);
         sinhVien.setHoTen(hoTen);
         sinhVien.setGioiTinh(gioiTinh);
         sinhVien.setNgaySinh(ngaySinh);
-        sinhVien.setQueQuan(queQuan);
-        sinhVien.setDiaChiThuongTru(diaChiHienTai);
+        sinhVien.setQueQuan(queQuan.toString());
+        sinhVien.setDiaChiThuongTru(diaChiHienTai.toString());
         sinhVien.setSoDienThoai(soDienThoai);
         sinhVien.setEmail(email);
         sinhVien.setTenLopQuanLi(tenLopQuanLi);
@@ -215,28 +236,24 @@ public class ThemSinhVienController {
         sinhVien.setKhoa(tenKhoa);
         Integer maLop = lopService.checkKhoa(tenLopQuanLi, tenKhoa);
         if (maLop == null) {
-            throw new IllegalArgumentException("Có lỗi ở khoa và lớp quản lí!");
+            throw new KhoaLopException("Có lỗi ở khoa và lớp quản lí!");
         }
         sinhVien.setMaLopQuanLi(maLop);
         return sinhVien;
     }
 
-    private void formatDate(DatePicker datePicker, String shortFormat, String longFormat) {
-        DateTimeFormatter dateFormatter = new DateTimeFormatterBuilder()
-                .appendPattern(shortFormat)
-                .optionalStart()
-                .appendPattern(longFormat)
-                .toFormatter();
-
-        datePicker.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(LocalDate date) {
-                return (date != null) ? dateFormatter.format(date) : "";
-            }
-
-            @Override
-            public LocalDate fromString(String string) {
-                return (string != null && !string.isEmpty()) ? LocalDate.parse(string, dateFormatter) : null;
+    private void formatDate(DatePicker datePicker) {
+        datePicker.getEditor().textProperty().addListener((obser, oldValue, newValue) -> {
+            if (!newValue.isBlank()) {
+                try {
+                    LocalDate date = LocalDate.parse(newValue, dateFormatter);
+                    datePicker.setValue(date);
+                } catch (Exception e) {
+                    datePicker.setValue(null);
+                    alert.setAlertType(AlertType.ERROR);
+                    alert.setContentText("Không thể chuyển đổi giá trị '" + newValue + "' thành ngày/tháng/năm");
+                    alert.show();
+                }
             }
         });
     }

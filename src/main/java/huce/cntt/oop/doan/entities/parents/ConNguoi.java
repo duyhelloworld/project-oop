@@ -4,11 +4,14 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
+import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
+import huce.cntt.oop.doan.entities.exception.EmailException;
+import huce.cntt.oop.doan.entities.exception.NgayGioException;
 import huce.cntt.oop.doan.entities.properties.DiaChi;
 import huce.cntt.oop.doan.entities.properties.HoTen;
 
 public abstract class ConNguoi {
-
     private Integer maso;
 
     private HoTen hoTen;
@@ -17,9 +20,9 @@ public abstract class ConNguoi {
 
     private LocalDate ngaySinh;
 
-    private DiaChi diaChiThuongTru;
-
     private DiaChi queQuan;
+
+    private DiaChi diaChiThuongTru;
 
     private String email;
 
@@ -34,6 +37,14 @@ public abstract class ConNguoi {
 
     public void setMaSo(Integer maso) {
         this.maso = maso;
+    }
+
+    public void setMaSo(String maso) throws ChuyenSoException {
+        if (maso.matches("-?\\d+(\\.\\d+)?")) {
+            this.maso = Integer.parseInt(maso);
+            return;
+        }
+        throw new ChuyenSoException();
     }
 
     public HoTen getHoTen() {
@@ -52,16 +63,20 @@ public abstract class ConNguoi {
         return Date.valueOf(this.ngaySinh);
     }
 
-    public void setNgaySinh(LocalDate ngay_sinh) {
-        if (!ngay_sinh.isBefore(LocalDate.now().minusYears(10))
-            || !ngay_sinh.isAfter(LocalDate.of(1940, 1, 1))) {
-            throw new IllegalArgumentException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 10));
+    public void setNgaySinh(LocalDate ngay_sinh) throws NgayGioException {
+        LocalDate minDate = LocalDate.of(1940, 1, 1);
+        LocalDate maxDate = LocalDate.now().minusYears(10);
+
+        if (ngay_sinh.isBefore(maxDate) && ngay_sinh.isAfter(minDate)) {
+            this.ngaySinh = ngay_sinh;
+            return ;
         }
-        this.ngaySinh = ngay_sinh;
+        throw new NgayGioException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 10));
     }
 
-    public void setNgaySinh(Date ngay_sinh) {
-        this.ngaySinh = ngay_sinh.toLocalDate();
+    public void setNgaySinh(Date ngay_sinh) throws NgayGioException {
+        LocalDate ns =  ngay_sinh.toLocalDate();
+        setNgaySinh(ns);
     }
 
     public Boolean getGioiTinh() {
@@ -76,32 +91,32 @@ public abstract class ConNguoi {
         this.gioiTinh = gioiTinh;
     }
 
-    public DiaChi getDiaChiThuongTru() {
-        return this.diaChiThuongTru;
+    public String getDiaChiThuongTru() {
+        return this.diaChiThuongTru.toString();
     }
 
-    public void setDiaChiThuongTru(DiaChi diaChiThuongTru) {
-        this.diaChiThuongTru = diaChiThuongTru;
+    public void setDiaChiThuongTru(String diaChiThuongTru) throws ChuyenDiaChiException {
+        this.diaChiThuongTru = new DiaChi(diaChiThuongTru);
     }
 
-    public DiaChi getQueQuan() {
-        return this.queQuan;
+    public String getQueQuan() {
+        return this.queQuan.toString();
     }
 
-    public void setQueQuan(DiaChi que_quan) {
-        this.queQuan = que_quan;
+    public void setQueQuan(String que_quan) throws ChuyenDiaChiException {
+        this.queQuan = new DiaChi(que_quan);
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws EmailException {
         if (email == null || email.isBlank()) {
-            return;
+            throw new EmailException("Email trống!!!\nHãy điền 1 email hợp lệ");
         }
         
         if (email.matches(".*@.*")) {
             this.email = email;
             return;
         }
-        throw new IllegalArgumentException("Email sai định dạng\nViết lại với kí tự '@' !");
+        throw new EmailException();
     }
 
     public String getEmail() {
@@ -112,13 +127,13 @@ public abstract class ConNguoi {
         return this.soDienThoai;
     }
 
-    public void setSoDienThoai(String so_dien_thoai) {
+    public void setSoDienThoai(String so_dien_thoai) throws ChuyenSoException {
         String regex = "^0\\d{9}$";
         if (so_dien_thoai.matches(regex)) {    
             this.soDienThoai = so_dien_thoai;
             return;
         }
-        throw new NumberFormatException("Định dạng 'số điện thoại' không đúng!");
+        throw new ChuyenSoException("\"Số điện thoại\" không đúng định dạng!");
     }
 
     @Override

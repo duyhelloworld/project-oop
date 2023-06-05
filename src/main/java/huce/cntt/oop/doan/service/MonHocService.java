@@ -8,6 +8,8 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.MonHoc;
+import huce.cntt.oop.doan.entities.exception.CapNhatException;
+import huce.cntt.oop.doan.entities.exception.XoaException;
 import huce.cntt.oop.doan.interfaces.IMonHocService;
 
 public class MonHocService implements IMonHocService {
@@ -46,7 +48,6 @@ public class MonHocService implements IMonHocService {
                 temp.setMoTa(result.getString("mo_ta"));
                 kq.add(temp);
             }
-            // access.closeConnection(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,7 +78,6 @@ public class MonHocService implements IMonHocService {
                 mh.setMoTa(result.getString("mo_ta"));
                 kq.add(mh);
             }
-            // access.closeConnection(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -143,65 +143,23 @@ public class MonHocService implements IMonHocService {
         return kq;    }
 
     @Override
-    public void capNhatThongTinMonHoc(Integer ma_mon,  MonHoc monHocTruyenVao) {
-    //     MonHoc monHocLayRaTuDatabase = layMonHocTheoMaSo(ma_mon);
+    public void capNhatThongTinMonHoc(MonHoc monHocTruyenVao) throws CapNhatException {
 
-    //     try {
-    //         if (monHocLayRaTuDatabase == null) {
-    //             throw new IllegalArgumentException("Not found 'mon hoc'.ma_mon =  " + ma_mon);
-    //         }
-
-    //         PreparedStatement statement = access.getStatement(
-    //                 "UPDATE MonHoc SET ten_mon_hoc = ?, so_tin_chi = ?, bat_buoc = ?, mon_tien_quyet = ?, mo_ta = ? WHERE ma_mon_hoc = ?");
-    //         if (monHocTruyenVao.getTenMon().equals(monHocLayRaTuDatabase.getTenMon())) {
-    //             statement.setString(1, monHocTruyenVao.getTenMon());
-    //         } else {
-    //             statement.setString(1, monHocLayRaTuDatabase.getTenMon());
-    //         }
-
-    //         if (monHocTruyenVao.getSoTinChi().equals(monHocLayRaTuDatabase.getSoTinChi())) {
-    //             statement.setInt(2, monHocTruyenVao.getSoTinChi());
-    //         } else {
-    //             statement.setInt(2, monHocLayRaTuDatabase.getSoTinChi());
-    //         }
-
-    //         if (monHocTruyenVao.getBatBuoc().equals(monHocLayRaTuDatabase.getBatBuoc())) {
-    //             statement.setBoolean(3, monHocTruyenVao.getBatBuoc());
-    //         } else {
-    //             statement.setBoolean(3, monHocLayRaTuDatabase.getBatBuoc());
-    //         }
-            
-    //         if (monHocTruyenVao.getMonTienQuyet().equals(monHocLayRaTuDatabase.getMonTienQuyet())) {
-    //             statement.setString(4, monHocTruyenVao.getMonTienQuyet());
-    //         } else {
-    //             statement.setString(4, monHocLayRaTuDatabase.getMonTienQuyet());
-    //         }      
-    //         if (monHocTruyenVao.getMoTa().equals(monHocLayRaTuDatabase.getMoTa())) {
-    //             statement.setString(5, monHocTruyenVao.getMoTa());
-    //         } else {
-    //             statement.setString(5, monHocLayRaTuDatabase.getMoTa());
-    //         }         
-    //         statement.setInt(6, ma_mon);
-    //         int rowAffected = statement.executeUpdate();
-    //         if (rowAffected != 1) {
-    //             throw new IllegalStateException("Some error happened when update 'monhoc' with id " + ma_mon);
-    //         }
-
-    //         // access.closeConnection(statement);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
     }
 
     @Override
-    public boolean xoaMonHoc(Integer maMon) throws SQLException {
+    public boolean xoaMonHoc(Integer maMon) throws XoaException {
         String query = "DELETE FROM MonHoc where ma_mon_hoc = "+ maMon;
-        PreparedStatement statement = access.getStatement(query);
-        
-        int rowAffected = statement.executeUpdate();
-        if (rowAffected != 1){
-            throw new SQLException("Unimplemented method 'xoaMonHoc'");
-        }
+       try {
+            PreparedStatement statement = access.getStatement(query);
+            
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected != 1){
+                throw new XoaException("Xóa môn học không thành công do lỗi hệ thống!");
+            }
+       } catch (SQLException e) {
+            throw new XoaException(maMon, "môn học");
+       }
         return true;
     }
 }

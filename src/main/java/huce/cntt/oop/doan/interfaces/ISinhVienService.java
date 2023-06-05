@@ -1,9 +1,11 @@
 package huce.cntt.oop.doan.interfaces;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import huce.cntt.oop.doan.entities.SinhVien;
+import huce.cntt.oop.doan.entities.exception.CapNhatException;
+import huce.cntt.oop.doan.entities.exception.ThemException;
+import huce.cntt.oop.doan.entities.exception.XoaException;
 
 public interface ISinhVienService {
     public List<SinhVien> layTatCaSinhVien();
@@ -16,9 +18,9 @@ public interface ISinhVienService {
 
     public SinhVien timKiemSinhVienTheoEmail(String ten);
 
-    public Integer themMoiSinhVien(SinhVien sinhVien) throws SQLException;
+    public Integer themMoiSinhVien(SinhVien sinhVien) throws ThemException;
 
-    public boolean xoaSinhVienTheoMaSo(Integer mssvs)  throws SQLException, IllegalArgumentException;
+    public boolean xoaSinhVienTheoMaSo(Integer mssvs)  throws XoaException;
 
-    public void capNhatThongTinSinhVien(SinhVien sinhVien) throws SQLException, IllegalArgumentException;
+    public void capNhatThongTinSinhVien(SinhVien sinhVien) throws CapNhatException;
 }
