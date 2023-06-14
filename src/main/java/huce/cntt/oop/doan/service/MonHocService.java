@@ -55,8 +55,7 @@ public class MonHocService implements IMonHocService {
     }
 
     @Override
-    public List<MonHoc> layMonHocTheoMaSo(Integer maso) {
-        List<MonHoc> kq = new ArrayList<MonHoc>();
+    public MonHoc layMonHocTheoMaSo(Integer maso) {
         PreparedStatement statement = access.getStatement(
             "SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta " +
                     "FROM monhoc mh " +
@@ -76,12 +75,12 @@ public class MonHocService implements IMonHocService {
                 mh.setMonTienQuyet(result.getString("mon_tien_quyet"));
                 mh.setKhoa(result.getString("ten_khoa"));
                 mh.setMoTa(result.getString("mo_ta"));
-                kq.add(mh);
+                return mh;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return kq;
+        return null;
     }
 
     @Override
@@ -107,7 +106,7 @@ public class MonHocService implements IMonHocService {
                 temp.setMoTa(result.getString("mo_ta"));
                 kq.add(temp);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return kq;
@@ -136,15 +135,38 @@ public class MonHocService implements IMonHocService {
                 temp.setMoTa(result.getString("mo_ta"));
                 kq.add(temp);
             }
-            // access.closeConnection(statement);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return kq;    }
 
     @Override
-    public void capNhatThongTinMonHoc(MonHoc monHocTruyenVao) throws CapNhatException {
+    public void capNhatThongTinMonHoc(MonHoc monHoc) throws CapNhatException {
+        int maMon = monHoc.getMaMon();
+        MonHoc monHocTrongDb = layMonHocTheoMaSo(maMon);
+    
+        if (monHocTrongDb == null) {
+            throw new CapNhatException("Lỗi : Không tìm thấy môn học với mã " + maMon);
+        }
 
+        try {
+            PreparedStatement statement = access.getStatement("UPDATE MonHoc SET ten_mon_hoc = ?, " +
+            "so_tin_chi = ?, bat_buoc = ?, mon_tien_quyet = ?, mo_ta = ? " + 
+            "WHERE ma_mon_hoc = ?");
+            statement.setString(1, monHoc.getTenMon());
+            statement.setInt(2, monHoc.getSoTinChi());
+            statement.setBoolean(3,  monHoc.getBatBuoc());
+            statement.setString(4, monHoc.getMonTienQuyet());
+            statement.setString(5, monHoc.getMoTa());
+            statement.setInt(6, monHoc.getMaMon());
+
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected != 1) {
+                throw new CapNhatException("Cập nhật không thành công do lỗi hệ thống!");
+            }
+        } catch (SQLException e) {
+            throw new CapNhatException(maMon, "môn học");
+        }
     }
 
     @Override

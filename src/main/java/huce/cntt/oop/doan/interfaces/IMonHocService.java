@@ -9,7 +9,7 @@ import huce.cntt.oop.doan.entities.exception.XoaException;
 public interface IMonHocService {
     public List<MonHoc> layTatCaMonHoc();
 
-    public List<MonHoc> layMonHocTheoMaSo(Integer maso);
+    public MonHoc layMonHocTheoMaSo(Integer maso);
 
     public List<MonHoc> timKiemMonHocTheoTen(String ten);
 
