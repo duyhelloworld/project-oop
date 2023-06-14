@@ -150,7 +150,7 @@
         <Label layoutX="655.0" layoutY="517.0" text="Lớp quản lí :" />
         <TextField fx:id="maSoTextField" layoutX="823.0" layoutY="325.0" prefHeight="26.0"
             prefWidth="273.0" editable="false" />
-        <ComboBox fx:id="khoaComboBox" editable="true" layoutX="823.0" layoutY="365.0"
+        <ComboBox fx:id="khoaComboBox" editable="false" layoutX="823.0" layoutY="365.0"
             prefHeight="26.0"
             prefWidth="273.0" />
         <TextField fx:id="emailTextField" layoutX="824.0" layoutY="413.0" prefHeight="26.0"
@@ -158,7 +158,7 @@
         <DatePicker fx:id="ngayVaoTruongDatePicker" layoutX="825.0" layoutY="469.0"
             prefHeight="26.0"
             prefWidth="269.0" />
-        <ChoiceBox fx:id="lopQuanLiChoiceBox" layoutX="826.0" layoutY="522.0" prefHeight="25.0"
+        <ComboBox fx:id="lopQuanLiComboBox" editable="false" layoutX="826.0" layoutY="522.0" prefHeight="25.0"
             prefWidth="267.0" />
 
         <Button fx:id="nutThem" layoutX="740.0" layoutY="587.0" mnemonicParsing="false"
