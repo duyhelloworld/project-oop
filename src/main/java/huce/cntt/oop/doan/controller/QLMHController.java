@@ -130,7 +130,8 @@ public class QLMHController {
                     case "Mã môn":
                         try {
                             int maMon = Integer.parseInt(searchText);
-                            searchResults = service.layMonHocTheoMaSo(maMon);
+                            searchResults.clear();
+                            searchResults.add(service.layMonHocTheoMaSo(maMon));
                         } catch (NumberFormatException e) {
                             // Hiển thị thông báo lỗi nếu mã môn không hợp lệ
                             Alert alert = new Alert(Alert.AlertType.ERROR);
