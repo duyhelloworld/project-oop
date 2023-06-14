@@ -1,5 +1,5 @@
--- Active: 1670603812210@@127.0.0.1@3306@doanoop
--- CREATE DATABASE DoAnOOP;
+-- Active: 1683203836476@@127.0.0.1@3306@doanoop
+CREATE DATABASE DoAnOOP;
 USE DoAnOOP;
 CREATE TABLE Khoa (
     ma_khoa INT PRIMARY KEY AUTO_INCREMENT,
@@ -55,11 +55,12 @@ CREATE TABLE LopQuanLi (
     Foreign Key (ma_khoa) REFERENCES khoa(ma_khoa),
     Foreign Key (ma_gv) REFERENCES giangvien(ma_gv)
 );
+
 CREATE TABLE SinhVien (
     mssv INT PRIMARY KEY AUTO_INCREMENT,
     ho_ten VARCHAR(100),
     gioi_tinh BIT,
-    ma_lop_quan_li INT,
+    ma_lop_quan_li INT, 
     ngay_sinh DATE,
     dia_chi_thuong_tru VARCHAR(200),
     que_quan VARCHAR(200), 
@@ -75,6 +76,7 @@ CREATE TABLE DiemSinhVien (
     diem_chuyen_can FLOAT,
     diem_giua_ki FLOAT,
     diem_cuoi_ki FLOAT,
+    hocki INT,
     ghi_chu TEXT,
     PRIMARY KEY (mssv, ma_lop_mon_hoc),
     Foreign Key (ma_lop_mon_hoc) REFERENCES LopMonHoc(ma_lop_mon_hoc),
