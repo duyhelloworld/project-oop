@@ -83,19 +83,6 @@ public class SinhVien extends ConNguoi {
         return getNgayVaoTruong().getYear() - 1966;
     }
 
-    public boolean hasNullElement() {
-        return super.getHoTen() == null || super.getHoTen().toString().isBlank() ||
-        super.getGioiTinh() == null || 
-        super.getEmail() == null || super.getEmail().isBlank() ||
-        super.getNgaySinh() == null || 
-        super.getQueQuan() == null || super.getQueQuan().toString().isBlank() || 
-        super.getDiaChiThuongTru() == null || super.getDiaChiThuongTru().toString().isBlank() ||
-        super.getSoDienThoai() == null || super.getSoDienThoai().isBlank() ||
-        khoa == null || khoa.isBlank() ||
-        ngayVaoTruong == null || 
-        tenLopQuanLi == null || tenLopQuanLi.isBlank();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)

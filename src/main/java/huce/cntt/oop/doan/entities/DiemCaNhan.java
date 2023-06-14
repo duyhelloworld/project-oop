@@ -2,8 +2,6 @@ package huce.cntt.oop.doan.entities;
 
 import java.util.Objects;
 
-import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
-
 public class DiemCaNhan {
     private Integer maMon;
     private String tenMon;

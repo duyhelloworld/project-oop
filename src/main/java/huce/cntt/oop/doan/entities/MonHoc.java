@@ -3,8 +3,6 @@ package huce.cntt.oop.doan.entities;
 import java.util.Objects;
 
 public class MonHoc {
-    // private static final int MAX_SO_TIN_CHI = 3;
-
     private Integer maMon;
 
     private String tenMon;
