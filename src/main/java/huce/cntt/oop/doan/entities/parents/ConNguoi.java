@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
+import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
 import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
 import huce.cntt.oop.doan.entities.exception.EmailException;
 import huce.cntt.oop.doan.entities.exception.NgayGioException;
@@ -51,8 +52,8 @@ public abstract class ConNguoi {
         return this.hoTen;
     }
 
-    public void setHoTen(HoTen hoTen) {
-        this.hoTen = hoTen;
+    public void setHoTen(String hoTen) throws ChuyenHoTenException {
+        this.hoTen = new HoTen(hoTen);
     }
 
     public LocalDate getNgaySinh() {
@@ -75,8 +76,8 @@ public abstract class ConNguoi {
     }
 
     public void setNgaySinh(Date ngay_sinh) throws NgayGioException {
-        LocalDate ns =  ngay_sinh.toLocalDate();
-        setNgaySinh(ns);
+        LocalDate ngaySinh =  ngay_sinh.toLocalDate();
+        setNgaySinh(ngaySinh);
     }
 
     public Boolean getGioiTinh() {
@@ -156,7 +157,7 @@ public abstract class ConNguoi {
                 "\tHọ tên = " + getHoTen() + "\n" +
                 "\tGiới tính = " + getGioiTinhString() + "\n" +
                 "\tNgày sinh = " + getNgaySinh() + "\n" +
-                "\tĐịa chỉ hiện tại = " + getDiaChiThuongTru() + "\n" +
+                "\tĐịa chỉ  = " + getDiaChiThuongTru() + "\n" +
                 "\tQuê quán = " + getQueQuan() + "\n" +
                 "\tEmail = " + getEmail() + "\n" +
                 "\tSố điện thoại = " + getSoDienThoai() + "\n";

@@ -14,8 +14,6 @@ import huce.cntt.oop.doan.entities.exception.EmailException;
 import huce.cntt.oop.doan.entities.exception.KhoaLopException;
 import huce.cntt.oop.doan.entities.exception.NgayGioException;
 import huce.cntt.oop.doan.entities.exception.ThieuGiaTriException;
-import huce.cntt.oop.doan.entities.properties.DiaChi;
-import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
 import huce.cntt.oop.doan.interfaces.ILopService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
@@ -86,6 +84,7 @@ public class ThemSinhVienController {
     @FXML
     private void initialize() {
         alert = new Alert(AlertType.INFORMATION);
+
         ToggleGroup namHayNu = new ToggleGroup();
         nam.setToggleGroup(namHayNu);
         nu.setToggleGroup(namHayNu);
@@ -184,9 +183,9 @@ public class ThemSinhVienController {
 
     private SinhVien kiemTraDuLieu() throws NgayGioException, ChuyenHoTenException,
      ChuyenDiaChiException, ChuyenSoException, EmailException, ThieuGiaTriException, KhoaLopException {
-        HoTen hoTen = new HoTen(hoTenTextField.getText());
-        DiaChi queQuan = new DiaChi(queQuanTextField.getText());
-        DiaChi diaChiHienTai = new DiaChi(diaChiHienTaiTextField.getText());
+        String hoTen = hoTenTextField.getText();
+        String queQuan = queQuanTextField.getText();
+        String diaChiHienTai = diaChiHienTaiTextField.getText();
         String soDienThoai = soDienThoaiTextField.getText();
         String email = emailTextField.getText();
         LocalDate ngaySinh = ngaySinhDatePicker.getValue();
@@ -199,13 +198,13 @@ public class ThemSinhVienController {
             throw new ThieuGiaTriException("họ tên");
         }
         if (ngaySinh == null) {
-            throw new ThieuGiaTriException("ngày sinh");
+            throw new ThieuGiaTriException("Ngày sinh");
         }
         if (queQuan == null || queQuan.toString().isBlank()) {
             throw new ThieuGiaTriException("quê quán");
         }
         if (diaChiHienTai == null || diaChiHienTai.toString().isBlank()) {
-            throw new ThieuGiaTriException("địa chỉ hiện tại");
+            throw new ThieuGiaTriException("địa chỉ thường trú");
         }
         if (soDienThoai == null || soDienThoai.isBlank()) {
             throw new ThieuGiaTriException("số điện thoại");
@@ -234,6 +233,7 @@ public class ThemSinhVienController {
         sinhVien.setTenLopQuanLi(tenLopQuanLi);
         sinhVien.setNgayVaoTruong(ngayVaoTruong);
         sinhVien.setKhoa(tenKhoa);
+
         Integer maLop = lopService.checkKhoa(tenLopQuanLi, tenKhoa);
         if (maLop == null) {
             throw new KhoaLopException("Có lỗi ở khoa và lớp quản lí!");

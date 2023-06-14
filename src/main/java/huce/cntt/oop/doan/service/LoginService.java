@@ -9,7 +9,6 @@ import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
 import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
 import huce.cntt.oop.doan.entities.exception.EmailException;
-import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.ILoginService;
 
 public class LoginService implements ILoginService {
@@ -35,7 +34,7 @@ public class LoginService implements ILoginService {
             ResultSet result = statement.executeQuery();
             if (result.next()) {
                 giangVien.setMaSo(result.getInt("ma_gv"));
-                giangVien.setHoTen(new HoTen(result.getString("ho_ten")));
+                giangVien.setHoTen(result.getString("ho_ten"));
                 giangVien.setEmail(result.getString("email"));
                 giangVien.setSoDienThoai(result.getString("so_dien_thoai"));
                 return giangVien;

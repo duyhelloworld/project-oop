@@ -48,7 +48,7 @@ public class SinhVienService implements ISinhVienService {
             while (result.next()) {
                 temp = new SinhVien();
                 temp.setMaSo(result.getInt("mssv"));
-                temp.setHoTen(new HoTen(result.getString("ho_ten")));
+                temp.setHoTen(result.getString("ho_ten"));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
                 temp.setNgaySinh(result.getDate("ngay_sinh"));
                 temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
@@ -83,7 +83,7 @@ public class SinhVienService implements ISinhVienService {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 temp.setMaSo(maso);
-                temp.setHoTen(new HoTen(result.getString("ho_ten")));
+                temp.setHoTen(result.getString("ho_ten"));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
                 temp.setNgaySinh(result.getDate("ngay_sinh"));
                 temp.setQueQuan(result.getString("que_quan"));
@@ -118,7 +118,7 @@ public class SinhVienService implements ISinhVienService {
             while (result.next()) {
                 SinhVien temp = new SinhVien();
                 temp.setMaSo(result.getInt("mssv"));
-                temp.setHoTen(new HoTen(result.getString("ho_ten")));
+                temp.setHoTen(result.getString("ho_ten"));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
                 temp.setNgaySinh(result.getDate("ngay_sinh"));
                 temp.setQueQuan(result.getString("que_quan"));
@@ -152,7 +152,7 @@ public class SinhVienService implements ISinhVienService {
             ResultSet result = statement.executeQuery();
             if (result.next()) {
             temp.setMaSo(result.getInt("mssv"));
-            temp.setHoTen(new HoTen(result.getString("ho_ten")));
+            temp.setHoTen(result.getString("ho_ten"));
             temp.setGioiTinh(result.getBoolean("gioi_tinh"));
             temp.setNgaySinh(
                     result.getDate("ngay_sinh"));
@@ -198,7 +198,7 @@ public class SinhVienService implements ISinhVienService {
                     maSoSinhVien = resultSet.getInt(1);
                 }
             } else {
-                throw new ThemException("Lỗi hệ thống khi chèn sinh viên có mã số " + maSoSinhVien);
+                throw new ThemException("Lỗi hệ thống khi thêm mới sinh viên !");
             }
         } catch (SQLException e) {
             throw new ThemException(maSoSinhVien, "sinh viên");
