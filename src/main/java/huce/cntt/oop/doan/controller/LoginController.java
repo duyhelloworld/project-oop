@@ -68,6 +68,9 @@ public class LoginController {
     private void login() {
         try {
             GiangVien giangVien = layThongTin();
+            // GiangVien giangVienTrongDataBase = new GiangVien();
+            // giangVienTrongDataBase.setMaSo(1);
+            // giangVienTrongDataBase.setPassword("00000000");
             GiangVien giangVienTrongDataBase = loginService
                 .checkLogin(giangVien.getMaSo(), giangVien.getPassword());
             if (giangVienTrongDataBase != null) {

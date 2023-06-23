@@ -78,5 +78,4 @@ public class KhoaService implements IKhoaService {
         PreparedStatement statement = access.getStatement("DELETE FROM khoa_monhoc WHERE ma_mon_hoc = " + maMon);
         int rowAffected = statement.executeUpdate();
     }
-    
 }

@@ -62,8 +62,8 @@ CREATE TABLE SinhVien (
     ma_lop_quan_li INT,
     ngay_sinh DATE,
     dia_chi_thuong_tru VARCHAR(200),
-    que_quan VARCHAR(200), 
-    email VARCHAR(30) UNIQUE, 
+    que_quan VARCHAR(200),
+    email VARCHAR(30) UNIQUE,
     so_dien_thoai CHAR(10) UNIQUE,
     ngay_vao_truong DATE,
     Foreign Key (ma_lop_quan_li) REFERENCES LopQuanLi(ma_lop_quan_li)

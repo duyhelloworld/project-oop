@@ -3,9 +3,9 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"paths": [
-				"${workspace}"
-			],
+			// "paths": [
+			// 	"${workspace}"
+			// ],
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -14,9 +14,9 @@
 			"label": "java : Build JavaFX Application",
 			"detail": "$(tools) Build all the Java projects in workspace.",
 			// Hiep PS
-			// "command": "cd C:/Users/PC/Documents/Giao_Trinh/HDT/DoAn/project-oop; if ($?) {mvn clean javafx:run}"
+			"command": "cd C:/Users/PC/Documents/Giao_Trinh/HDT/DoAn/project-oop; if ($?) {mvn clean javafx:run}"
 			// Duy CMD
-			"command": "cd /d D:/Project_Java/project-oop/quanlisinhvien && mvn clean javafx:run"
+			// "command": "cd /d D:/Project_Java/project-oop/quanlisinhvien && mvn clean javafx:run"
 			// Duy Linux
 			// "command": "cd /media/duyaiti/Project/Project_Java/project-oop/quanlisinhvien && mvn clean javafx:run"
 		}
