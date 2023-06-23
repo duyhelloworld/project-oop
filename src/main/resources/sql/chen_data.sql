@@ -1,4 +1,4 @@
--- Active: 1683203836476@@127.0.0.1@3306@doanoop2
+-- Active: 1683203836476@@127.0.0.1@3306@doanoop
 use doanoop;
 
 INSERT INTO khoa (ten_khoa) VALUES
@@ -7,12 +7,18 @@ INSERT INTO khoa (ten_khoa) VALUES
     ("Kinh Tế"),
     ("Khoa Học Máy Tính");
 
-INSERT INTO `MonHoc` (ten_mon_hoc, so_tin_chi, bat_buoc, ma_mon_tien_quyet, ma_khoa, mo_ta)
- VALUES
-    ("C++", 3, TRUE, NULL, 2, "lập trình với ngôn ngữ c++"),
-    ("Mac-lenin", 3, TRUE, NULL, 1, "triết học Mác - Lênin"),
-    ("CTXH", 2, TRUE, 2, 1, "Chính trị xã hội hiện đại"),
-    ("TRR", 2, FALSE, 0, 2, "Toán rời rạc");
+INSERT INTO `MonHoc` (ten_mon_hoc, so_tin_chi, bat_buoc, mon_tien_quyet, mo_ta)
+VALUES
+    ("Tin học đại cương", 3, TRUE, NULL, "lập trình cơ bản với C, C++"),
+    ("Ngôn ngữ C++", 3, TRUE, "Tin học đại cương", "lập trình với ngôn ngữ c++"),
+    ("Phương pháp lập trình HĐT", 3, TRUE, "Ngôn ngữ C++", "lập trình hướng đối tượng qua Java"),
+    ("Kinh tế vĩ mô", 3, TRUE, NULL, "kinh tế vĩ mô toàn cầu"),
+    ("Toán học tính toán", 3, TRUE, NULL, "lập trình xử lí toán học với Python/Mathematica"),
+    ("Triết học Mác-Lenin", 3, TRUE, NULL, 1, "triết học Mác - Lênin"),
+    ("Chủ Nghĩa XHKH", 2, TRUE, 2, "Triết học Mác-Lenin", "Chủ nghĩa xã hội khoa học"),
+    ("Lập trình linux", 2, FALSE, NULL, 1, "triết học Mác - Lênin"),
+    ("Triết học Mác-Lenin", 3, TRUE, NULL, 1, "triết học Mác - Lênin"),
+    ("Toán Rời Rạc", 2, TRUE, , "Toán rời rạc");
 
 INSERT INTO `LopMonHoc` (ten_lop_mon_hoc, ma_mon_hoc)
 VALUES
@@ -74,10 +80,10 @@ VALUES (1, 1),
         (3, 3),
         (3, 5);
 
-INSERT INTO diemsinhvien (ma_lop_mon_hoc,mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, ghi_chu)
-VALUES  (1, 1, 9.5, 7.8, 9.0, "hoc lai lan 1"),
-        (2, 2, 7.5, 6.5, 6.9, ""),
-        (2, 1, 8.0, 4.5, 4.0, ""),
-        (2, 4, 6.0, 1.0, 1.0, "vi pham quy che"),
-        (2, 5, 4.4, 7.5, 9.0, ""),
-        (2, 6, 7.6, 8.5, 2.5, "");
+INSERT INTO diemsinhvien (ma_lop_mon_hoc,mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hoc_ki, ghi_chu)
+VALUES  (1, 1, 9.5, 7.8, 9.0, 2, "hoc lai lan 1"),
+        (2, 2, 7.5, 6.5, 6.9, 1, ""),
+        (2, 1, 8.0, 4.5, 4.0, 1, ""),
+        (2, 4, 6.0, 1.0, 1.0, 2, "vi pham quy che"),
+        (2, 5, 4.4, 7.5, 9.0, 3, ""),
+        (2, 6, 7.6, 8.5, 2.5, 3, "");
