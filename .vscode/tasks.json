@@ -3,9 +3,9 @@
 	"tasks": [
 		{
 			"type": "shell",
-			// "paths": [
-			// 	"${workspace}"
-			// ],
+			"paths": [
+				"${workspace}"
+			],
 			"group": {
 				"kind": "build",
 				"isDefault": true
