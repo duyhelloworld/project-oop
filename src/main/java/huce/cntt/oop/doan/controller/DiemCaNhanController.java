@@ -6,6 +6,7 @@ import huce.cntt.oop.doan.entities.DiemCaNhan;
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
 import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
@@ -189,7 +190,7 @@ public class DiemCaNhanController {
             List<DiemCaNhan> listDCN = diemCaNhanService.layDiemCaNhanTheoMaSo(mssv);
             data.clear();
             data.setAll(listDCN);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException |DatabaseException  e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
