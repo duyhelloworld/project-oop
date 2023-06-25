@@ -11,6 +11,7 @@ import huce.cntt.oop.doan.entities.exception.CapNhatException;
 import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
 import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
 import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
 import huce.cntt.oop.doan.entities.exception.EmailException;
 import huce.cntt.oop.doan.entities.exception.KhoaLopException;
 import huce.cntt.oop.doan.entities.exception.NgayGioException;
@@ -126,8 +127,8 @@ public class HomeSinhVienController {
 
     private SinhVien sinhVien;
     private ToggleGroup gioiTinhToggle;
-    private ObservableList<SinhVien> data;
-    private Alert alert;
+    private ObservableList<SinhVien> data = FXCollections.observableArrayList();
+    private Alert alert  = new Alert(AlertType.INFORMATION);
     private int soLuotTimKiem;
 
     @FXML
@@ -137,12 +138,19 @@ public class HomeSinhVienController {
 
     @FXML
     public void initialize() {
-        alert = new Alert(AlertType.INFORMATION);
+        try {
+            data.addAll(sinhVienService.layTatCaSinhVien());
+        } catch (DatabaseException e) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("Lỗi text!");
+            alert.show();
+        }
 
-        data = FXCollections.observableArrayList();
-        data.addAll(sinhVienService.layTatCaSinhVien());
+        ngaySinhDatePicker.getEditor().setDisable(true);
+        ngayVaoTruongDatePicker.getEditor().setDisable(true);
 
         showSinhVienTableView();
+        disableChoDenKhiClick(true);
 
         // Set Bool
         gioiTinhToggle = new ToggleGroup();
@@ -156,6 +164,7 @@ public class HomeSinhVienController {
                 luu();
             }
         });
+
         nutQuayLai.setOnAction(e -> {
             if (!nutQuayLai.isPressed()) {
                 if (chuaThayDoi()) {
@@ -163,10 +172,11 @@ public class HomeSinhVienController {
                 } else {
                     if (ok("Bạn có thay đổi chưa lưu.\nLưu ?")) {
                         luu();
-                        quayLaiHome();
                     }
+                    quayLaiHome();
                 }
         }});
+
         nutTimKiem.setOnAction(e -> {
             if (!nutTimKiem.isPressed()) {
                 timKiem();
@@ -191,8 +201,8 @@ public class HomeSinhVienController {
                 } else {
                     if (ok("Bạn có thay đổi chưa lưu.\nLưu ?")) {
                         luu();
-                        doiSceneSangThemSinhVien();
                     }
+                    doiSceneSangThemSinhVien();
                 }
             }
         });
@@ -209,7 +219,8 @@ public class HomeSinhVienController {
             alert.setContentText("Sinh Viên đã cập nhật : \n" + sinhVien.toString());
             alert.setHeight(400);
             alert.show();
-        } catch (CapNhatException e) {
+            disableChoDenKhiClick(true);
+        } catch (CapNhatException | DatabaseException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
@@ -221,8 +232,12 @@ public class HomeSinhVienController {
         soLuotTimKiem++;
         if (searchString.isBlank()) {
             if (soLuotTimKiem >= 3) {
-                loadLaiBang(sinhVienService.layTatCaSinhVien());
-                return;
+                try {
+                    loadLaiBang(sinhVienService.layTatCaSinhVien());
+                } catch (DatabaseException e) {
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
             } else {
                 alert.setAlertType(AlertType.WARNING);
                 alert.setContentText("Ô tìm kiếm trống. Hãy nhập điểu gì đó");
@@ -235,7 +250,12 @@ public class HomeSinhVienController {
         clearDataDaNhap();
         switch (searchComboBox.getSelectionModel().getSelectedItem()) {
             case "Tên sinh viên":
-                loadLaiBang(sinhVienService.timKiemSinhVienTheoTen(searchString));
+                try {
+                    loadLaiBang(sinhVienService.timKiemSinhVienTheoTen(searchString));
+                } catch (DatabaseException e) {
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
                 break;
             case "Mã số":
                 try {
@@ -248,22 +268,21 @@ public class HomeSinhVienController {
                         return;
                     }
                     loadLaiBang(List.of(sinhVienService.timKiemSinhVienTheoMaSo(mssv)));
-                } catch (ChuyenSoException e) {
+                } catch (ChuyenSoException | DatabaseException e) {
                     alert.setContentText(e.getMessage());
                     alert.show();
-                    return;
                 }
+                break;
             case "Email":
                 try {
                     SinhVien sv = new SinhVien();
                     sv.setEmail(searchString);
                     loadLaiBang(List.of(sinhVienService.timKiemSinhVienTheoEmail(searchString)));
-                } catch (Exception e) {
+                } catch (DatabaseException | EmailException e) {
                     alert.setContentText(e.getMessage());
                     alert.show();
-                    return;
                 }
-                return;
+                break;
             }
     }
 
@@ -294,7 +313,7 @@ public class HomeSinhVienController {
                     alert.show();
                 }
             }
-        } catch (XoaException e) {
+        } catch (XoaException | DatabaseException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
@@ -325,6 +344,7 @@ public class HomeSinhVienController {
                     if (ok("Bạn có muốn thay đổi sinh viên này?")) {
                         sinhVien = row.getItem();
                         showDataCapNhatKhiClick(sinhVien);
+                        disableChoDenKhiClick(false);
                     }
                 }
             });
@@ -341,7 +361,7 @@ public class HomeSinhVienController {
         soDienThoaiTextField.clear();
         gioiTinhToggle.selectToggle(null);
         khoaComboBox.getEditor().clear();
-        lopQuanLiComboBox.setValue(null);
+        lopQuanLiComboBox.getEditor().clear();
         ngaySinhDatePicker.setValue(null);
         ngayVaoTruongDatePicker.setValue(null);
     }
@@ -365,7 +385,7 @@ public class HomeSinhVienController {
             String tenKhoa = khoaComboBox.getValue();
             Integer maLopQuanLi = lopService.checkKhoa(tenLopQuanLi, tenKhoa);
             if (maLopQuanLi == null) {
-                throw new KhoaLopException();
+                throw new KhoaLopException("Lỗi đồng bộ giữa khoa và lớp quản lí!");
             }
             if (hoTen == null || hoTen.isBlank()) {
                 throw new ThieuGiaTriException("họ tên");
@@ -412,8 +432,6 @@ public class HomeSinhVienController {
             alert = new Alert(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return sinhVien;
     }
@@ -438,12 +456,14 @@ public class HomeSinhVienController {
         ObservableList<String> tenCacKhoa = FXCollections.observableArrayList(khoaService.layTenTatCaKhoa());
         khoaComboBox.setItems(tenCacKhoa);
 
-        khoaComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldV, tenKhoa) -> {
-            ObservableList<String> tenCacLop = FXCollections.observableArrayList();
-            lopQuanLiComboBox.setValue(null);
-            tenCacLop.addAll(lopService.layTenCacLopQuanLiTheoKhoa(tenKhoa));
-            lopQuanLiComboBox.setItems(tenCacLop);
-        });
+        if (!khoaComboBox.isPressed()) {
+            khoaComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldV, tenKhoa) -> {
+                ObservableList<String> tenCacLop = FXCollections.observableArrayList();
+                lopQuanLiComboBox.setValue(null);
+                tenCacLop.addAll(lopService.layTenCacLopQuanLiTheoKhoa(tenKhoa));
+                lopQuanLiComboBox.setItems(tenCacLop);
+            });
+        }
     }
 
     private boolean chuaThayDoi() {
@@ -492,5 +512,18 @@ public class HomeSinhVienController {
     private void loadLaiBang(List<SinhVien> list) {
         data.clear();
         data.setAll(list);
+    }
+
+    private void disableChoDenKhiClick(boolean on) {
+        hoTenTextField.setDisable(on);
+        maSoTextField.setDisable(on);
+        ngaySinhDatePicker.setDisable(on);
+        queQuanTextField.setDisable(on);
+        diaChiThuongTruTextField.setDisable(on);
+        emailTextField.setDisable(on);;
+        soDienThoaiTextField.setDisable(on);
+        khoaComboBox.setDisable(on);
+        lopQuanLiComboBox.setDisable(on);
+        ngayVaoTruongDatePicker.setDisable(on);
     }
 }

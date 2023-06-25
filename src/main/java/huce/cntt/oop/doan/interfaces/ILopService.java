@@ -11,9 +11,9 @@ import huce.cntt.oop.doan.entities.exception.XoaException;
 public interface ILopService {
     public List<String> layTenCacLopQuanLiTheoKhoa(String tenKhoa);
 
-    public void capNhatLopQuanLi(SinhVien SinhVien) throws CapNhatException;
-
     public int laySoLopMonHocDangHoc(Integer mssv);
+
+    public void capNhatLopQuanLi(SinhVien SinhVien) throws CapNhatException;
 
     public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws XoaException;
 

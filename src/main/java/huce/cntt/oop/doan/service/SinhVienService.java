@@ -12,11 +12,11 @@ import huce.cntt.oop.doan.entities.exception.CapNhatException;
 import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
 import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
 import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
 import huce.cntt.oop.doan.entities.exception.EmailException;
 import huce.cntt.oop.doan.entities.exception.NgayGioException;
 import huce.cntt.oop.doan.entities.exception.ThemException;
 import huce.cntt.oop.doan.entities.exception.XoaException;
-import huce.cntt.oop.doan.entities.properties.HoTen;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 
 public class SinhVienService implements ISinhVienService {
@@ -34,9 +34,9 @@ public class SinhVienService implements ISinhVienService {
     private final DataAccess access = DataAccess.getInstance();
 
     @Override
-    public List<SinhVien> layTatCaSinhVien() {
+    public List<SinhVien> layTatCaSinhVien() throws DatabaseException {
         PreparedStatement statement = access.getStatement("SELECT " +
-        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, sinhvien.ma_lop_quan_li " +
+        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
         "FROM `SinhVien` " + 
         "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = sinhvien.ma_lop_quan_li " +
         "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
@@ -58,21 +58,19 @@ public class SinhVienService implements ISinhVienService {
                 temp.setSoDienThoai(result.getString("so_dien_thoai"));
                 temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
                 temp.setKhoa(result.getString("ten_khoa"));
-                temp.setMaLopQuanLi(result.getInt("ma_lop_quan_li"));
                 listSinhVien.add(temp);
             }
         } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
-            System.out.println("Lỗi dữ liệu trong database!!!");
-            e.printStackTrace();
+            throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
         return listSinhVien;
     }
 
     @Override
-    public SinhVien timKiemSinhVienTheoMaSo(Integer maso) {
+    public SinhVien timKiemSinhVienTheoMaSo(Integer maso) throws DatabaseException {
         SinhVien temp = new SinhVien();
         PreparedStatement statement = access.getStatement("SELECT " +
-        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, sinhvien.ma_lop_quan_li " +
+        "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
         "FROM `SinhVien` " + 
         "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = sinhvien.ma_lop_quan_li " +
         "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
@@ -93,22 +91,20 @@ public class SinhVienService implements ISinhVienService {
                 temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
                 temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
                 temp.setKhoa(result.getString("ten_khoa"));
-                temp.setMaLopQuanLi(result.getInt("ma_lop_quan_li"));
             }
         } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
-            System.out.println("Lỗi dữ liệu trong database!!!");
-            e.printStackTrace();
+            throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
         return temp;
     }
 
     @Override
-    public List<SinhVien> timKiemSinhVienTheoTen(String ten) {
+    public List<SinhVien> timKiemSinhVienTheoTen(String ten) throws DatabaseException {
         List<SinhVien> kq = new ArrayList<SinhVien>();
         
         try {
             PreparedStatement statement = access.getStatement("SELECT " +
-            "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, sinhvien.ma_lop_quan_li " +
+            "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
             "FROM `SinhVien` " + 
             "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = sinhvien.ma_lop_quan_li " +
             "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
@@ -128,22 +124,21 @@ public class SinhVienService implements ISinhVienService {
                 temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
                 temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
                 temp.setKhoa(result.getString("ten_khoa"));
-                temp.setMaLopQuanLi(result.getInt("ma_lop_quan_li"));
                 kq.add(temp);
             }
         }  catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
         return kq;
     }
 
     @Override
-    public SinhVien timKiemSinhVienTheoEmail(String email) {
+    public SinhVien timKiemSinhVienTheoEmail(String email) throws DatabaseException {
         SinhVien temp = new SinhVien();
 
         try {
             PreparedStatement statement = access.getStatement("SELECT " +
-            "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa, sinhvien.ma_lop_quan_li " +
+            "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
             "FROM `SinhVien` " + 
             "INNER JOIN lopquanli ON lopquanli.ma_lop_quan_li = sinhvien.ma_lop_quan_li " +
             "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
@@ -162,12 +157,10 @@ public class SinhVienService implements ISinhVienService {
             temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
             temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
             temp.setKhoa(result.getString("ten_khoa"));
-            temp.setMaLopQuanLi(result.getInt("ma_lop_quan_li"));
             temp.setEmail(email);
             }
         } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
-            System.out.println("Lỗi dữ liệu trong database!!!");
-            e.printStackTrace();
+            throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
         return temp;
     }
@@ -201,21 +194,24 @@ public class SinhVienService implements ISinhVienService {
                 throw new ThemException("Lỗi hệ thống khi thêm mới sinh viên !");
             }
         } catch (SQLException e) {
-            throw new ThemException(maSoSinhVien, "sinh viên");
+            if (contraintException(e)) {
+                throw new ThemException("Trùng thông tin sinh viên tại email, số điện thoại.\nHãy kiểm tra lại");
+            }
+            throw new ThemException("Có lỗi khi thêm sinh viên có mã số " + maSoSinhVien);
         }
         return maSoSinhVien;
     }
 
     @Override
-    public void capNhatThongTinSinhVien(SinhVien sinhVien) throws CapNhatException {
+    public void capNhatThongTinSinhVien(SinhVien sinhVien) throws CapNhatException, DatabaseException{
         int mssv = sinhVien.getMaSo();
-        SinhVien sinhVienTrongDb = timKiemSinhVienTheoMaSo(mssv);
-    
-        if (sinhVienTrongDb == null) {
-            throw new CapNhatException("Lỗi : Không tìm thấy sinh viên với " + mssv);
-        }
-
+        
         try {
+            SinhVien sinhVienTrongDb = timKiemSinhVienTheoMaSo(mssv);
+        
+            if (sinhVienTrongDb == null) {
+                throw new CapNhatException("Lỗi : Không tìm thấy sinh viên với " + mssv);
+            }
             PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ho_ten = ?, " +
             "ngay_sinh = ?, gioi_tinh = ?, que_quan = ?, dia_chi_thuong_tru = ?, so_dien_thoai = ?, " + 
             "email = ?, ngay_vao_truong = ?, ma_lop_quan_li = ? WHERE mssv = ?");
@@ -235,7 +231,10 @@ public class SinhVienService implements ISinhVienService {
                 throw new CapNhatException("Cập nhật không thành công do lỗi hệ thống!");
             }
         } catch (SQLException e) {
-            throw new CapNhatException(mssv, "sinh viên");
+            if (contraintException(e)) {
+                throw new CapNhatException("Trùng thông tin sinh viên tại email, số điện thoại.\nHãy kiểm tra lại");
+            }
+            throw new CapNhatException("Có lỗi khi cập nhật sinh viên có mã số " + mssv);
         }
     }
 
@@ -250,13 +249,13 @@ public class SinhVienService implements ISinhVienService {
                 throw new XoaException("Xóa không thành công do lỗi hệ thống!");
             }
         } catch (SQLException e) {
-            throw new XoaException(mssv, "sinh viên");
+            throw new XoaException("Có lỗi khi thêm sinh viên có mã số " + mssv);
         }
         return true;
     }
 
     @Override
-    public Integer tongSoSinhVien() {
+    public Integer tongSoSinhVien() throws DatabaseException {
         try {
             String query = "SELECT COUNT(mssv) FROM SinhVien";
             PreparedStatement statement = access.getStatement(query);
@@ -267,7 +266,12 @@ public class SinhVienService implements ISinhVienService {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DatabaseException("Lỗi khi lấy tổng số sinh viên!");
         }
         return 0;
+    }
+
+    private boolean contraintException(SQLException e) {
+        return e.getSQLState().startsWith("23");
     }
 }

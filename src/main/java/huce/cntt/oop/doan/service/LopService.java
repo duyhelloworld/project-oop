@@ -48,7 +48,9 @@ public class LopService implements ILopService {
     @Override
     public void capNhatLopQuanLi(SinhVien sinhVien) throws CapNhatException {
         try {
-            PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ma_lop_quan_li = " + sinhVien.getMaLopQuanLi() + " WHERE mssv = " + sinhVien.getMaSo());
+            PreparedStatement statement = access.getStatement(
+                "UPDATE SinhVien SET ma_lop_quan_li = " + sinhVien.getMaLopQuanLi() + 
+                " WHERE mssv = " + sinhVien.getMaSo());
             int rowAffected = statement.executeUpdate();
             if (rowAffected != 1) {
                 throw new CapNhatException("Có 1 số lỗi xảy ra với hệ thống.\nHãy quay lại sau!");
@@ -115,8 +117,8 @@ public class LopService implements ILopService {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new KhoaLopException();
+            throw new KhoaLopException("Khoa '" + tenKhoa + "' và lớp '" + tenLopQuanLi + "' xảy ra xung đột");
         }
         return null;
-    }    
+    }   
 }
