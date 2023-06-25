@@ -165,7 +165,7 @@ public class MonHocService implements IMonHocService {
                 throw new CapNhatException("Cập nhật không thành công do lỗi hệ thống!");
             }
         } catch (SQLException e) {
-            throw new CapNhatException(maMon, "môn học");
+            throw new CapNhatException("Có lỗi khi cập nhật môn học có mã số " + maMon);
         }
     }
 
@@ -180,8 +180,12 @@ public class MonHocService implements IMonHocService {
                 throw new XoaException("Xóa môn học không thành công do lỗi hệ thống!");
             }
        } catch (SQLException e) {
-            throw new XoaException(maMon, "môn học");
+            throw new XoaException("Có lỗi khi xóa môn học có mã số " + maMon);
        }
         return true;
+    }
+    
+    private boolean contraintException(SQLException e) {
+        return e.getSQLState().startsWith("23");
     }
 }

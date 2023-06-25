@@ -16,7 +16,7 @@ public class DiaChi {
             this.diaChi = input;
         } catch (PatternSyntaxException e) {
             e.printStackTrace();
-            throw new ChuyenDiaChiException();
+            throw new ChuyenDiaChiException("Không thể nhận dạng địa chỉ : " + input);
         }
     }
 

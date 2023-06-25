@@ -25,7 +25,7 @@ public class HoTen {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ChuyenHoTenException();
+            throw new ChuyenHoTenException("Lỗi nhận dạng họ tên với " + hoTen);
         }
     }
 
