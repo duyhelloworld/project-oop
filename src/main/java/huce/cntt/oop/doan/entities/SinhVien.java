@@ -43,7 +43,7 @@ public class SinhVien extends ConNguoi {
 
         if (ngayVaoTruong.isAfter(now)   // ngVaoTrg > now
             || ngayVaoTruong.isBefore(minDate)) { // ngVaoTrg < minDate 
-                throw new NgayGioException("Ngày vào trường trong khoảng 1966 - " + now.getYear());
+                throw new NgayGioException("Ngày vào trường trong khoảng " + minDate  + " tới " + now);
         }
         this.ngayVaoTruong = ngayVaoTruong;
     }
