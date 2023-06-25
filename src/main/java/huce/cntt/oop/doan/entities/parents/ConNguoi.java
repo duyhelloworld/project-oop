@@ -45,7 +45,7 @@ public abstract class ConNguoi {
             this.maso = Integer.parseInt(maso);
             return;
         }
-        throw new ChuyenSoException();
+        throw new ChuyenSoException("Có lỗi trong quá trình nhận dạng số nhập vào\nHãy thử lại");
     }
 
     public HoTen getHoTen() {
@@ -66,13 +66,14 @@ public abstract class ConNguoi {
 
     public void setNgaySinh(LocalDate ngay_sinh) throws NgayGioException {
         LocalDate minDate = LocalDate.of(1940, 1, 1);
-        LocalDate maxDate = LocalDate.now().minusYears(10);
+        LocalDate maxDate = LocalDate.now().minusYears(18);
 
-        if (ngay_sinh.isBefore(maxDate) && ngay_sinh.isAfter(minDate)) {
+        if (ngay_sinh.isAfter(minDate) && ngay_sinh.isBefore(maxDate)) {
             this.ngaySinh = ngay_sinh;
-            return ;
+            return;
         }
-        throw new NgayGioException("Lỗi ngày : khoảng cách năm sinh là từ 1940 tới " + (LocalDate.now().getYear() - 10));
+        int minYear = minDate.getYear(), maxYear = maxDate.getYear();
+        throw new NgayGioException("Lỗi ngày : khoảng cách năm sinh là từ " + minYear + " tới " + maxYear);
     }
 
     public void setNgaySinh(Date ngay_sinh) throws NgayGioException {
@@ -117,7 +118,7 @@ public abstract class ConNguoi {
             this.email = email;
             return;
         }
-        throw new EmailException();
+        throw new EmailException("Email sai định dạng\nHãy viết lại với kí tự '@'!");
     }
 
     public String getEmail() {
