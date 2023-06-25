@@ -1,7 +1,6 @@
 package huce.cntt.oop.doan.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,7 @@ import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
 import huce.cntt.oop.doan.entities.exception.EmailException;
 import huce.cntt.oop.doan.entities.exception.KhoaLopException;
 import huce.cntt.oop.doan.entities.exception.NgayGioException;
+import huce.cntt.oop.doan.entities.exception.ThemException;
 import huce.cntt.oop.doan.entities.exception.ThieuGiaTriException;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
 import huce.cntt.oop.doan.interfaces.ILopService;
@@ -41,7 +41,6 @@ public class ThemSinhVienController {
     private final ISinhVienService sinhVienService = SinhVienService.getInstance();
     private final ILopService lopService = LopService.getInstance();
     private final IKhoaService khoaService = KhoaService.getInstance();
-    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private Stage stage;
     private GiangVien giangVien;
 
@@ -93,12 +92,11 @@ public class ThemSinhVienController {
         queQuanTextField.setPromptText("xã ..., huyện ..., tỉnh ...");
         diaChiHienTaiTextField.setPromptText("số ..., ngõ ..., đường ..., quận ...");
         soDienThoaiTextField.setPromptText("XXX XXX XXXX");
-        ngaySinhDatePicker.setPromptText("dd/MM/yyyy");
-        ngayVaoTruongDatePicker.setPromptText("dd/MM/yyyy");
-
-        formatDate(ngaySinhDatePicker);
-        formatDate(ngayVaoTruongDatePicker);
-
+        ngaySinhDatePicker.setPromptText("Sử dụng nút bên cạnh để chọn ngày sinh");
+        ngayVaoTruongDatePicker.setPromptText("Sử dụng nút bên cạnh để chọn ngày vào trường");
+        disableText(ngaySinhDatePicker);
+        disableText(ngayVaoTruongDatePicker);
+        
         List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
         ObservableList<String> O_khoa = FXCollections.observableArrayList(tenCacKhoa);
         khoaComboBox.setItems(O_khoa);
@@ -137,7 +135,7 @@ public class ThemSinhVienController {
 
     void themSinhVien() {
         try {
-            SinhVien sinhVien = kiemTraDuLieu();            
+            SinhVien sinhVien = kiemTraDuLieu();         
             int mssv = sinhVienService.themMoiSinhVien(sinhVien);
             sinhVien.setMaSo(mssv);
             alert.setAlertType(AlertType.INFORMATION);
@@ -148,7 +146,8 @@ public class ThemSinhVienController {
                 ChuyenHoTenException | 
                 ChuyenSoException | 
                 EmailException | 
-                ThieuGiaTriException | 
+                ThieuGiaTriException |
+                ThemException | 
                 KhoaLopException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage()); 
@@ -198,12 +197,12 @@ public class ThemSinhVienController {
             throw new ThieuGiaTriException("họ tên");
         }
         if (ngaySinh == null) {
-            throw new ThieuGiaTriException("Ngày sinh");
+            throw new ThieuGiaTriException("ngày sinh");
         }
-        if (queQuan == null || queQuan.toString().isBlank()) {
+        if (queQuan == null || queQuan.isBlank()) {
             throw new ThieuGiaTriException("quê quán");
         }
-        if (diaChiHienTai == null || diaChiHienTai.toString().isBlank()) {
+        if (diaChiHienTai == null || diaChiHienTai.isBlank()) {
             throw new ThieuGiaTriException("địa chỉ thường trú");
         }
         if (soDienThoai == null || soDienThoai.isBlank()) {
@@ -242,20 +241,8 @@ public class ThemSinhVienController {
         return sinhVien;
     }
 
-    private void formatDate(DatePicker datePicker) {
-        datePicker.getEditor().textProperty().addListener((obser, oldValue, newValue) -> {
-            if (!newValue.isBlank()) {
-                try {
-                    LocalDate date = LocalDate.parse(newValue, dateFormatter);
-                    datePicker.setValue(date);
-                } catch (Exception e) {
-                    datePicker.setValue(null);
-                    alert.setAlertType(AlertType.ERROR);
-                    alert.setContentText("Không thể chuyển đổi giá trị '" + newValue + "' thành ngày/tháng/năm");
-                    alert.show();
-                }
-            }
-        });
+    private void disableText(DatePicker datePicker) {
+        datePicker.getEditor().setDisable(true);
     }
 
     private void quayLaiHome() {
