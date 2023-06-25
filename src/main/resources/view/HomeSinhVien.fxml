@@ -69,7 +69,7 @@
                         <PropertyValueFactory property="diaChiThuongTru" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotTenKhoa" editable="false" prefWidth="59.0" text="Khoa">
+                <TableColumn fx:id="cotTenKhoa" editable="false" prefWidth="80.0" text="Khoa">
                     <cellValueFactory>
                         <PropertyValueFactory property="khoa" />
                     </cellValueFactory>
@@ -79,7 +79,7 @@
                         <PropertyValueFactory property="email" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotSoDienThoai" editable="false" prefWidth="160.0"
+                <TableColumn fx:id="cotSoDienThoai" editable="false" prefWidth="140.0"
                     text="Số điện thoại">
                     <cellValueFactory>
                         <PropertyValueFactory property="soDienThoai" />
@@ -101,8 +101,6 @@
                     <cellValueFactory>
                         <PropertyValueFactory property="maLopQuanLi" />
                     </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="cotXoa" editable="false" visible="false" prefWidth="47.0" text="Xóa">
                 </TableColumn>
             </columns>
         </TableView>
