@@ -59,7 +59,7 @@ public class DiemCaNhanController {
     @FXML
     private TextField hocLucTLTextField;
     @FXML
-    private Button nutRefresh;
+    private Button nutLoadLai;
     @FXML
     private Button nutQuayLai;
     @FXML
@@ -91,7 +91,7 @@ public class DiemCaNhanController {
     @FXML
     private TableColumn<DiemCaNhan, String> cotDiemChu;
     @FXML
-    private Label hocKi;
+    private TableColumn<DiemCaNhan, Integer> cotHocKi;
 
     private Alert alert;
     private ObservableList<DiemCaNhan> data;
@@ -117,8 +117,8 @@ public class DiemCaNhanController {
             }
         });
 
-        nutRefresh.setOnAction(e -> {
-            if (!nutRefresh.isPressed()) {
+        nutLoadLai.setOnAction(e -> {
+            if (!nutLoadLai.isPressed()) {
                 data.clear();
                 hoTenTextField.clear();
                 khoaTextField.clear();
@@ -160,6 +160,7 @@ public class DiemCaNhanController {
         cotDiemTongKet.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemTongKet"));
         cotDiemTongKetHe4.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemTongKetHe4"));
         cotDiemChu.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDiemChuString()));
+        cotHocKi.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Integer>("hocKi"));
         bangDiemCaNhan.setItems(data);
 
         bangDiemCaNhan.setRowFactory(tv -> {

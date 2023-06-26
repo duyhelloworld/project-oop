@@ -8,6 +8,7 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.Khoa;
+import huce.cntt.oop.doan.entities.exception.XoaException;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
 
 public class KhoaService implements IKhoaService {
@@ -74,9 +75,17 @@ public class KhoaService implements IKhoaService {
         return kq;
     }
 
-    public void xoaMonKhoa(int maMon) throws SQLException{
+    @Override
+    public void xoaMonKhoa(int maMon) throws XoaException {
         PreparedStatement statement = access.getStatement("DELETE FROM khoa_monhoc WHERE ma_mon_hoc = " + maMon);
-        int rowAffected = statement.executeUpdate();
+        try {
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected != 1) {
+                throw new XoaException("Lỗi khi xóa môn học có mã + " + maMon + " khỏi khoa!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new XoaException("Lỗi khi xóa môn học có mã + " + maMon + " khỏi khoa!");
+        }
     }
-    
 }

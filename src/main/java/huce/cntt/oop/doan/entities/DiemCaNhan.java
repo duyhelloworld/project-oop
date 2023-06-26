@@ -1,5 +1,7 @@
 package huce.cntt.oop.doan.entities;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class DiemCaNhan {
@@ -15,6 +17,8 @@ public class DiemCaNhan {
     private Float diemTongKet;
     private Float diemTongKetHe4;
     private DiemChu diemChu;
+    private Integer hocKi;
+    private LocalDate ngayVaoTruong;
 
     public DiemCaNhan() {
     }
@@ -106,6 +110,19 @@ public class DiemCaNhan {
         return getDiemChu().toString();
     }
 
+    public Integer getHocKi() {
+        long soThang = ChronoUnit.MONTHS.between(ngayVaoTruong, LocalDate.now());
+        return (int) soThang / 6;
+    }
+
+    public void setNgayVaoTruong(LocalDate ngayVaoTruong) {
+        this.ngayVaoTruong = ngayVaoTruong;
+    }    
+
+    public LocalDate getNgayVaoTruong() {
+        return ngayVaoTruong;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -116,7 +133,8 @@ public class DiemCaNhan {
         DiemCaNhan diem = (DiemCaNhan) o;
         return Objects.equals(diemGiuaKi, diem.diemGiuaKi)
                 && Objects.equals(diemChuyenCan, diem.diemChuyenCan)
-                && Objects.equals(diemCuoiKi, diem.diemCuoiKi);
+                && Objects.equals(diemCuoiKi, diem.diemCuoiKi)
+                && Objects.equals(hocKi, diem.hocKi);
     }
 
     @Override
@@ -129,6 +147,7 @@ public class DiemCaNhan {
             "\tĐiểm Giữa Kì = " + getDiemGiuaKi() + "\n" +
             "\tĐiểm Cuối Kì = " + getDiemCuoiKi() + "\n" +
             "\tĐiểm Quá Trình = " + getDiemQuaTrinh() + "\n" +
+            "\tHọc Kì = '" + getHocKi() + "'" + "\n" +
             "\tĐiểm Tổng Kết = " + getDiemTongKet() + "\n" +
             "\tĐiểm Chữ = " + getDiemChu() + "\n";
     }
