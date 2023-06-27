@@ -6,6 +6,7 @@ import java.util.Optional;
 import huce.cntt.oop.doan.entities.DiemChu;
 import huce.cntt.oop.doan.entities.DiemLopHP;
 import huce.cntt.oop.doan.entities.GiangVien;
+import huce.cntt.oop.doan.entities.MonHoc;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
@@ -170,6 +171,25 @@ public class DiemLopHPController {
         // monHoc.clear();
         // }
         // });
+
+        tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                DiemLopHP selectedDiemLopHP = tableView.getSelectionModel().getSelectedItem();
+                if (selectedDiemLopHP != null) {
+                    // Đổ dữ liệu từ đối tượng được chọn vào các TextField
+                    hoTenTextField.setText(selectedDiemLopHP.getHoTen());
+                    diemChuTextField.setText(selectedDiemLopHP.getDiemChu());
+                    diemChuyenCanTextField.setText(Float.toString(selectedDiemLopHP.getDiemChuyenCan()));
+                    diemGiuaKiTextField.setText(Float.toString(selectedDiemLopHP.getDiemGiuaKi()));
+                    diemHe4TextField.setText(Float.toString(selectedDiemLopHP.getDiemHe4()));
+                    diemKetThucTextField.setText(Float.toString(selectedDiemLopHP.getDiemCuoiKi()));
+                    diemQTTextField.setText(Float.toString(selectedDiemLopHP.getDiemQuaTrinh()));                    
+                    diemTongKetTextField.setText(Float.toString(selectedDiemLopHP.getDiemTongKet()));
+                    lopQLTextField.setText(selectedDiemLopHP.getLopQL());
+                }
+            }
+        });
+
         xoa.setOnAction(e -> xoa());
 
         thoat.setOnAction(e -> {
@@ -205,7 +225,7 @@ public class DiemLopHPController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Xác nhận xóa");
         alert.setHeaderText(null);
-        alert.setContentText("Xác nhận xóa điểm?");
+        alert.setContentText("Xác nhận xóa điểm này?");
 
         Optional<ButtonType> confirm = alert.showAndWait();
 
