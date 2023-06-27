@@ -24,14 +24,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.FloatStringConverter;
 
 public class DiemLopHPController {
     private Stage stage;
     private GiangVien giangVien;
     private final DiemLopHPService service = DiemLopHPService.getInstance();
 
-    public DiemLopHPController(Stage stage, GiangVien giangVien){
+    public DiemLopHPController(Stage stage, GiangVien giangVien) {
         this.stage = stage;
         this.giangVien = giangVien;
     }
@@ -49,9 +51,11 @@ public class DiemLopHPController {
     @FXML
     private TableColumn<DiemLopHP, Float> cotDiemGK;
     @FXML
-    private TableColumn<DiemLopHP, Float> cotDiemQT;
+    private TableColumn<DiemLopHP, String> cotDiemQT;
     @FXML
     private TableColumn<DiemLopHP, Float> cotDiemKT;
+    @FXML
+    private TableColumn<DiemLopHP, String> cotDiemTK;
     @FXML
     private TableColumn<DiemLopHP, String> cotGPA;
     @FXML
@@ -72,9 +76,9 @@ public class DiemLopHPController {
     private Button thoat;
 
     private ObservableList<DiemLopHP> observableList;
-    
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         timKiemTheo.getItems().addAll("Mã môn", "Tên môn");
         lop.getItems().addAll();
         cotMSSV.setCellValueFactory(new PropertyValueFactory<>("MSSV"));
@@ -82,8 +86,9 @@ public class DiemLopHPController {
         cotLopQL.setCellValueFactory(new PropertyValueFactory<>("lopQL"));
         cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<>("diemChuyenCan"));
         cotDiemGK.setCellValueFactory(new PropertyValueFactory<>("diemGiuaKi"));
-        cotDiemQT.setCellValueFactory(new PropertyValueFactory<>("diemQuaTrinh"));
-        cotDiemKT.setCellValueFactory(new PropertyValueFactory<>("diemKetThuc"));
+        cotDiemQT.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemQuaTrinh().toString()));
+        cotDiemKT.setCellValueFactory(new PropertyValueFactory<>("diemCuoiKi"));
+        cotDiemTK.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemTongKet().toString()));
         cotGPA.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemHe4().toString()));
         cotDiemChu.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemChu()));
 
@@ -91,58 +96,61 @@ public class DiemLopHPController {
         observableList = FXCollections.observableArrayList();
         observableList.addAll(diem);
         tableView.setItems(observableList);
+
+        // ...
+
         // monHoc.setOnKeyPressed(event -> {
-        //     if (event.getCode() == KeyCode.ENTER) {
-        //         String searchOption = timKiemTheo.getValue();
-        //         String searchText = monHoc.getText();
-        //         String searchOption2 = lop.getValue();
+        // if (event.getCode() == KeyCode.ENTER) {
+        // String searchOption = timKiemTheo.getValue();
+        // String searchText = monHoc.getText();
+        // String searchOption2 = lop.getValue();
 
-        //         List<DiemLopHP> searchResults = new ArrayList<DiemLopHP>();
+        // List<DiemLopHP> searchResults = new ArrayList<DiemLopHP>();
 
-        //         switch (searchOption) {
-        //             case "Mã môn":
-        //                 try {
-        //                     int maMon = Integer.parseInt(searchText);
-        //                     searchResults = service.layDiemLopHPTheoMaMon(maMon);
-        //                 } catch (NumberFormatException e) {
-        //                     // Hiển thị thông báo lỗi nếu mã môn không hợp lệ
-        //                     Alert alert = new Alert(Alert.AlertType.ERROR);
-        //                     alert.setTitle("Lỗi");
-        //                     alert.setHeaderText(null);
-        //                     alert.setContentText("Mã môn không hợp lệ");
-        //                     alert.show();
-        //                 }
-        //                 break;
-        //             case "Tên môn":
-        //             try {
-        //                 searchResults = service.layDiemLopHPTheoTenMon(searchText, searchOption2);
-        //             } catch (Exception e) {
-        //                 e.printStackTrace();
-        //                 // Hiển thị thông báo lỗi nếu tên môn không hợp lệ
-        //                 Alert alert = new Alert(Alert.AlertType.ERROR);
-        //                 alert.setTitle("Lỗi");
-        //                 alert.setContentText("Tên môn không hợp lệ");
-        //                 alert.show();
-        //             }
-        //                 break;
-        //         // Xóa nội dung của TableView trước khi hiển thị kết quả tìm kiếm
-        //         tableView.getItems().clear();
+        // switch (searchOption) {
+        // case "Mã môn":
+        // try {
+        // int maMon = Integer.parseInt(searchText);
+        // searchResults = service.layDiemLopHPTheoMaMon(maMon);
+        // } catch (NumberFormatException e) {
+        // // Hiển thị thông báo lỗi nếu mã môn không hợp lệ
+        // Alert alert = new Alert(Alert.AlertType.ERROR);
+        // alert.setTitle("Lỗi");
+        // alert.setHeaderText(null);
+        // alert.setContentText("Mã môn không hợp lệ");
+        // alert.show();
+        // }
+        // break;
+        // case "Tên môn":
+        // try {
+        // searchResults = service.layDiemLopHPTheoTenMon(searchText, searchOption2);
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // // Hiển thị thông báo lỗi nếu tên môn không hợp lệ
+        // Alert alert = new Alert(Alert.AlertType.ERROR);
+        // alert.setTitle("Lỗi");
+        // alert.setContentText("Tên môn không hợp lệ");
+        // alert.show();
+        // }
+        // break;
+        // // Xóa nội dung của TableView trước khi hiển thị kết quả tìm kiếm
+        // tableView.getItems().clear();
 
-        //         if (!searchResults.isEmpty()) {
-        //             observableList.clear();
-        //             observableList.setAll(searchResults);
-        //         } else {
-        //             // Hiển thị thông báo nếu không tìm thấy kết quả
-        //             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        //             alert.setTitle("Thông báo");
-        //             alert.setHeaderText(null);
-        //             alert.setContentText("Không tìm thấy kết quả");
-        //             alert.show();
-        //         }
+        // if (!searchResults.isEmpty()) {
+        // observableList.clear();
+        // observableList.setAll(searchResults);
+        // } else {
+        // // Hiển thị thông báo nếu không tìm thấy kết quả
+        // Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        // alert.setTitle("Thông báo");
+        // alert.setHeaderText(null);
+        // alert.setContentText("Không tìm thấy kết quả");
+        // alert.show();
+        // }
 
-        //         // Xóa nội dung của TextField
-        //         monHoc.clear();
-        //     }
+        // // Xóa nội dung của TextField
+        // monHoc.clear();
+        // }
         // });
         xoa.setOnAction(e -> xoa());
 
@@ -152,7 +160,7 @@ public class DiemLopHPController {
             }
         });
     }
-    
+
     public void setItemsForChoiceBox(String tenMon) {
         List<DiemLopHP> danhSachLopHP = service.layDanhSachLopHPTheoMon(tenMon);
 
