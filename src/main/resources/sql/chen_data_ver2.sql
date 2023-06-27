@@ -1,4 +1,4 @@
--- Active: 1683203836476@@127.0.0.1@3306@doanoop2
+-- Active: 1670603812210@@127.0.0.1@3306@doanoop
 use doanoop;
 
 INSERT INTO khoa (ten_khoa) VALUES
