@@ -1,4 +1,5 @@
 package huce.cntt.oop.doan.entities;
+
 import java.util.Objects;
 
 public class DiemLopHP {
@@ -7,17 +8,12 @@ public class DiemLopHP {
     private String lopQL;
     private Float diemChuyenCan;
     private Float diemGiuaKi;
-    private Float diemQuaTrinh;
     private Float diemCuoiKi;
-    private Float diemTongKet;
-    private Float diemHe4;
-    private DiemChu diemChu;
     private String tenLopMonHoc;
     private Integer maLopHP;
 
     public DiemLopHP() {
     }
-
 
     public Integer getMaLopHP() {
         return this.maLopHP;
@@ -27,11 +23,11 @@ public class DiemLopHP {
         this.maLopHP = maLopHP;
     }
 
-    public String getTenLopMonHoc(){
+    public String getTenLopMonHoc() {
         return this.tenLopMonHoc;
     }
 
-    public void setTenLopMonHoc(String tenLopMonHoc){
+    public void setTenLopMonHoc(String tenLopMonHoc) {
         this.tenLopMonHoc = tenLopMonHoc;
     }
 
@@ -76,13 +72,11 @@ public class DiemLopHP {
     }
 
     public Float getDiemQuaTrinh() {
-        diemQuaTrinh = diemChuyenCan / 10f + diemGiuaKi * 0.7f;
-        return Float.parseFloat(String.format("%.1f", diemQuaTrinh));
-    }
-
-    public void setDiemQuaTrinh(Float diemQuaTrinh) {
-        this.diemQuaTrinh = diemQuaTrinh;
-    }
+    float diemChuyenCan = getDiemChuyenCan();
+    float diemGiuaKi = getDiemGiuaKi();
+    Float diemQuaTrinh = Math.round((diemChuyenCan * 0.5f + diemGiuaKi * 0.5f) * 10.0f) / 10.0f;
+    return diemQuaTrinh;
+}
 
     public Float getDiemCuoiKi() {
         return this.diemCuoiKi;
@@ -93,28 +87,36 @@ public class DiemLopHP {
     }
 
     public Float getDiemTongKet() {
-        diemTongKet = getDiemQuaTrinh() * 0.3f + getDiemCuoiKi() * 0.7f;
-        return Float.parseFloat(String.format("%.1f", diemTongKet));
-    }
+    float diemQuaTrinh = getDiemQuaTrinh();
+    float diemCuoiKi = getDiemCuoiKi();
+    float diemTongKet = Math.round((diemQuaTrinh * 0.3f + diemCuoiKi * 0.7f) * 10.0f) / 10.0f;
+    return diemTongKet;
+}
 
-    public void setDiemTongKet(Float diemTongKet) {
-        this.diemTongKet = diemTongKet;
-    }
 
     public Float getDiemHe4() {
-        return Float.parseFloat(String.format("%.1f", getDiemTongKet() * 0.2f));
-    }
-
-    public void setDiemHe4(Float diemHe4) {
-        this.diemHe4 = diemHe4;
+        float diemtk = getDiemTongKet();
+        if (diemtk >= 8.5f)
+            return 4f;
+        else if (diemtk >= 8.0f)
+            return 3.5f;
+        else if (diemtk >= 7.0f)
+            return 3.0f;
+        else if (diemtk >= 6.5f)
+            return 2.5f;
+        else if (diemtk >= 5.5f)
+            return 2.0f;
+        else if (diemtk >= 5.0f)
+            return 1.5f;
+        else if (diemtk >= 4.0f)
+            return 1.0f;
+        else
+            return 0f;
     }
 
     public String getDiemChu() {
-        return DiemChu.tuDiemSo(diemTongKet).toString();
-    }
-
-    public void setDiemChu(DiemChu diemChu) {
-        this.diemChu = diemChu;
+        float diemtk = getDiemTongKet();
+        return DiemChu.tuDiemSo(diemtk).toString();
     }
 
     @Override
@@ -125,28 +127,25 @@ public class DiemLopHP {
             return false;
         }
         DiemLopHP diemLopHP = (DiemLopHP) o;
-        return Objects.equals(MSSV, diemLopHP.MSSV) && Objects.equals(hoTen, diemLopHP.hoTen) && Objects.equals(lopQL, diemLopHP.lopQL) && Objects.equals(diemChuyenCan, diemLopHP.diemChuyenCan) && Objects.equals(diemGiuaKi, diemLopHP.diemGiuaKi) && Objects.equals(diemQuaTrinh, diemLopHP.diemQuaTrinh) && Objects.equals(diemCuoiKi, diemLopHP.diemCuoiKi) && Objects.equals(diemTongKet, diemLopHP.diemTongKet) && Objects.equals(diemHe4, diemLopHP.diemHe4) && Objects.equals(diemChu, diemLopHP.diemChu);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(MSSV, hoTen, lopQL, diemChuyenCan, diemGiuaKi, diemQuaTrinh, diemCuoiKi, diemTongKet, diemHe4, diemChu);
+        return Objects.equals(MSSV, diemLopHP.MSSV) && Objects.equals(hoTen, diemLopHP.hoTen)
+                && Objects.equals(lopQL, diemLopHP.lopQL) && Objects.equals(diemChuyenCan, diemLopHP.diemChuyenCan)
+                && Objects.equals(diemGiuaKi, diemLopHP.diemGiuaKi) && Objects.equals(diemCuoiKi, diemLopHP.diemCuoiKi);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " MSSV = '" + getMSSV() + "'" +
-            "Họ Tên = '" + getHoTen() + "'" +
-            ", lopQL='" + getLopQL() + "'" +
-            ", diemChuyenCan='" + getDiemChuyenCan() + "'" +
-            ", diemGiuaKi='" + getDiemGiuaKi() + "'" +
-            ", diemQuaTrinh='" + getDiemQuaTrinh() + "'" +
-            ", diemCuoiKi='" + getDiemCuoiKi() + "'" +
-            ", diemTongKet='" + getDiemTongKet() + "'" +
-            ", diemTongKetHe4='" + getDiemHe4() + "'" +
-            ", diemChu='" + getDiemChu() + "'" +
-            "}";
+                " MSSV = '" + getMSSV() + "'" +
+                " Họ Tên = '" + getHoTen() + "'" +
+                ", lopQL='" + getLopQL() + "'" +
+                ", diemChuyenCan='" + getDiemChuyenCan() + "'" +
+                ", diemGiuaKi='" + getDiemGiuaKi() + "'" +
+                ", diemQuaTrinh='" + getDiemQuaTrinh() + "'" +
+                ", diemCuoiKi='" + getDiemCuoiKi() + "'" +
+                ", diemTongKet='" + getDiemTongKet() + "'" +
+                ", diemTongKetHe4='" + getDiemHe4() + "'" +
+                ", diemChu='" + getDiemChu() + "'" +
+                "}";
     }
-    
+
 }
