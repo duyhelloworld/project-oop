@@ -103,7 +103,7 @@ public class DiemLopHPService implements IDiemLopService{
         
         int rowAffected = statement.executeUpdate();
         if (rowAffected != 1){
-            throw new SQLException("Unimplemented method 'xoaMonHoc'");
+            throw new SQLException("Unimplemented method 'xoaDiemHP'");
         }
         return true;
     }
