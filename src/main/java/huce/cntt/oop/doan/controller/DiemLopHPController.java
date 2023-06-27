@@ -74,6 +74,24 @@ public class DiemLopHPController {
     private Button luuThongTin;
     @FXML
     private Button thoat;
+    @FXML
+    private TextField hoTenTextField;
+    @FXML
+    private TextField lopQLTextField;
+    @FXML
+    private TextField diemChuyenCanTextField;
+    @FXML
+    private TextField diemGiuaKiTextField;
+    @FXML
+    private TextField diemKetThucTextField;
+    @FXML
+    private TextField diemQTTextField;
+    @FXML
+    private TextField diemTongKetTextField;
+    @FXML
+    private TextField diemHe4TextField;
+    @FXML
+    private TextField diemChuTextField;
 
     private ObservableList<DiemLopHP> observableList;
 
