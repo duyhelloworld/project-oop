@@ -59,7 +59,7 @@
             </TableColumn>
             <TableColumn fx:id = "cotDiemKT" prefWidth="85.00003051757812" text="Điểm KT" >
                <cellValueFactory>
-                  <PropertyValueFactory property="diemKetThuc" />
+                  <PropertyValueFactory property="diemCuoiKi" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id = "cotDiemTK" prefWidth="111.66665649414062" text="Điểm tổng kết">
@@ -72,7 +72,7 @@
                   <PropertyValueFactory property="diemHe4" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id = "cotDiemChu" prefWidth="67" text="Điểm chữ" >
+            <TableColumn fx:id = "cotDiemChu" prefWidth="81" text="Điểm chữ" >
                <cellValueFactory>
                   <PropertyValueFactory property="diemChu" />
                </cellValueFactory>
