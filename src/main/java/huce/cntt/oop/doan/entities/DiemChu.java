@@ -1,11 +1,11 @@
 package huce.cntt.oop.doan.entities;
 
 public enum DiemChu {
-    A_CONG("+"), A(""),
-    B_CONG("+"), B(""),
-    C_CONG("+"), C(""),
-    D_CONG("+"), D(""),
-    F;
+    A_CONG("A+"), A("A"),
+    B_CONG("B+"), B("B"),
+    C_CONG("C+"), C("C"),
+    D_CONG("D+"), D("D"),
+    F("F");
     
     private String cong;
 
@@ -13,13 +13,9 @@ public enum DiemChu {
         this.cong = cong;
     }
 
-    DiemChu() {
-        this.cong = "";
-    }
-
     @Override
     public String toString() {
-        return super.toString() + cong;
+        return cong;
     }
 
     public static DiemChu tuDiemSo(Float diem) {
