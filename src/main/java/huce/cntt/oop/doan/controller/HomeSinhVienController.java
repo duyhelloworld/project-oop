@@ -142,7 +142,7 @@ public class HomeSinhVienController {
             data.addAll(sinhVienService.layTatCaSinhVien());
         } catch (DatabaseException e) {
             alert.setAlertType(AlertType.ERROR);
-            alert.setContentText("Lỗi text!");
+            alert.setContentText("Lỗi dữ liệu trong DB!");
             alert.show();
         }
 
@@ -525,5 +525,7 @@ public class HomeSinhVienController {
         khoaComboBox.setDisable(on);
         lopQuanLiComboBox.setDisable(on);
         ngayVaoTruongDatePicker.setDisable(on);
+        nam.setDisable(on);
+        nu.setDisable(on);
     }
 }
