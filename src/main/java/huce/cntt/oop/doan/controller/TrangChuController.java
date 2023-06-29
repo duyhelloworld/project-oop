@@ -122,7 +122,7 @@ public class TrangChuController {
         if (nutLopHocPhan.isPressed()) {
             return;
         }
-        Scene lopHocPhan = LoadDiemHocPhan.loadDiemLopHP(stage, giangVien);
+        Scene lopHocPhan = LoadDiemHocPhan.loadDiemHocPhan(stage, giangVien);
         stage.setScene(lopHocPhan);
         stage.show();
     }
