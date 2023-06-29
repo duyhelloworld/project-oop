@@ -1,5 +1,6 @@
 package huce.cntt.oop.doan.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
@@ -46,7 +48,7 @@ public class DiemLopHPController {
     @FXML
     private TableColumn<DiemLopHP, String> cotHoTen;
     @FXML
-    private TableColumn<DiemLopHP, String> cotLopQL;
+    private TableColumn<DiemLopHP, String> cotLopMH;
     @FXML
     private TableColumn<DiemLopHP, Float> cotDiemChuyenCan;
     @FXML
@@ -61,6 +63,8 @@ public class DiemLopHPController {
     private TableColumn<DiemLopHP, String> cotGPA;
     @FXML
     private TableColumn<DiemLopHP, String> cotDiemChu;
+    @FXML
+    private TableColumn<DiemLopHP, Integer> cotMaLopHP;
     // @FXML
     // private TableColumn<DiemLopHP, > cot;
     @FXML
@@ -102,7 +106,7 @@ public class DiemLopHPController {
         lop.getItems().addAll();
         cotMSSV.setCellValueFactory(new PropertyValueFactory<>("MSSV"));
         cotHoTen.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
-        cotLopQL.setCellValueFactory(new PropertyValueFactory<>("lopQL"));
+        cotLopMH.setCellValueFactory(new PropertyValueFactory<>("tenLopMonHoc"));
         cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<>("diemChuyenCan"));
         cotDiemGK.setCellValueFactory(new PropertyValueFactory<>("diemGiuaKi"));
         cotDiemQT.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemQuaTrinh().toString()));
@@ -110,6 +114,7 @@ public class DiemLopHPController {
         cotDiemTK.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemTongKet().toString()));
         cotGPA.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemHe4().toString()));
         cotDiemChu.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemChu()));
+        cotMaLopHP.setCellValueFactory(new PropertyValueFactory<>("maLopHP"));
 
         List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
@@ -183,15 +188,22 @@ public class DiemLopHPController {
                     diemGiuaKiTextField.setText(Float.toString(selectedDiemLopHP.getDiemGiuaKi()));
                     diemHe4TextField.setText(Float.toString(selectedDiemLopHP.getDiemHe4()));
                     diemKetThucTextField.setText(Float.toString(selectedDiemLopHP.getDiemCuoiKi()));
-                    diemQTTextField.setText(Float.toString(selectedDiemLopHP.getDiemQuaTrinh()));                    
+                    diemQTTextField.setText(Float.toString(selectedDiemLopHP.getDiemQuaTrinh()));
                     diemTongKetTextField.setText(Float.toString(selectedDiemLopHP.getDiemTongKet()));
-                    lopQLTextField.setText(selectedDiemLopHP.getLopQL());
+                    lopQLTextField.setText(selectedDiemLopHP.getTenLopMonHoc());
                 }
             }
         });
 
         xoa.setOnAction(e -> xoa());
-
+        luuThongTin.setOnAction(e -> {
+            try {
+                luu();
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
         thoat.setOnAction(e -> {
             if (!thoat.isPressed()) {
                 thoat();
@@ -214,6 +226,70 @@ public class DiemLopHPController {
         stage.setScene(trangChu);
         stage.show();
     }
+
+    // private void luu(){
+    //     DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
+    //     String diemCC = diemChuyenCanTextField.getText();
+    //     String diemGK = diemGiuaKiTextField.getText();
+    //     String diemKT = diemKetThucTextField.getText();
+    //     if (diem == null) {
+    //         return;
+    //     }
+    //     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    //     alert.setTitle("Xác nhận lưu thay đổi");
+    //     alert.setHeaderText(null);
+    //     alert.setContentText("Xác nhận lưu thay đổi điểm này?");
+        
+    //     Optional<ButtonType> confirm = alert.showAndWait();
+
+    //     if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+    //         try {
+    //             boolean luuThanhCong = service.capNhatDiemLopHP(diem.getMaLopHP(), diem.getMSSV(), diem.getDiemChuyenCan(), diem.getDiemGiuaKi(), diem.getDiemCuoiKi());
+            
+    //             if(luuThanhCong){
+
+    //             }
+    // }
+
+    private void luu() throws SQLException {
+    DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
+    if (diem == null) {
+        return;
+    }
+    
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Xác nhận lưu thay đổi");
+    alert.setHeaderText(null);
+    alert.setContentText("Xác nhận lưu thay đổi điểm này?");
+    
+    Optional<ButtonType> confirm = alert.showAndWait();
+    
+    if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+        try {
+            float diemChuyenCan = Float.parseFloat(diemChuyenCanTextField.getText());
+            float diemGiuaKi = Float.parseFloat(diemGiuaKiTextField.getText());
+            float diemCuoiKi = Float.parseFloat(diemKetThucTextField.getText());
+            service.capNhatDiemLopHP(diem.getMaLopHP(), diem.getMSSV(), diemChuyenCan, diemGiuaKi, diemCuoiKi);
+            
+            // Cập nhật dữ liệu trong đối tượng DiemLopHP
+            diem.setDiemChuyenCan(diemChuyenCan);
+            diem.setDiemGiuaKi(diemGiuaKi);
+            diem.setDiemCuoiKi(diemCuoiKi);
+            
+            alert.setAlertType(AlertType.INFORMATION);
+            alert.setContentText("Lưu dữ liệu thành công!");
+            alert.show();
+            // Cập nhật dữ liệu trong TableView
+            tableView.refresh();
+            
+            System.out.println("Lưu dữ liệu thành công!");
+        } catch (NumberFormatException e) {
+            System.out.println("Lỗi: Nhập không hợp lệ cho điểm!");
+            e.printStackTrace();
+        }
+    }
+}
+
 
     private void xoa() {
         DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();

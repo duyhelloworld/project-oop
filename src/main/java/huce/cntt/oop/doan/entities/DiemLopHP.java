@@ -47,14 +47,6 @@ public class DiemLopHP {
         this.hoTen = hoTen;
     }
 
-    public String getLopQL() {
-        return this.lopQL;
-    }
-
-    public void setLopQL(String lopQL) {
-        this.lopQL = lopQL;
-    }
-
     public Float getDiemChuyenCan() {
         return this.diemChuyenCan;
     }
@@ -137,7 +129,7 @@ public class DiemLopHP {
         return "{" +
                 " MSSV = '" + getMSSV() + "'" +
                 " Họ Tên = '" + getHoTen() + "'" +
-                ", lopQL='" + getLopQL() + "'" +
+                ", lopMH='" + getTenLopMonHoc() + "'" +
                 ", diemChuyenCan='" + getDiemChuyenCan() + "'" +
                 ", diemGiuaKi='" + getDiemGiuaKi() + "'" +
                 ", diemQuaTrinh='" + getDiemQuaTrinh() + "'" +
