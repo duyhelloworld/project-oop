@@ -95,10 +95,10 @@ INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 WHERE mh.ten_mon_hoc = 'Lập trình C++';
 
 SELECT 
-sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki
+sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc
 FROM MonHoc mh
 INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
-INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv
-INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li;
+INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv;
 DELETE FROM diemsinhvien where ma_lop_mon_hoc = 1 AND mssv = 1;
+UPDATE diemsinhvien SET diem_Chuyen_Can = 0, diem_Giua_Ki = 0, diem_Cuoi_Ki = 0 WHERE ma_lop_mon_hoc = 1 AND MSSV = 1

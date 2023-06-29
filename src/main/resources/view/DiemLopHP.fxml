@@ -36,9 +36,9 @@
                   <PropertyValueFactory property="hoTen" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="cotLopQL" minWidth="0.0" prefWidth="94.0" text="Lớp QL">
+            <TableColumn fx:id="cotLopMH" minWidth="0.0" prefWidth="94.0" text="Lớp MH">
                <cellValueFactory>
-                  <PropertyValueFactory property="lopQL" />
+                  <PropertyValueFactory property="tenLopMonHoc" />
                </cellValueFactory>
             </TableColumn>
             <TableColumn fx:id="cotDiemChuyenCan" prefWidth="118.0" text="Điểm chuyên cần">
@@ -74,6 +74,11 @@
             <TableColumn fx:id="cotDiemChu" prefWidth="81" text="Điểm chữ">
                <cellValueFactory>
                   <PropertyValueFactory property="diemChu" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotMaLopHP" prefWidth="90.0" visible = "false" text="maLopQL">
+               <cellValueFactory>
+                  <PropertyValueFactory property="maLopHP" />
                </cellValueFactory>
             </TableColumn>
         </columns>
