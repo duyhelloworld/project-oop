@@ -42,9 +42,10 @@ public class SinhVienService implements ISinhVienService {
         "INNER JOIN khoa ON khoa.ma_khoa = lopquanli.ma_khoa " +
         "ORDER BY sinhvien.mssv");
         List<SinhVien> listSinhVien = new ArrayList<SinhVien>();
-        SinhVien temp = null;    
-
-        try (ResultSet result = statement.executeQuery()) {
+        
+        try {
+            SinhVien temp = null;    
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 temp = new SinhVien();
                 temp.setMaSo(result.getInt("mssv"));
@@ -68,7 +69,6 @@ public class SinhVienService implements ISinhVienService {
 
     @Override
     public SinhVien timKiemSinhVienTheoMaSo(Integer maso) throws DatabaseException {
-        SinhVien temp = new SinhVien();
         PreparedStatement statement = access.getStatement("SELECT " +
         "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
         "FROM `SinhVien` " + 
@@ -79,7 +79,8 @@ public class SinhVienService implements ISinhVienService {
         try {
             statement.setInt(1, maso);
             ResultSet result = statement.executeQuery();
-            while (result.next()) {
+            if (result.next()) {
+                SinhVien temp = new SinhVien();
                 temp.setMaSo(maso);
                 temp.setHoTen(result.getString("ho_ten"));
                 temp.setGioiTinh(result.getBoolean("gioi_tinh"));
@@ -91,17 +92,18 @@ public class SinhVienService implements ISinhVienService {
                 temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
                 temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
                 temp.setKhoa(result.getString("ten_khoa"));
+                return temp;
             }
         } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
-        return temp;
+        return null;
     }
 
     @Override
     public List<SinhVien> timKiemSinhVienTheoTen(String ten) throws DatabaseException {
         List<SinhVien> kq = new ArrayList<SinhVien>();
-        
+
         try {
             PreparedStatement statement = access.getStatement("SELECT " +
             "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
@@ -111,6 +113,9 @@ public class SinhVienService implements ISinhVienService {
             "WHERE ho_ten LIKE ?");
             statement.setString(1, "%" + ten + "%");
             ResultSet result = statement.executeQuery();
+            if (!result.first()) {
+                return null;
+            }
             while (result.next()) {
                 SinhVien temp = new SinhVien();
                 temp.setMaSo(result.getInt("mssv"));
@@ -126,16 +131,14 @@ public class SinhVienService implements ISinhVienService {
                 temp.setKhoa(result.getString("ten_khoa"));
                 kq.add(temp);
             }
+            return kq;
         }  catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
-        return kq;
     }
 
     @Override
     public SinhVien timKiemSinhVienTheoEmail(String email) throws DatabaseException {
-        SinhVien temp = new SinhVien();
-
         try {
             PreparedStatement statement = access.getStatement("SELECT " +
             "sinhvien.mssv, ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan, email, so_dien_thoai, ngay_vao_truong, ten_lop_quan_li, ten_khoa " +
@@ -146,23 +149,25 @@ public class SinhVienService implements ISinhVienService {
             statement.setString(1, "%" + email + "%");
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-            temp.setMaSo(result.getInt("mssv"));
-            temp.setHoTen(result.getString("ho_ten"));
-            temp.setGioiTinh(result.getBoolean("gioi_tinh"));
-            temp.setNgaySinh(
+                SinhVien temp = new SinhVien();
+                temp.setMaSo(result.getInt("mssv"));
+                temp.setHoTen(result.getString("ho_ten"));
+                temp.setGioiTinh(result.getBoolean("gioi_tinh"));
+                temp.setNgaySinh(
                     result.getDate("ngay_sinh"));
-            temp.setQueQuan(result.getString("que_quan"));
-            temp.setDiaChiThuongTru(result.getString("dia_chi_thuong_tru"));
-            temp.setSoDienThoai(result.getString("so_dien_thoai"));
-            temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
-            temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
-            temp.setKhoa(result.getString("ten_khoa"));
-            temp.setEmail(email);
+                temp.setQueQuan(result.getString("que_quan"));
+                temp.setDiaChiThuongTru(result.getString("dia_chi_thuong_tru"));
+                temp.setSoDienThoai(result.getString("so_dien_thoai"));
+                temp.setNgayVaoTruong(result.getDate("ngay_vao_truong"));
+                temp.setTenLopQuanLi(result.getString("ten_lop_quan_li"));
+                temp.setKhoa(result.getString("ten_khoa"));
+                temp.setEmail(email);
+                return temp;
             }
         } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
-        return temp;
+        return null;
     }
 
 
