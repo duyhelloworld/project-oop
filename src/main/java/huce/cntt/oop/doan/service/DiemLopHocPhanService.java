@@ -8,16 +8,16 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.DiemLopHocPhan;
-import huce.cntt.oop.doan.interfaces.IDiemLopService;
+import huce.cntt.oop.doan.interfaces.IDiemLopHocPhanService;
 
-public class DiemLopHPService implements IDiemLopService{
+public class DiemLopHocPhanService implements IDiemLopHocPhanService{
     private DataAccess access = DataAccess.getInstance();
 
-    public DiemLopHPService(){}
-    private static DiemLopHPService service;
-    public static DiemLopHPService getInstance(){
+    public DiemLopHocPhanService(){}
+    private static DiemLopHocPhanService service;
+    public static DiemLopHocPhanService getInstance(){
         if (service == null){
-            service = new DiemLopHPService();
+            service = new DiemLopHocPhanService();
         }
         return service;
     }
