@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import huce.cntt.oop.doan.entities.DiemLopHP;
+import huce.cntt.oop.doan.entities.exception.CapNhatException;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
 
 public interface IDiemLopService {
     public List<DiemLopHP> layTatCaDiem();
@@ -16,7 +18,7 @@ public interface IDiemLopService {
 
     public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop);
 
-    public List<DiemLopHP> capNhatDiemLopHP(Integer mssv, Float diem);
+    public boolean capNhatDiemLopHP(Integer mssv, Integer maLopHP, Float diem1,Float diem2,Float diem3) throws SQLException;
 
     public boolean xoa(Integer maLop, Integer mssv) throws SQLException;
 }
