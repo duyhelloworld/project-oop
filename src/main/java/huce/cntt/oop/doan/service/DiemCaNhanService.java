@@ -8,6 +8,8 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.DiemCaNhan;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
+import huce.cntt.oop.doan.entities.exception.DiemException;
 import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
 
 public class DiemCaNhanService implements IDiemCaNhanService {
@@ -24,9 +26,9 @@ public class DiemCaNhanService implements IDiemCaNhanService {
     }
 
     @Override
-    public List<DiemCaNhan> layDiemCaNhanTheoMaSo(Integer maSo) {
-        String query = "SELECT " + 
-        "monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki " +
+    public List<DiemCaNhan> layDiemCaNhanTheoMaSo(Integer maSo) throws DatabaseException {
+        String query = "SELECT " +  
+        "monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hoc_ki " +
         "FROM diemsinhvien " + 
         "INNER JOIN lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc " +
         "INNER JOIN monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc " + 
@@ -45,8 +47,11 @@ public class DiemCaNhanService implements IDiemCaNhanService {
                 diemCaNhan.setDiemChuyenCan(result.getFloat("diem_chuyen_can"));
                 diemCaNhan.setDiemGiuaKi(result.getFloat("diem_giua_ki"));
                 diemCaNhan.setDiemCuoiKi(result.getFloat("diem_cuoi_ki"));
+                diemCaNhan.setHocKi(result.getInt("hoc_ki"));
                 listDiemCaNhan.add(diemCaNhan);
             }
+        } catch (DiemException e) {
+            throw new DatabaseException("Lỗi dữ liệu trong Database");
         } catch (SQLException e) {
             e.printStackTrace();
         }
