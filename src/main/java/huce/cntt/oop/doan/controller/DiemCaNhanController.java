@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -183,19 +182,24 @@ public class DiemCaNhanController {
         try {
             SinhVien sinhVien = sinhVienService.timKiemSinhVienTheoMaSo(mssv);
             if (sinhVien == null) {
-                throw new IllegalArgumentException("Không tồn tại sinh viên này!");
+                throw new DatabaseException("Không tồn tại sinh viên này!");
             }
             hoTenTextField.setText(sinhVien.getHoTen().toString());
             khoaTextField.setText(sinhVien.getKhoa());
             lopQuanLiTextField.setText(sinhVien.getTenLopQuanLi());
             List<DiemCaNhan> listDCN = diemCaNhanService.layDiemCaNhanTheoMaSo(mssv);
+
             data.clear();
+            diemTBTextField.clear();
+            diemTBhe4TextField.clear();
+            hocLucTextField.clear();
+
             data.setAll(listDCN);
-        } catch (IllegalArgumentException |DatabaseException  e) {
+        } catch (DatabaseException  e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText("Có lỗi xảy ra!");
@@ -223,10 +227,14 @@ public class DiemCaNhanController {
         if (diemCaNhan == null) {
             return;
         }
-        Float diemTb = diemCaNhan.getDiemTongKet();
+        Float diemTb = (float) data.stream()
+            .filter(dcn -> dcn.getMaMon() == diemCaNhan.getMaMon())
+            .mapToDouble(DiemCaNhan::getDiemTongKet)
+            .sum();
         diemTBTextField.setText(diemTb.toString());
-        diemTBhe4TextField.setText(diemCaNhan.getDiemTongKetHe4().toString());
 
+        Float diemTbHe4 = diemTb * 0.2f;
+        diemTBhe4TextField.setText(diemTbHe4.toString());
         hocLucTextField.setText(xepLoaiHocLuc(diemTb));
     }
 
@@ -243,7 +251,6 @@ public class DiemCaNhanController {
         diemTBTLTextField.setText(String.format("%.1f", diemTBTL));
         Float diemTBTLHe4 = diemTBTL * 0.2f;
         diemTBTLhe4TextField.setText(String.format("%.1f", diemTBTLHe4));
-
         hocLucTLTextField.setText(xepLoaiHocLuc(diemTBTL));
     }
 
