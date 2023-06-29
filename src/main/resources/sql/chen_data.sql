@@ -75,7 +75,7 @@ INSERT INTO SinhVien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan
     ('Lê Thị Ngọc', 0, '1993-08-12', '20, Phạm Hùng, Cầu Giấy', 'Giang Tiên, Đại Lộc, Quảng Nam', 'lethingoc@huce.edu.vn', '0956789123', "2022-09-18", 4),
     ('Vũ Văn Tuấn', 1, '1991-02-15', '25, Trần Phú, Hà Đông', 'Thanh Liễu, Thanh Liễu, Hà Nam', 'vuvantuan@huce.edu.vn', '0912345678', "2021-10-08", 4);
 
-INSERT INTO diemsinhvien (ma_lop_mon_hoc, mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hocki, ghi_chu)
+INSERT INTO diemsinhvien (ma_lop_mon_hoc, mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hoc_ki, ghi_chu)
 VALUES  (1, 1, 9.5, 7.8, 9.0, 2, "hoc lai lan 1"),
         (2, 2, 7.5, 6.5, 6.9, 1, ""),
         (2, 3, 8.0, 4.5, 4.0, 1, ""),
@@ -86,3 +86,27 @@ VALUES  (1, 1, 9.5, 7.8, 9.0, 2, "hoc lai lan 1"),
         (10, 8, 5.4, 2.5, 2.5, 5, ""),
         (4, 9, 4.7, 0.0, 10.0, 5, ""),
         (8, 10, 7.6, 8.5, 2.5, 5, "");
+
+INSERT INTO khoa_monhoc (ma_khoa, ma_mon_hoc) 
+VALUES  (1, 1),
+        (1, 2),
+        (1, 3),
+        (1, 5),
+        (1, 6),
+        (1, 7),
+        (1, 8),
+        (1, 9),
+        (1, 10),
+        (2, 6),
+        (2, 7),
+        (3, 4),
+        (3, 6),
+        (3, 7),
+        (4, 1),
+        (4, 2),
+        (4, 3),
+        (4, 5),
+        (4, 6),
+        (4, 7),
+        (4, 8),
+        (4, 10);

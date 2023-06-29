@@ -76,7 +76,7 @@ CREATE TABLE DiemSinhVien (
     diem_chuyen_can FLOAT,
     diem_giua_ki FLOAT,
     diem_cuoi_ki FLOAT,
-    hocki INT,
+    hoc_ki INT,
     ghi_chu TEXT,
     PRIMARY KEY(ma_lop_mon_hoc, mssv),
     Foreign Key (ma_lop_mon_hoc) REFERENCES LopMonHoc(ma_lop_mon_hoc),

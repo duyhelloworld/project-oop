@@ -101,3 +101,19 @@ INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
 INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv
 INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li;
+
+SELECT 
+    monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, diemsinhvien.hocki
+FROM 
+    diemsinhvien
+INNER JOIN 
+    lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc
+INNER JOIN 
+    monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc
+WHERE diemsinhvien.mssv = 1;
+-- ORDER BY monhoc.ma_mon_hoc;
+
+SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta
+FROM monhoc mh
+INNER JOIN Khoa_MonHoc kmh ON kmh.ma_mon_hoc = mh.ma_mon_hoc
+INNER JOIN Khoa k ON k.ma_khoa = kmh.ma_khoa;
