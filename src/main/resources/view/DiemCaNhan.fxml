@@ -25,7 +25,7 @@
       <TextField fx:id="lopQuanLiTextField" layoutX="540.0" layoutY="110.0" />
       <TextField fx:id="khoaTextField" layoutX="540.0" layoutY="150.0" />
       <Button fx:id="nutXemDiem" layoutX="870.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Xem bảng điểm" />
-      <Button fx:id="nutRefresh" layoutX="970.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Refresh" />
+      <Button fx:id="nutLoadLai" layoutX="970.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Load lại" />
       <Button fx:id="nutQuayLai" layoutX="1070.0" layoutY="105.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="80.0" text="Quay lại" />
       <Label layoutX="518.0" layoutY="30.0" prefHeight="27.0" prefWidth="558.0" text="Danh sách các môn học và kết quả học tập">
          <font>
@@ -87,6 +87,11 @@
             <TableColumn fx:id="cotDiemChu" prefWidth="100.0" text="Điểm Chữ">
                <cellValueFactory>
                   <PropertyValueFactory property="diemChu" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="cotHocKi" prefWidth="100.0" text="Học kì">
+               <cellValueFactory>
+                  <PropertyValueFactory property="hocKi" />
                </cellValueFactory>
             </TableColumn>
         </columns>
