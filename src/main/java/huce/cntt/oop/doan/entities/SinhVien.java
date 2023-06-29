@@ -36,15 +36,16 @@ public class SinhVien extends ConNguoi {
         if (super.getNgaySinh() == null) {
             throw new NgayGioException("Hãy điền ngày sinh trước!");
         }
-
-        if (!super.getNgaySinh().isBefore(ngayVaoTruong)) { // ngay sinh >= ngay vao trg
-            throw new NgayGioException("Ngày vào trường không được nhỏ hơn ngày sinh!!!");
-        }
-
-        if (ngayVaoTruong.isAfter(now)   // ngVaoTrg > now
-            || ngayVaoTruong.isBefore(minDate)) { // ngVaoTrg < minDate 
+        
+        if (ngayVaoTruong.isAfter(now)             // ngVaoTrg > now
+            || ngayVaoTruong.isBefore(minDate)) {  // ngVaoTrg < minDate 
                 throw new NgayGioException("Ngày vào trường trong khoảng " + minDate  + " tới " + now);
         }
+
+        if (!super.getNgaySinh().isBefore(ngayVaoTruong.minusYears(17))) { // ngay sinh >= ngay vao trg
+            throw new NgayGioException("Ngày vào trường phải cách ngày sinh ít nhất 18 năm!!!");
+        }
+
         this.ngayVaoTruong = ngayVaoTruong;
     }
 
@@ -90,11 +91,12 @@ public class SinhVien extends ConNguoi {
         if (!(o instanceof SinhVien)) {
             return false;
         }
-        SinhVien SinhVien = (SinhVien) o;
-        return super.equals(SinhVien) 
-            && Objects.equals(ngayVaoTruong, SinhVien.ngayVaoTruong)
-            && Objects.equals(tenLopQuanLi, SinhVien.tenLopQuanLi)
-            && Objects.equals(khoa, SinhVien.khoa);
+        SinhVien sinhVien = (SinhVien) o;
+        return super.equals(sinhVien) 
+            && Objects.equals(ngayVaoTruong, sinhVien.ngayVaoTruong)
+            && Objects.equals(tenLopQuanLi, sinhVien.tenLopQuanLi)
+            && Objects.equals(nienKhoa, sinhVien.nienKhoa)
+            && Objects.equals(khoa, sinhVien.khoa);
     }
     
     @Override

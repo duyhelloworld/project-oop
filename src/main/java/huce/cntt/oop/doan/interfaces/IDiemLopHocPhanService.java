@@ -5,7 +5,7 @@ import java.util.List;
 
 import huce.cntt.oop.doan.entities.DiemLopHocPhan;
 
-public interface IDiemLopService {
+public interface IDiemLopHocPhanService {
     public List<DiemLopHocPhan> layTatCaDiem();
 
     public List<DiemLopHocPhan> layDiemLopHPTheoMaMon(Integer maMon);
