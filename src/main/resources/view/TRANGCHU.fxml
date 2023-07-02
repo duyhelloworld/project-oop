@@ -20,8 +20,9 @@
       <Button fx:id="nutDiemCaNhan" layoutX="536.0" layoutY="331.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="247.0" text="Quản lí&#10;Điểm cá nhân" />
       <Button fx:id="nutMonHoc" layoutX="534.0" layoutY="150.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="246.0" text="Quản lí&#10;Môn học" />
       <Button fx:id="nutLopHocPhan" layoutX="255.0" layoutY="331.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="246.0" text="Quản lí&#10;Điểm theo lớp học phần" />
-      <ListView layoutX="39.0" layoutY="85.0" prefHeight="447.0" prefWidth="165.0" />
-      <Button fx:id="nutDangXuat" layoutX="42.0" layoutY="506.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" text="Đăng xuất"/>
+      <ListView layoutX="39.0" layoutY="85.0" prefHeight="430.0" prefWidth="165.0" />
+      <!-- <Button fx:id="nutDangXuat" layoutX="42.0" layoutY="540.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" text="Đăng xuất" /> -->
+      <!-- <Button fx:id="dangXuat" layoutX="39.0" layoutY="506.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Đăng xuất" /> -->
       <Label layoutX="42.0" layoutY="236.0" prefHeight="17.0" prefWidth="138.0" text="Thông tin tài khoản:" />
       <Label layoutX="42.0" layoutY="273.0" text="Tên Chủ TK :" />
       <TextField fx:id="tenTKTextField" editable="false" layoutX="42.0" layoutY="290.0" prefHeight="25.0" prefWidth="162.0" />
@@ -34,6 +35,7 @@
 
       <ImageView fx:id="anhTaiKhoan" fitHeight="147.0" fitWidth="142.0" layoutX="39.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <Label layoutX="1.0" layoutY="510.0" prefHeight="81.0" prefWidth="898.0" text="Phần mềm được phát triển bởi Team trễ deadline :((" alignment="center" />
+      <Label fx:id="dangXuat" layoutX="45.0" layoutY="540.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Đăng xuất" />
+      <!-- <Label layoutX="1.0" layoutY="510.0" prefHeight="81.0" prefWidth="898.0" text="Phần mềm được phát triển bởi Team trễ deadline :((" alignment="center" /> -->
    </children>
 </Pane>

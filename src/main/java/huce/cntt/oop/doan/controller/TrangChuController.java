@@ -13,11 +13,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TrangChuController {
@@ -25,19 +26,10 @@ public class TrangChuController {
     private GiangVien giangVien;
     private Stage stage;
 
-    public TrangChuController(){
-        vaiTro = VaiTro.NULL;
-        giangVien = new GiangVien();
-    }
-
     public TrangChuController(VaiTro vaiTro, GiangVien giangVien, Stage stage) {
         this.vaiTro = vaiTro;
         this.giangVien = giangVien;
         this.stage = stage;
-    }
-
-    public void setVaiTro(VaiTro vaiTro){
-        this.vaiTro = vaiTro;
     }
 
     @FXML
@@ -57,23 +49,30 @@ public class TrangChuController {
     @FXML
     private Button nutLopHocPhan;
     @FXML
-    private Button nutDangXuat;
+    private Label dangXuat;
+    @FXML
+    private ImageView anhTaiKhoan;
 
     @FXML
     public void initialize() {
         tenTKTextField.setText(giangVien.getHoTen().toString());
-        chucVuTextField.setText(vaiTro.in());
+        chucVuTextField.setText(vaiTro.getTenIn());
         emailTextField.setText(giangVien.getEmail());
         sdtTextField.setText(giangVien.getSoDienThoai());
-
+        
         if (vaiTro == VaiTro.GIANGVIEN) {
             nutSinhVien.setDisable(true);
             nutMonHoc.setDisable(true);
             nutDiemCaNhan.setDisable(true);
+            anhTaiKhoan.setImage(new Image("anhthe_giangvien.jpg"));
         } else if (vaiTro == VaiTro.NVDT) {
             nutLopHocPhan.setDisable(true);
+            anhTaiKhoan.setImage(new Image("anhthe_nvdt.jpg"));
         }
-
+    
+        dangXuat.setOnMouseClicked(e -> {
+            loadDangXuat();
+        });
         nutSinhVien.setOnAction(e -> {
             loadSinhVien();
         });
@@ -85,9 +84,6 @@ public class TrangChuController {
         });
         nutDiemCaNhan.setOnAction(e -> {
             loadDiemCaNhan();
-        });
-        nutDangXuat.setOnAction(e -> {
-            loadDangXuat();
         });
     }
 
@@ -127,23 +123,14 @@ public class TrangChuController {
         stage.show();
     }
 
+    @FXML
     private void loadDangXuat() {
-        if (nutDangXuat.isPressed()) {
-            return;
-        }
-        String duongDanAnhDangXuat = getClass().getResource("/dang-xuat-khoi-trai-dat.jpg").toExternalForm();
-        Image image = new Image(duongDanAnhDangXuat);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(500);
-        imageView.setPreserveRatio(true);
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText("");
-        alert.getDialogPane().setGraphic(imageView);
-        alert.setHeight(340);
+        alert.setContentText("Bạn có chắc muốn đăng xuất?");
         Optional<ButtonType> dangXuat = alert.showAndWait();
         if (dangXuat.isPresent() && dangXuat.get() == ButtonType.OK) {
-            Scene loginn = LoadLogin.loadLoginScreen(stage);
-            stage.setScene(loginn);
+            Scene login = LoadLogin.loadLoginScreen(stage);
+            stage.setScene(login);
             stage.show();
         }
     }
