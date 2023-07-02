@@ -86,6 +86,9 @@ public abstract class ConNguoi {
     }
 
     public String getGioiTinhString() {
+        if (getGioiTinh() == null) {
+            return "ẩn";
+        }
         return getGioiTinh() ? "nam" : "nữ"; 
     }
 
