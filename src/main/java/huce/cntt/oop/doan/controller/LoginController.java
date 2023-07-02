@@ -2,6 +2,7 @@ package huce.cntt.oop.doan.controller;
 
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.entities.exception.LoginException;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.LoginService;
 import javafx.fxml.FXML;
@@ -43,7 +44,7 @@ public class LoginController {
 
     @FXML
     public void initialize(){
-        footer.setText("Toàn bộ phần mềm được viết bởi Development By 2 Person!");
+        footer.setText("Toàn bộ phần mềm được viết bởi 2 Developer (Intern Level)!");
 
         alert = new Alert(AlertType.ERROR);
         nutQuenMatKhau.setOnMouseClicked(e -> {
@@ -81,24 +82,24 @@ public class LoginController {
                 stage.show();
             }
             else {
-                throw new IllegalArgumentException("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
+                throw new LoginException("Thông tin đăng nhập không chính xác.\nHãy kiểm tra lại!");
             }
-        } catch (IllegalArgumentException ex) {
+        } catch (LoginException e) {
             alert.setAlertType(AlertType.ERROR);
-            alert.setContentText(ex.getMessage());
+            alert.setContentText(e.getMessage());
             alert.show();
         }
     }
 
-    private GiangVien layThongTin() throws IllegalArgumentException {
+    private GiangVien layThongTin() throws LoginException {
         GiangVien giangVien = new GiangVien();
         String maGiangVien = maGiangVienField.getText();
         String matKhau = matKhauField.getText();
         if (maGiangVien == null || maGiangVien.isBlank()) {
-            throw new IllegalArgumentException("Thiếu mã giảng viên !");
+            throw new LoginException("Thiếu mã giảng viên !");
         }
         if (matKhau == null || matKhau.isBlank()) {
-            throw new IllegalArgumentException("Thiếu mật khẩu !");
+            throw new LoginException("Thiếu mật khẩu !");
         }
 
         giangVien.setMaSoString(maGiangVien);
