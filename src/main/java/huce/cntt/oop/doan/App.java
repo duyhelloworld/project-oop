@@ -2,7 +2,6 @@ package huce.cntt.oop.doan;
 
 import java.io.IOException;
 
-import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.loader.LoadLogin;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,19 +14,11 @@ public class App extends Application {
 
         Scene login = LoadLogin.loadLoginScreen(primaryStage);
         primaryStage.setScene(login);
-
-        primaryStage.setTitle("HUCE app");
+        primaryStage.setTitle("Phần mềm quản lí sinh viên\nHSMS (HUCE Student Management System)");
         primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch();
-        SinhVien sinhVien = new SinhVien();
-        try {
-            sinhVien.setDiaChiThuongTru("1, 1, Hà Nam");
-            System.out.println(sinhVien);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
