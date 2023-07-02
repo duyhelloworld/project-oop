@@ -1,10 +1,10 @@
 package huce.cntt.oop.doan.entities;
 
 public enum DiemChu {
-    A_CONG("+"), A(""),
-    B_CONG("+"), B(""),
-    C_CONG("+"), C(""),
-    D_CONG("+"), D(""),
+    A_("+"), A(""),
+    B_("+"), B(""),
+    C_("+"), C(""),
+    D_("+"), D(""),
     F;
     
     private String cong;
@@ -26,15 +26,15 @@ public enum DiemChu {
         if (diem >= 8.5f)
             return A;
         else if (diem >= 8.0f)
-            return B_CONG;
+            return B_;
         else if (diem >= 7.0f)
             return B;
         else if (diem >= 6.5f)
-            return C_CONG;
+            return C_;
         else if (diem >= 5.5f)
             return C;
         else if (diem >= 5.0f)
-            return D_CONG;
+            return D_;
         else if (diem >= 4.0f)
             return D;
         else 
