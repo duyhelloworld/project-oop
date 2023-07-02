@@ -121,62 +121,6 @@ public class DiemLopHPController {
         observableList.addAll(diem);
         tableView.setItems(observableList);
 
-        // ...
-
-        // monHoc.setOnKeyPressed(event -> {
-        // if (event.getCode() == KeyCode.ENTER) {
-        // String searchOption = timKiemTheo.getValue();
-        // String searchText = monHoc.getText();
-        // String searchOption2 = lop.getValue();
-
-        // List<DiemLopHP> searchResults = new ArrayList<DiemLopHP>();
-
-        // switch (searchOption) {
-        // case "Mã môn":
-        // try {
-        // int maMon = Integer.parseInt(searchText);
-        // searchResults = service.layDiemLopHPTheoMaMon(maMon);
-        // } catch (NumberFormatException e) {
-        // // Hiển thị thông báo lỗi nếu mã môn không hợp lệ
-        // Alert alert = new Alert(Alert.AlertType.ERROR);
-        // alert.setTitle("Lỗi");
-        // alert.setHeaderText(null);
-        // alert.setContentText("Mã môn không hợp lệ");
-        // alert.show();
-        // }
-        // break;
-        // case "Tên môn":
-        // try {
-        // searchResults = service.layDiemLopHPTheoTenMon(searchText, searchOption2);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // // Hiển thị thông báo lỗi nếu tên môn không hợp lệ
-        // Alert alert = new Alert(Alert.AlertType.ERROR);
-        // alert.setTitle("Lỗi");
-        // alert.setContentText("Tên môn không hợp lệ");
-        // alert.show();
-        // }
-        // break;
-        // // Xóa nội dung của TableView trước khi hiển thị kết quả tìm kiếm
-        // tableView.getItems().clear();
-
-        // if (!searchResults.isEmpty()) {
-        // observableList.clear();
-        // observableList.setAll(searchResults);
-        // } else {
-        // // Hiển thị thông báo nếu không tìm thấy kết quả
-        // Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        // alert.setTitle("Thông báo");
-        // alert.setHeaderText(null);
-        // alert.setContentText("Không tìm thấy kết quả");
-        // alert.show();
-        // }
-
-        // // Xóa nội dung của TextField
-        // monHoc.clear();
-        // }
-        // });
-
         tableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 DiemLopHP selectedDiemLopHP = tableView.getSelectionModel().getSelectedItem();
@@ -200,7 +144,6 @@ public class DiemLopHPController {
             try {
                 luu();
             } catch (SQLException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         });
@@ -227,69 +170,43 @@ public class DiemLopHPController {
         stage.show();
     }
 
-    // private void luu(){
-    //     DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
-    //     String diemCC = diemChuyenCanTextField.getText();
-    //     String diemGK = diemGiuaKiTextField.getText();
-    //     String diemKT = diemKetThucTextField.getText();
-    //     if (diem == null) {
-    //         return;
-    //     }
-    //     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    //     alert.setTitle("Xác nhận lưu thay đổi");
-    //     alert.setHeaderText(null);
-    //     alert.setContentText("Xác nhận lưu thay đổi điểm này?");
-        
-    //     Optional<ButtonType> confirm = alert.showAndWait();
-
-    //     if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-    //         try {
-    //             boolean luuThanhCong = service.capNhatDiemLopHP(diem.getMaLopHP(), diem.getMSSV(), diem.getDiemChuyenCan(), diem.getDiemGiuaKi(), diem.getDiemCuoiKi());
-            
-    //             if(luuThanhCong){
-
-    //             }
-    // }
-
     private void luu() throws SQLException {
-    DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
-    if (diem == null) {
-        return;
-    }
-    
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Xác nhận lưu thay đổi");
-    alert.setHeaderText(null);
-    alert.setContentText("Xác nhận lưu thay đổi điểm này?");
-    
-    Optional<ButtonType> confirm = alert.showAndWait();
-    
-    if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-        try {
-            float diemChuyenCan = Float.parseFloat(diemChuyenCanTextField.getText());
-            float diemGiuaKi = Float.parseFloat(diemGiuaKiTextField.getText());
-            float diemCuoiKi = Float.parseFloat(diemKetThucTextField.getText());
-            service.capNhatDiemLopHP(diem.getMaLopHP(), diem.getMSSV(), diemChuyenCan, diemGiuaKi, diemCuoiKi);
-            
-            // Cập nhật dữ liệu trong đối tượng DiemLopHP
-            diem.setDiemChuyenCan(diemChuyenCan);
-            diem.setDiemGiuaKi(diemGiuaKi);
-            diem.setDiemCuoiKi(diemCuoiKi);
-            
-            alert.setAlertType(AlertType.INFORMATION);
-            alert.setContentText("Lưu dữ liệu thành công!");
-            alert.show();
-            // Cập nhật dữ liệu trong TableView
-            tableView.refresh();
-            
-            System.out.println("Lưu dữ liệu thành công!");
-        } catch (NumberFormatException e) {
-            System.out.println("Lỗi: Nhập không hợp lệ cho điểm!");
-            e.printStackTrace();
+        DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
+        if (diem == null) {
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận lưu thay đổi");
+        alert.setHeaderText(null);
+        alert.setContentText("Xác nhận lưu thay đổi điểm này?");
+
+        Optional<ButtonType> confirm = alert.showAndWait();
+
+        if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+            try {
+                float diemChuyenCan = Float.parseFloat(diemChuyenCanTextField.getText());
+                float diemGiuaKi = Float.parseFloat(diemGiuaKiTextField.getText());
+                float diemCuoiKi = Float.parseFloat(diemKetThucTextField.getText());
+                service.capNhatDiemLopHP(diem.getMaLopHP(), diem.getMSSV(), diemChuyenCan, diemGiuaKi, diemCuoiKi);
+
+                diem.setDiemChuyenCan(diemChuyenCan);
+                diem.setDiemGiuaKi(diemGiuaKi);
+                diem.setDiemCuoiKi(diemCuoiKi);
+
+                alert.setAlertType(AlertType.INFORMATION);
+                alert.setContentText("Lưu dữ liệu thành công!");
+                alert.show();
+                // Cập nhật dữ liệu trong TableView
+                tableView.refresh();
+
+                System.out.println("Lưu dữ liệu thành công!");
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi: Nhập không hợp lệ cho điểm!");
+                e.printStackTrace();
+            }
         }
     }
-}
-
 
     private void xoa() {
         DiemLopHP diem = tableView.getSelectionModel().getSelectedItem();
