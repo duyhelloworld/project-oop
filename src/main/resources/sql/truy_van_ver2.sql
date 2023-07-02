@@ -95,7 +95,7 @@ INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 WHERE mh.ten_mon_hoc = 'Lập trình C++';
 
 SELECT 
-sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc
+sv.mssv, sv.ho_ten, mh.ten_mon_hoc, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc
 FROM MonHoc mh
 INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
