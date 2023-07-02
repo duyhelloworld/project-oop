@@ -8,7 +8,7 @@ public enum VaiTro {
         this.tenInRa = tenInRa;
     }
 
-    public String in(){
+    public String getTenIn(){
         return this.tenInRa;
     }
 }
