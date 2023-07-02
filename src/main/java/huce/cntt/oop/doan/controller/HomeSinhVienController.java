@@ -86,18 +86,14 @@ public class HomeSinhVienController {
     private TableColumn<SinhVien, String> cotTenLopQuanLi;
     @FXML
     private TableColumn<SinhVien, Integer> cotMaLopQuanLi;
-
     @FXML
     private TextField maSoTextField;
-
     @FXML
     private TextField hoTenTextField;
-
     @FXML
     private RadioButton nam;
     @FXML
     private RadioButton nu;
-
     @FXML
     private DatePicker ngaySinhDatePicker;
     @FXML
