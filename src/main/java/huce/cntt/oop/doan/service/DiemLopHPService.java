@@ -34,7 +34,7 @@ public class DiemLopHPService implements IDiemLopService {
     }
 
     @Override
-    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop, Integer hocKy) {
+    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop, Integer hocKi) {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement(
                 "SELECT sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki"
@@ -44,13 +44,13 @@ public class DiemLopHPService implements IDiemLopService {
                         "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc " +
                         "INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv " +
                         "INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li " +
-                        "WHERE mh.ten_mon_hoc = ? AND lmh.ten_lop_mon_hoc = ? AND dsv.hoc_ky = ?"
+                        "WHERE mh.ten_mon_hoc = ? AND lmh.ten_lop_mon_hoc = ? AND dsv.hoc_ki = ?"
 
         );
         try {
             statement.setString(1, "%" + tenMon + "%");
             statement.setString(2, "%" + tenLop + "%");
-            statement.setInt(3,  hocKy );
+            statement.setInt(3,  hocKi );
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 DiemLopHP temp = new DiemLopHP();
@@ -112,7 +112,7 @@ public class DiemLopHPService implements IDiemLopService {
     public List<DiemLopHP> layTatCaDiem() {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement("SELECT " +
-                "sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ky " +
+                "sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ki " +
                 "FROM MonHoc mh " +
                 "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc " +
                 "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc " +
@@ -128,7 +128,7 @@ public class DiemLopHPService implements IDiemLopService {
                 temp.setDiemGiuaKi(result.getFloat("diem_giua_ki"));
                 temp.setDiemCuoiKi(result.getFloat("diem_cuoi_ki"));
                 temp.setMaLopHP(result.getInt("ma_lop_mon_hoc"));
-                temp.setHocKy(result.getInt("hoc_ky"));
+                temp.setHocKi(result.getInt("hoc_ki"));
                 kq.add(temp);
             }
             // access.closeConnection(statement);

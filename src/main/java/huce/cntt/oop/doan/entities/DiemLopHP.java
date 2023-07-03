@@ -11,7 +11,7 @@ public class DiemLopHP {
     private Float diemCuoiKi;
     private String tenLopMonHoc;
     private Integer maLopHP;
-    private Integer hocKy;
+    private Integer hocKi;
 
     public DiemLopHP() {
     }
@@ -48,12 +48,12 @@ public class DiemLopHP {
         this.hoTen = hoTen;
     }
 
-    public Integer getHocKy() {
-        return this.hocKy;
+    public Integer getHocKi() {
+        return this.hocKi;
     }
 
-    public void setHocKy(Integer hocKy) {
-        this.hocKy = hocKy;
+    public void setHocKi(Integer hocKi) {
+        this.hocKi = hocKi;
     }
 
     public Float getDiemChuyenCan() {

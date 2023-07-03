@@ -25,7 +25,7 @@
       <ComboBox fx:id="timKiemTheo" editable="true" layoutX="146.0" layoutY="68.0" prefWidth="150.0" />
       <TextField fx:id="monHoc" layoutX="436.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" />
       <ChoiceBox fx:id="lop" layoutX="687.0" layoutY="68.0" prefWidth="150.0" />
-      <TextField fx:id="hocKy" layoutX="973.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" />
+      <TextField fx:id="hocKi" layoutX="973.0" layoutY="68.0" prefHeight="25.0" prefWidth="150.0" />
       <TableView fx:id="tableView" accessibleRole="CHECK_BOX" layoutX="4.0" layoutY="111.0" prefHeight="203.0" prefWidth="1206.0">
         <columns>
             <TableColumn fx:id="cotMSSV" prefWidth="90.0" text="MSSV">
@@ -83,9 +83,9 @@
                   <PropertyValueFactory property="maLopHP" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="cotHocKy" prefWidth="90.0" text="Học kỳ" visible="false">
+            <TableColumn fx:id="cotHocKi" prefWidth="90.0" text="Học kỳ" visible="false">
                <cellValueFactory>
-                  <PropertyValueFactory property="hocKy" />
+                  <PropertyValueFactory property="hocKi" />
                </cellValueFactory>
             </TableColumn>
         </columns>
