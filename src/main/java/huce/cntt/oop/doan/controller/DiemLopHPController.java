@@ -65,6 +65,8 @@ public class DiemLopHPController {
     private TableColumn<DiemLopHP, String> cotDiemChu;
     @FXML
     private TableColumn<DiemLopHP, Integer> cotMaLopHP;
+    @FXML
+    private TableColumn<DiemLopHP, Integer> cotHocKy;
     // @FXML
     // private TableColumn<DiemLopHP, > cot;
     @FXML
@@ -73,6 +75,8 @@ public class DiemLopHPController {
     private ChoiceBox<String> lop;
     @FXML
     private TextField monHoc;
+    @FXML
+    private TextField hocKy;
     @FXML
     private Button xoa;
     @FXML
@@ -115,7 +119,8 @@ public class DiemLopHPController {
         cotGPA.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemHe4().toString()));
         cotDiemChu.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemChu()));
         cotMaLopHP.setCellValueFactory(new PropertyValueFactory<>("maLopHP"));
-
+        cotHocKy.setCellValueFactory(new PropertyValueFactory<>("hocKy"));
+        
         List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
         observableList.addAll(diem);
@@ -224,17 +229,18 @@ public class DiemLopHPController {
 
         if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
             try {
-                boolean xoaThanhCong = service.xoa(diem.getMaLopHP(), diem.getMSSV());
+                service.xoa(diem.getMaLopHP(), diem.getMSSV());
+                diem.setDiemChuyenCan(0f);
+                diem.setDiemGiuaKi(0f);
+                diem.setDiemCuoiKi(0f);
 
-                if (xoaThanhCong) {
-                    tableView.getItems().remove(diem);
                     // Hiển thị thông báo xóa thành công
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                     successAlert.setTitle("Thành công");
                     successAlert.setHeaderText(null);
                     successAlert.setContentText("Xóa thành công");
                     successAlert.show();
-                }
+                    tableView.refresh();
             } catch (Exception e) {
                 // Hiển thị thông báo lỗi nếu có lỗi xảy ra
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);

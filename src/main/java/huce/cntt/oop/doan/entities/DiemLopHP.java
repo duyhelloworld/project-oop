@@ -11,6 +11,7 @@ public class DiemLopHP {
     private Float diemCuoiKi;
     private String tenLopMonHoc;
     private Integer maLopHP;
+    private Integer hocKy;
 
     public DiemLopHP() {
     }
@@ -47,6 +48,14 @@ public class DiemLopHP {
         this.hoTen = hoTen;
     }
 
+    public Integer getHocKy() {
+        return this.hocKy;
+    }
+
+    public void setHocKy(Integer hocKy) {
+        this.hocKy = hocKy;
+    }
+
     public Float getDiemChuyenCan() {
         return this.diemChuyenCan;
     }
@@ -64,11 +73,11 @@ public class DiemLopHP {
     }
 
     public Float getDiemQuaTrinh() {
-    float diemChuyenCan = getDiemChuyenCan();
-    float diemGiuaKi = getDiemGiuaKi();
-    Float diemQuaTrinh = Math.round((diemChuyenCan * 0.5f + diemGiuaKi * 0.5f) * 10.0f) / 10.0f;
-    return diemQuaTrinh;
-}
+        float diemChuyenCan = getDiemChuyenCan();
+        float diemGiuaKi = getDiemGiuaKi();
+        Float diemQuaTrinh = Math.round((diemChuyenCan * 0.5f + diemGiuaKi * 0.5f) * 10.0f) / 10.0f;
+        return diemQuaTrinh;
+    }
 
     public Float getDiemCuoiKi() {
         return this.diemCuoiKi;
@@ -79,12 +88,11 @@ public class DiemLopHP {
     }
 
     public Float getDiemTongKet() {
-    float diemQuaTrinh = getDiemQuaTrinh();
-    float diemCuoiKi = getDiemCuoiKi();
-    float diemTongKet = Math.round((diemQuaTrinh * 0.3f + diemCuoiKi * 0.7f) * 10.0f) / 10.0f;
-    return diemTongKet;
-}
-
+        float diemQuaTrinh = getDiemQuaTrinh();
+        float diemCuoiKi = getDiemCuoiKi();
+        float diemTongKet = Math.round((diemQuaTrinh * 0.3f + diemCuoiKi * 0.7f) * 10.0f) / 10.0f;
+        return diemTongKet;
+    }
 
     public Float getDiemHe4() {
         float diemtk = getDiemTongKet();

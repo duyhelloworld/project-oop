@@ -34,7 +34,7 @@ public class DiemLopHPService implements IDiemLopService {
     }
 
     @Override
-    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop) {
+    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop, Integer hocKy) {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement(
                 "SELECT sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki"
@@ -44,18 +44,19 @@ public class DiemLopHPService implements IDiemLopService {
                         "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc " +
                         "INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv " +
                         "INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li " +
-                        "WHERE mh.ten_mon_hoc = ? AND lmh.ten_lop_mon_hoc = ?"
+                        "WHERE mh.ten_mon_hoc = ? AND lmh.ten_lop_mon_hoc = ? AND dsv.hoc_ky = ?"
 
         );
         try {
             statement.setString(1, "%" + tenMon + "%");
-            statement.setString(0, "%" + tenLop + "%");
+            statement.setString(2, "%" + tenLop + "%");
+            statement.setInt(3,  hocKy );
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 DiemLopHP temp = new DiemLopHP();
                 temp.setMSSV(result.getInt("mssv"));
                 temp.setHoTen(result.getString("ho_ten"));
-                temp.setTenLopMonHoc(result.getString("ten_lop_quan_li"));
+                temp.setTenLopMonHoc(result.getString("ten_lop_mon_hoc"));
                 temp.setDiemChuyenCan(result.getFloat("diem_chuyen_can"));
                 temp.setDiemGiuaKi(result.getFloat("diem_giua_ki"));
                 temp.setDiemCuoiKi(result.getFloat("diem_cuoi_ki"));
@@ -97,7 +98,7 @@ public class DiemLopHPService implements IDiemLopService {
 
     @Override
     public boolean xoa(Integer maLop, Integer mssv) throws SQLException {
-        String query = "DELETE FROM diemsinhvien where ma_lop_mon_hoc = " + maLop + " AND mssv = " + mssv;
+        String query = "UPDATE diemsinhvien SET diem_Chuyen_Can = 0, diem_Giua_Ki = 0, diem_Cuoi_Ki = 0 WHERE ma_lop_mon_hoc = " + maLop + " AND MSSV = " + mssv;
         PreparedStatement statement = access.getStatement(query);
 
         int rowAffected = statement.executeUpdate();
@@ -111,7 +112,7 @@ public class DiemLopHPService implements IDiemLopService {
     public List<DiemLopHP> layTatCaDiem() {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement("SELECT " +
-                "sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc " +
+                "sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ky " +
                 "FROM MonHoc mh " +
                 "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc " +
                 "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc " +
@@ -127,6 +128,7 @@ public class DiemLopHPService implements IDiemLopService {
                 temp.setDiemGiuaKi(result.getFloat("diem_giua_ki"));
                 temp.setDiemCuoiKi(result.getFloat("diem_cuoi_ki"));
                 temp.setMaLopHP(result.getInt("ma_lop_mon_hoc"));
+                temp.setHocKy(result.getInt("hoc_ky"));
                 kq.add(temp);
             }
             // access.closeConnection(statement);

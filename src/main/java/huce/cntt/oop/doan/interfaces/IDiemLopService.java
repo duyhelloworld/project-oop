@@ -16,7 +16,7 @@ public interface IDiemLopService {
     
     public boolean xoaDiemLopHP(Integer MSSV) throws SQLException;
 
-    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop);
+    public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop, Integer hocKy);
 
     public boolean capNhatDiemLopHP(Integer mssv, Integer maLopHP, Float diem1,Float diem2,Float diem3) throws SQLException;
 
