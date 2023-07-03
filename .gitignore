@@ -1,3 +1,4 @@
 *.class
 target
 lib/javafx-sdk-20/*
+*.json
