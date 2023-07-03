@@ -8,9 +8,6 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.DiemLopHP;
-import huce.cntt.oop.doan.entities.SinhVien;
-import huce.cntt.oop.doan.entities.exception.CapNhatException;
-import huce.cntt.oop.doan.entities.exception.DatabaseException;
 import huce.cntt.oop.doan.interfaces.IDiemLopService;
 
 public class DiemLopHPService implements IDiemLopService {
