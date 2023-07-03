@@ -2,8 +2,7 @@ package huce.cntt.oop.doan;
 
 import java.io.IOException;
 
-import huce.cntt.oop.doan.loader.LoadDiemCaNhan;
-import huce.cntt.oop.doan.loader.LoadSinhVien;
+import huce.cntt.oop.doan.loader.LoadLogin;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,13 +11,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Scene QLsinhVien = LoadSinhVien.loadSinhVien();
-        primaryStage.setScene(QLsinhVien);
 
-        Scene QLdiemCaNhan = LoadDiemCaNhan.loadDiemCaNhan();
-        primaryStage.setScene(QLdiemCaNhan);
-        
-        primaryStage.setTitle("HUCE student management system");
+        Scene login = LoadLogin.loadLoginScreen(primaryStage);
+        primaryStage.setScene(login);
+        primaryStage.setTitle("Phần mềm quản lí sinh viên\nHSMS (HUCE Student Management System)");
         primaryStage.show();
     }
 

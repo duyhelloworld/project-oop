@@ -1,18 +1,34 @@
 package huce.cntt.oop.doan.controller;
 
 import java.util.List;
+<<<<<<< HEAD
 import java.util.regex.Pattern;
 
 import huce.cntt.oop.doan.entities.DiemCaNhan;
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
+=======
+
+import huce.cntt.oop.doan.entities.DiemCaNhan;
+import huce.cntt.oop.doan.entities.GiangVien;
+import huce.cntt.oop.doan.entities.SinhVien;
+import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
+import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
+import huce.cntt.oop.doan.interfaces.ISinhVienService;
+import huce.cntt.oop.doan.loader.LoadTrangChu;
+>>>>>>> duycode
 import huce.cntt.oop.doan.service.DiemCaNhanService;
 import huce.cntt.oop.doan.service.SinhVienService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+<<<<<<< HEAD
+=======
+import javafx.scene.Scene;
+>>>>>>> duycode
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -22,19 +38,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 public class DiemCaNhanController {
-    private IDiemCaNhanService diemCaNhanService;
-    private ISinhVienService sinhVienService;
+    private IDiemCaNhanService diemCaNhanService = DiemCaNhanService.getInstance();
+    private ISinhVienService sinhVienService = SinhVienService.getInstance();
+    private Stage stage;
+    private GiangVien giangVien;
 
-    public DiemCaNhanController() {
-        this.diemCaNhanService = DiemCaNhanService.getInstance();
-        this.sinhVienService = SinhVienService.getInstance();
-    }
-
-    public DiemCaNhanController(IDiemCaNhanService diemCaNhanService, ISinhVienService sinhVienService){
-        this.diemCaNhanService = diemCaNhanService;
-        this.sinhVienService = sinhVienService;
+    public DiemCaNhanController(Stage stage, GiangVien giangVien) {
+        this.stage = stage;
+        this.giangVien = giangVien;
     }
 
     @FXML
@@ -58,6 +72,8 @@ public class DiemCaNhanController {
     @FXML
     private Button nutLoadLai;
     @FXML
+    private Button nutQuayLai;
+    @FXML
     private TextField lopQuanLiTextField;
     @FXML 
     private Button nutXemDiem;
@@ -68,6 +84,11 @@ public class DiemCaNhanController {
     @FXML
     private TableColumn<DiemCaNhan, String> cotTenMon;
     @FXML
+<<<<<<< HEAD
+=======
+    private TableColumn<DiemCaNhan, String> cotTenLopMon;
+    @FXML
+>>>>>>> duycode
     private TableColumn<DiemCaNhan, Integer> cotSoTinChi;
     @FXML
     private TableColumn<DiemCaNhan, Float> cotDiemChuyenCan;
@@ -83,16 +104,16 @@ public class DiemCaNhanController {
     private TableColumn<DiemCaNhan, Float> cotDiemTongKetHe4;
     @FXML
     private TableColumn<DiemCaNhan, String> cotDiemChu;
+    @FXML
+    private TableColumn<DiemCaNhan, Integer> cotHocKi;
 
     private Alert alert;
     private ObservableList<DiemCaNhan> data;
 
     @FXML
     public void initialize() {
-        alert = new Alert(AlertType.NONE);
+        alert = new Alert(AlertType.INFORMATION);
         data = FXCollections.observableArrayList();
-        // Khởi tạo thì lấy điểm cá nhân của mọi sinh viên
-        data.addAll(diemCaNhanService.layTatCaDiemCaNhan());
 
         showBangDiemCaNhan();
         renderDiemTrungBinhTichLuy();
@@ -113,11 +134,21 @@ public class DiemCaNhanController {
         nutLoadLai.setOnAction(e -> {
             if (!nutLoadLai.isPressed()) {
                 data.clear();
-                data.addAll(diemCaNhanService.layTatCaDiemCaNhan());
                 hoTenTextField.clear();
                 khoaTextField.clear();
                 lopQuanLiTextField.clear();
                 maSVTextField.clear();
+            }
+        });
+
+        nutQuayLai.setOnAction(e -> {
+            if (!nutQuayLai.isPressed()) {
+                quayLaiHome();
+            }
+        });
+        layScene().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+                quayLaiHome();
             }
         });
 
@@ -135,6 +166,7 @@ public class DiemCaNhanController {
     private void showBangDiemCaNhan(){
         cotMaMon.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Integer>("maMon"));
         cotTenMon.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, String>("tenMon"));
+        cotTenLopMon.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, String>("tenLopMon"));
         cotSoTinChi.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Integer>("soTinChi"));
         cotDiemChuyenCan.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemChuyenCan"));
         cotDiemGiuaKi.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemGiuaKi"));
@@ -142,6 +174,7 @@ public class DiemCaNhanController {
         cotDiemTongKet.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemTongKet"));
         cotDiemTongKetHe4.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Float>("diemTongKetHe4"));
         cotDiemChu.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDiemChuString()));
+        cotHocKi.setCellValueFactory(new PropertyValueFactory<DiemCaNhan, Integer>("hocKi"));
         bangDiemCaNhan.setItems(data);
 
         bangDiemCaNhan.setRowFactory(tv -> {
@@ -164,33 +197,41 @@ public class DiemCaNhanController {
         try {
             SinhVien sinhVien = sinhVienService.timKiemSinhVienTheoMaSo(mssv);
             if (sinhVien == null) {
-                throw new IllegalArgumentException("Không tồn tại sinh viên này!");
+                throw new DatabaseException("Không tồn tại sinh viên này!");
             }
             hoTenTextField.setText(sinhVien.getHoTen().toString());
             khoaTextField.setText(sinhVien.getKhoa());
             lopQuanLiTextField.setText(sinhVien.getTenLopQuanLi());
             List<DiemCaNhan> listDCN = diemCaNhanService.layDiemCaNhanTheoMaSo(mssv);
+
             data.clear();
+            diemTBTextField.clear();
+            diemTBhe4TextField.clear();
+            hocLucTextField.clear();
+
             data.setAll(listDCN);
-        } catch (Exception e) {
+        } catch (DatabaseException  e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
+        } catch (Exception e) {
             e.printStackTrace();
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("Có lỗi xảy ra!");
+            alert.show();
         }
     }
 
-    private Integer layMaSoSV(){
+    private Integer layMaSoSV() {
         String string = maSVTextField.getText();
         if (string.isBlank()) {
             return null;
         }
         try {
-            if (Pattern.matches("^\\d+$", string)) {
-                Integer mssv = Integer.parseInt(string);
-                return mssv;
-            }
-        } catch (Exception e) {
+            Integer mssv = Integer.parseInt(string);
+            return mssv;
+        } catch (NumberFormatException e) {
+            alert.setAlertType(AlertType.ERROR);
             alert.setContentText("Mã số sai định dạng!!!");
             alert.show();
         }
@@ -201,10 +242,14 @@ public class DiemCaNhanController {
         if (diemCaNhan == null) {
             return;
         }
-        Float diemTb = diemCaNhan.getDiemTongKet();
+        Float diemTb = (float) data.stream()
+            .filter(dcn -> dcn.getMaMon() == diemCaNhan.getMaMon())
+            .mapToDouble(DiemCaNhan::getDiemTongKet)
+            .sum();
         diemTBTextField.setText(diemTb.toString());
-        diemTBhe4TextField.setText(diemCaNhan.getDiemTongKetHe4().toString());
 
+        Float diemTbHe4 = diemTb * 0.2f;
+        diemTBhe4TextField.setText(diemTbHe4.toString());
         hocLucTextField.setText(xepLoaiHocLuc(diemTb));
     }
 
@@ -221,7 +266,6 @@ public class DiemCaNhanController {
         diemTBTLTextField.setText(String.format("%.1f", diemTBTL));
         Float diemTBTLHe4 = diemTBTL * 0.2f;
         diemTBTLhe4TextField.setText(String.format("%.1f", diemTBTLHe4));
-
         hocLucTLTextField.setText(xepLoaiHocLuc(diemTBTL));
     }
 
@@ -239,5 +283,15 @@ public class DiemCaNhanController {
         } else {
             return "Kém";
         }
+    }
+
+    private Scene layScene(){
+        return LoadTrangChu.loadTrangChu(stage, VaiTro.NVDT, giangVien);
+    }
+
+    private void quayLaiHome() {
+        Scene home = layScene();
+        stage.setScene(home);
+        stage.show();
     }
 }

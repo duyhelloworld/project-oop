@@ -1,46 +1,39 @@
 package huce.cntt.oop.doan.entities;
 
 public enum DiemChu {
-    A_CONG("+"), A(""),
-    B_CONG("+"), B(""),
-    C_CONG("+"), C(""),
-    D_CONG("+"), D(""),
-    F;
+    A("A"),
+    B_CONG("B+"), B("B"),
+    C_CONG("C+"), C("C"),
+    D_CONG("D+"), D("D"),
+    F("F");
     
-    private String cong;
+    private String diemChu;
 
-    DiemChu(String cong) {
-        this.cong = cong;
-    }
-
-    DiemChu() {
-        this.cong = "";
+    DiemChu(String diemChu) {
+        this.diemChu = diemChu;
     }
 
     @Override
     public String toString() {
-        return super.toString() + cong;
+        return diemChu;
     }
 
     public static DiemChu tuDiemSo(Float diem) {
-        if (diem >= 8.5f) {
-            return A_CONG;
-        } else if (diem >= 8.0f) {
+        if (diem >= 8.5f)
             return A;
-        } else if (diem >= 7.5f) {
+        else if (diem >= 8.0f)
             return B_CONG;
-        } else if (diem >= 7.0f) {
+        else if (diem >= 7.0f)
             return B;
-        } else if (diem >= 6.5f) {
+        else if (diem >= 6.5f)
             return C_CONG;
-        } else if (diem >= 6.0f) {
+        else if (diem >= 5.5f)
             return C;
-        } else if (diem >= 5.0f) {
+        else if (diem >= 5.0f)
             return D_CONG;
-        } else if (diem >= 4.0f) {
+        else if (diem >= 4.0f)
             return D;
-        } else {
+        else 
             return F;
-        }
     }
 }

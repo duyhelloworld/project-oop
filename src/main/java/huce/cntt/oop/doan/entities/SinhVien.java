@@ -4,19 +4,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import huce.cntt.oop.doan.entities.exception.NgayGioException;
 import huce.cntt.oop.doan.entities.parents.ConNguoi;
 
 public class SinhVien extends ConNguoi {
 
     private LocalDate ngayVaoTruong;
 
-    private Integer maLopQuanLi;
-
     private String tenLopQuanLi;
 
-    private Integer nienKhoa;
+    private Integer maLopQuanLi;
 
-    private Integer maKhoa;
+    private Integer nienKhoa;
 
     private String khoa;
 
@@ -31,14 +30,27 @@ public class SinhVien extends ConNguoi {
         return Date.valueOf(this.ngayVaoTruong);
     }
 
-    public void setNgayVaoTruong(LocalDate ngayVaoTruong) {
-        LocalDate now = LocalDate.now();
-
-        if (!ngayVaoTruong.isBefore(now.plusDays(1))
-            || !ngayVaoTruong.isAfter(LocalDate.of(1966, 1, 1))) {
-            throw new IllegalArgumentException("Ngày vào trường trong khoảng 1966 - " + now.getYear());
+    public void setNgayVaoTruong(LocalDate ngayVaoTruong) throws NgayGioException {
+        LocalDate now = LocalDate.now(), 
+        minDate = LocalDate.of(1966, 1, 1);
+        if (super.getNgaySinh() == null) {
+            throw new NgayGioException("Hãy điền ngày sinh trước!");
         }
+        
+        if (ngayVaoTruong.isAfter(now)             // ngVaoTrg > now
+            || ngayVaoTruong.isBefore(minDate)) {  // ngVaoTrg < minDate 
+                throw new NgayGioException("Ngày vào trường trong khoảng " + minDate  + " tới " + now);
+        }
+
+        if (!super.getNgaySinh().isBefore(ngayVaoTruong.minusYears(17))) { // ngay sinh >= ngay vao trg
+            throw new NgayGioException("Ngày vào trường phải cách ngày sinh ít nhất 18 năm!!!");
+        }
+
         this.ngayVaoTruong = ngayVaoTruong;
+    }
+
+    public void setNgayVaoTruong(Date ngayVaoTruong) throws NgayGioException {
+        setNgayVaoTruong(ngayVaoTruong.toLocalDate());
     }
 
     public String getTenLopQuanLi() {
@@ -49,28 +61,20 @@ public class SinhVien extends ConNguoi {
         this.tenLopQuanLi = tenLopQuanLi;
     }
 
+    public Integer getMaLopQuanLi() {
+        return this.maLopQuanLi;
+    }
+
+    public void setMaLopQuanLi(Integer maLopQuanLi) {
+        this.maLopQuanLi = maLopQuanLi;
+    }
+
     public String getKhoa() {
         return this.khoa;
     }
 
     public void setKhoa(String khoa) {
         this.khoa = khoa;
-    }
-
-    public void setMaLopQuanLi(Integer maLop) {
-        this.maLopQuanLi = maLop;
-    }
-
-    public Integer getMaLopQuanLi() {
-        return this.maLopQuanLi;
-    }
-
-    public void setMaKhoa(Integer maKhoa) {
-        this.maKhoa = maKhoa;
-    }
-
-    public Integer getMaKhoa() {
-        return this.maKhoa;
     }
 
     public Integer getNienKhoa() {
@@ -80,21 +84,6 @@ public class SinhVien extends ConNguoi {
         return getNgayVaoTruong().getYear() - 1966;
     }
 
-    public boolean hasNullElement() {
-        return super.getHoTen() == null ||
-        super.getGioiTinh() == null ||
-        super.getEmail() == null ||
-        super.getNgaySinh() == null ||
-        super.getQueQuan() == null ||
-        super.getDiaChiThuongTru() == null ||
-        super.getSoDienThoai() == null ||
-        khoa == null || 
-        ngayVaoTruong == null ||
-        maLopQuanLi == null ||
-        tenLopQuanLi == null;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -102,21 +91,20 @@ public class SinhVien extends ConNguoi {
         if (!(o instanceof SinhVien)) {
             return false;
         }
-        SinhVien SinhVien = (SinhVien) o;
-        return super.equals(SinhVien) 
-            && Objects.equals(ngayVaoTruong, SinhVien.ngayVaoTruong)
-            && Objects.equals(maLopQuanLi, SinhVien.maLopQuanLi)
-            && Objects.equals(maKhoa, SinhVien.maKhoa);
+        SinhVien sinhVien = (SinhVien) o;
+        return super.equals(sinhVien) 
+            && Objects.equals(ngayVaoTruong, sinhVien.ngayVaoTruong)
+            && Objects.equals(tenLopQuanLi, sinhVien.tenLopQuanLi)
+            && Objects.equals(nienKhoa, sinhVien.nienKhoa)
+            && Objects.equals(khoa, sinhVien.khoa);
     }
     
     @Override
     public String toString() {
         return super.toString() +
-            ", ngày vào trường = '" + getNgayVaoTruong() + "'" +
-            ", lớp quản lí = '" + getTenLopQuanLi() + "'" +
-            ", mã lớp quản lí = '" + getMaLopQuanLi() + "'" +
-            ", khoa = '" + getKhoa() + "''" +
-            ", niên khoá = '" + getNienKhoa() + "'" +
-            "}";
+            "\tNgày vào trường = " + getNgayVaoTruong() + "\n" + 
+            "\tLớp quản lí = " + getTenLopQuanLi() + "\n" + 
+            "\tKhoa = " + getKhoa() + "\n" + 
+            "\tNiên khoá = " + getNienKhoa();
         }
 }
