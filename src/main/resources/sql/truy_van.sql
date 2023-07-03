@@ -1,4 +1,4 @@
--- Active: 1670603812210@@127.0.0.1@3306@doanoop
+-- Active: 1683203836476@@127.0.0.1@3306@doanoop
 use doanoop;
 
 SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta 
@@ -75,15 +75,6 @@ INNER JOIN khoa ON monhoc.ma_khoa = khoa.ma_khoa
 ORDER BY monhoc.ma_monhoc;
 
 
-                SELECT sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki
-                        
-                        FROM monhoc mh 
-                        INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc 
-                        INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc 
-                        INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv 
-                        INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li 
-                        WHERE mh.ten_mon_hoc = 'Mạng máy tính';
-
 SELECT ten_lop_quanli 
 FROM LopQuanLi 
 INNER JOIN khoa ON lopquanli.ma_khoa = khoa.ma_khoa
@@ -104,10 +95,26 @@ INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 WHERE mh.ten_mon_hoc = 'Lập trình C++';
 
 SELECT 
-sv.mssv, sv.ho_ten, mh.ten_mon_hoc, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc
+sv.mssv, sv.ho_ten, lql.ten_lop_quan_li, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki
 FROM MonHoc mh
 INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
-INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv;
-DELETE FROM diemsinhvien where ma_lop_mon_hoc = 1 AND mssv = 1;
-UPDATE diemsinhvien SET diem_Chuyen_Can = 0, diem_Giua_Ki = 0, diem_Cuoi_Ki = 0 WHERE ma_lop_mon_hoc = 1 AND MSSV = 1;
+INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv
+INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li;
+
+SELECT 
+    monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, diemsinhvien.hocki
+FROM 
+    diemsinhvien
+INNER JOIN 
+    lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc
+INNER JOIN 
+    monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc
+WHERE diemsinhvien.mssv = 1;
+-- ORDER BY monhoc.ma_mon_hoc;
+
+SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta
+FROM monhoc mh
+INNER JOIN Khoa_MonHoc kmh ON kmh.ma_mon_hoc = mh.ma_mon_hoc
+INNER JOIN Khoa k ON k.ma_khoa = kmh.ma_khoa;
+

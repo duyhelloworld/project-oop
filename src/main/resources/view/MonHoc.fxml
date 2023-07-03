@@ -57,7 +57,7 @@
             </TableColumn>
         </columns>
       </TableView>
-      <ComboBox fx:id="khoa" editable="true" layoutX="192.0" layoutY="400.0" prefHeight="25.0" prefWidth="175.0" />
+      <ChoiceBox fx:id="khoaChoiceBox" layoutX="192.0" layoutY="400.0" prefHeight="25.0" prefWidth="175.0" />
       <RadioButton fx:id="batBuoc" layoutX="915.0" layoutY="400.0" prefHeight="25.0" prefWidth="175.0" />
       <RadioButton fx:id="koBatBuoc" layoutX="1032.0" layoutY="400.0" prefHeight="25.0" prefWidth="175.0" />
       <TextField fx:id="maMon" layoutX="192.0" layoutY="448.0" prefHeight="25.0" prefWidth="175.0" />

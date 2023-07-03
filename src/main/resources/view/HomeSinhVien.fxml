@@ -69,7 +69,7 @@
                         <PropertyValueFactory property="diaChiThuongTru" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotKhoa" editable="false" prefWidth="59.0" text="Khoa">
+                <TableColumn fx:id="cotTenKhoa" editable="false" prefWidth="80.0" text="Khoa">
                     <cellValueFactory>
                         <PropertyValueFactory property="khoa" />
                     </cellValueFactory>
@@ -79,7 +79,7 @@
                         <PropertyValueFactory property="email" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotSoDienThoai" editable="false" prefWidth="160.0"
+                <TableColumn fx:id="cotSoDienThoai" editable="false" prefWidth="140.0"
                     text="Số điện thoại">
                     <cellValueFactory>
                         <PropertyValueFactory property="soDienThoai" />
@@ -90,7 +90,7 @@
                         <PropertyValueFactory property="nienKhoa" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cotLopQuanLi" editable="false" prefWidth="95.0"
+                <TableColumn fx:id="cotTenLopQuanLi" editable="false" prefWidth="95.0"
                     text="Lớp quản lí">
                     <cellValueFactory>
                         <PropertyValueFactory property="tenLopQuanLi" />
@@ -102,6 +102,7 @@
                         <PropertyValueFactory property="maLopQuanLi" />
                     </cellValueFactory>
                 </TableColumn>
+<<<<<<<< HEAD:src/main/resources/view/XemSuaXoaSinhVien.fxml
                 <TableColumn fx:id="cotMaKhoa" editable="false" prefWidth="3.0"
                     text="MaKhoa">
                     <cellValueFactory>
@@ -110,6 +111,8 @@
                 </TableColumn>
                 <TableColumn fx:id="cotXoa" editable="false" visible="false" prefWidth="47.0" text="Xóa">
                 </TableColumn>
+========
+>>>>>>>> duycode:src/main/resources/view/HomeSinhVien.fxml
             </columns>
         </TableView>
         <Button fx:id="nutTimKiem" layoutX="791.0" layoutY="28.0" mnemonicParsing="false"
@@ -156,7 +159,7 @@
         <Label layoutX="655.0" layoutY="517.0" text="Lớp quản lí :" />
         <TextField fx:id="maSoTextField" layoutX="823.0" layoutY="325.0" prefHeight="26.0"
             prefWidth="273.0" editable="false" />
-        <ComboBox fx:id="khoaComboBox" editable="true" layoutX="823.0" layoutY="365.0"
+        <ComboBox fx:id="khoaComboBox" editable="false" layoutX="823.0" layoutY="365.0"
             prefHeight="26.0"
             prefWidth="273.0" />
         <TextField fx:id="emailTextField" layoutX="824.0" layoutY="413.0" prefHeight="26.0"
@@ -164,7 +167,7 @@
         <DatePicker fx:id="ngayVaoTruongDatePicker" layoutX="825.0" layoutY="469.0"
             prefHeight="26.0"
             prefWidth="269.0" />
-        <ChoiceBox fx:id="lopQuanLiChoiceBox" layoutX="826.0" layoutY="522.0" prefHeight="25.0"
+        <ComboBox fx:id="lopQuanLiComboBox" editable="false" layoutX="826.0" layoutY="522.0" prefHeight="25.0"
             prefWidth="267.0" />
 
         <Button fx:id="nutThem" layoutX="740.0" layoutY="587.0" mnemonicParsing="false"

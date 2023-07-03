@@ -1,6 +1,10 @@
 package huce.cntt.oop.doan.entities;
 
+import java.time.LocalDate;
 import java.util.Objects;
+
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
+import huce.cntt.oop.doan.entities.exception.DiemException;
 
 public class DiemCaNhan {
     private Integer maMon;
@@ -14,8 +18,9 @@ public class DiemCaNhan {
     private Float diemQuaTrinh;
     private Float diemTongKet;
     private Float diemTongKetHe4;
-    
     private DiemChu diemChu;
+    private Integer hocKi;
+    private LocalDate ngayVaoTruong;
 
     public DiemCaNhan() {
     }
@@ -56,9 +61,9 @@ public class DiemCaNhan {
         return this.diemChuyenCan;
     }
 
-    public void setDiemChuyenCan(Float diemChuyenCan) {
+    public void setDiemChuyenCan(Float diemChuyenCan) throws DiemException {
         if (diemChuyenCan < 0 || diemChuyenCan > 10) {
-            throw new IllegalArgumentException("Giá trị 'điểm chuyên cần' không hợp lệ!");
+            throw new DiemException("Giá trị ở điểm chuyên cần không hợp lệ!");
         }
         this.diemChuyenCan = diemChuyenCan;
     }
@@ -67,9 +72,9 @@ public class DiemCaNhan {
         return this.diemGiuaKi;
     }
 
-    public void setDiemGiuaKi(Float diemGiuaKi) {
+    public void setDiemGiuaKi(Float diemGiuaKi) throws DiemException {
         if (diemGiuaKi < 0 || diemGiuaKi > 10) {
-            throw new IllegalArgumentException("Giá trị 'điểm giữa kì' không hợp lệ!");
+            throw new DiemException("Giá trị ở điểm giữa kì không hợp lệ!");
         }
         this.diemGiuaKi = diemGiuaKi;
     }
@@ -78,15 +83,15 @@ public class DiemCaNhan {
         return this.diemCuoiKi;
     }
 
-    public void setDiemCuoiKi(Float diemCuoiKi) {
+    public void setDiemCuoiKi(Float diemCuoiKi) throws DiemException {
         if (diemCuoiKi < 0 || diemCuoiKi > 10) {
-            throw new IllegalArgumentException("Giá trị 'điểm cuối kì' không hợp lệ!");
+            throw new DiemException("Giá trị ở điểm cuối kì không hợp lệ!");
         }
         this.diemCuoiKi = diemCuoiKi;
     }
 
     public Float getDiemQuaTrinh() {
-        diemQuaTrinh = diemChuyenCan / 10f + diemGiuaKi * 0.7f;
+        diemQuaTrinh = (diemChuyenCan + diemGiuaKi) / 2;
         return Float.parseFloat(String.format("%.1f", diemQuaTrinh));
     }
 
@@ -107,6 +112,25 @@ public class DiemCaNhan {
         return getDiemChu().toString();
     }
 
+    public Integer getHocKi() {
+        return hocKi;
+    }
+
+    public void setHocKi(Integer hocKi) throws DatabaseException {
+        if (hocKi >= 10 || hocKi <= 0) {
+            throw new DatabaseException("Giá trị của học kì ngoài khoảng quy định!");
+        }
+        this.hocKi = hocKi;
+    }
+
+    public void setNgayVaoTruong(LocalDate ngayVaoTruong) {
+        this.ngayVaoTruong = ngayVaoTruong;
+    }    
+
+    public LocalDate getNgayVaoTruong() {
+        return ngayVaoTruong;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -117,7 +141,10 @@ public class DiemCaNhan {
         DiemCaNhan diem = (DiemCaNhan) o;
         return Objects.equals(diemGiuaKi, diem.diemGiuaKi)
                 && Objects.equals(diemChuyenCan, diem.diemChuyenCan)
-                && Objects.equals(diemCuoiKi, diem.diemCuoiKi);
+                && Objects.equals(diemCuoiKi, diem.diemCuoiKi)
+                && Objects.equals(diemTongKetHe4, diem.diemTongKetHe4)
+                && Objects.equals(diemChu, diem.diemChu)
+                && Objects.equals(hocKi, diem.hocKi);
     }
 
     @Override
@@ -130,6 +157,7 @@ public class DiemCaNhan {
             "\tĐiểm Giữa Kì = " + getDiemGiuaKi() + "\n" +
             "\tĐiểm Cuối Kì = " + getDiemCuoiKi() + "\n" +
             "\tĐiểm Quá Trình = " + getDiemQuaTrinh() + "\n" +
+            "\tHọc Kì = '" + getHocKi() + "'" + "\n" +
             "\tĐiểm Tổng Kết = " + getDiemTongKet() + "\n" +
             "\tĐiểm Chữ = " + getDiemChu() + "\n";
     }

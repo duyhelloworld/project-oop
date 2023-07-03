@@ -10,18 +10,19 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class LoadTrangChu {
-    private static String path = "/view/TrangChu.fxml";
+    private static String fxmlPath = "/view/TrangChu.fxml";
+    private static String cssPath = "/view/css/TrangChu.css";
 
     public static Scene loadTrangChu(Stage stage, VaiTro vaiTro, GiangVien giangVien) { 
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource(path));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
             TrangChuController trangChuController = new TrangChuController(vaiTro, giangVien, stage);
-            loader.setController(trangChuController);
-
-            // CSS
+            loader.setController(trangChuController);            
         
             Pane root = loader.load();
-            return new Scene(root);
+            Scene scene =  new Scene(root);
+            scene.getStylesheets().add(App.class.getResource(cssPath).toExternalForm());
+            return scene;
         } catch (Exception e) {
             e.printStackTrace();
         }

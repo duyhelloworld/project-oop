@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class LoadLogin {
     private static String fxmlPath = "/view/Login.fxml";
 
-    public static Scene getScene(Stage stage) {
+    public static Scene loadLoginScreen(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
             LoginController loginController = new LoginController();

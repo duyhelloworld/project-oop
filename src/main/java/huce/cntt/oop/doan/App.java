@@ -12,15 +12,13 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        Scene login = LoadLogin.getScene(primaryStage);
+        Scene login = LoadLogin.loadLoginScreen(primaryStage);
         primaryStage.setScene(login);
-
-        primaryStage.setTitle("HUCE app");
+        primaryStage.setTitle("Phần mềm quản lí sinh viên\nHSMS (HUCE Student Management System)");
         primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch();
-        // System.out.println(MonHocService.getInstance().timKiemMonHocTheoTen("Lập trình C++"));
     }
 }

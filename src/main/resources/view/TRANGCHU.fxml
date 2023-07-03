@@ -9,31 +9,33 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="900.0"  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"  xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="118.0" layoutY="20.0" prefHeight="32.0" prefWidth="684.0" text="TRANG CHỦ HỆ THỐNG QUẢN LÍ ĐIỂM SINH VIÊN DÀNH CHO NHÀ TRƯỜNG">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="nutSinhVien" layoutX="255.0" layoutY="150.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="246.0" text="QL thông tin sinh viên" />
-      <Button fx:id="nutDiemCaNhan" layoutX="536.0" layoutY="331.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="247.0" text="QL điểm cá nhân" />
-      <Button fx:id="nutMonHoc" layoutX="534.0" layoutY="150.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="246.0" text="QL môn học" />
-      <Button fx:id="nutLopHocPhan" layoutX="255.0" layoutY="331.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="246.0" text="QL đểm theo lớp học phần" />
-      <ListView layoutX="39.0" layoutY="85.0" prefHeight="447.0" prefWidth="143.0" />
-      <Button fx:id="dangXuat" layoutX="39.0" layoutY="506.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Đăng xuất" />
-      <Label layoutX="38.0" layoutY="236.0" prefHeight="17.0" prefWidth="138.0" text="Thông tin tài khoản:" />
-      <Label layoutX="39.0" layoutY="273.0" text="Tên Chủ TK :" />
-      <TextField fx:id="tenTKTextField" editable="false" layoutX="39.0" layoutY="290.0" prefHeight="25.0" prefWidth="143.0" />
-      <Label layoutX="39.0" layoutY="318.0" text="Chức vụ :" />
-      <TextField fx:id="chucVuTextField" editable="false" layoutX="39.0" layoutY="335.0" prefHeight="25.0" prefWidth="143.0" />
-      <Label layoutX="39.0" layoutY="368.0" text="Email:" />
-      <TextField fx:id="emailTextField" editable="false" layoutX="39.0" layoutY="385.0" prefHeight="25.0" prefWidth="143.0" />
-      <Label layoutX="39.0" layoutY="422.0" text="SĐT:" />
-      <TextField fx:id="sdtTextField" editable="false" layoutX="39.0" layoutY="439.0" prefHeight="25.0" prefWidth="143.0" />
+      <Button fx:id="nutSinhVien" layoutX="255.0" layoutY="150.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="246.0" text="Quản lí&#10;Thông tin sinh viên" />
+      <Button fx:id="nutDiemCaNhan" layoutX="536.0" layoutY="331.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="247.0" text="Quản lí&#10;Điểm cá nhân" />
+      <Button fx:id="nutMonHoc" layoutX="534.0" layoutY="150.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="246.0" text="Quản lí&#10;Môn học" />
+      <Button fx:id="nutLopHocPhan" layoutX="255.0" layoutY="331.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="246.0" text="Quản lí&#10;Điểm theo lớp học phần" />
+      <ListView layoutX="39.0" layoutY="85.0" prefHeight="430.0" prefWidth="165.0" />
+      <!-- <Button fx:id="nutDangXuat" layoutX="42.0" layoutY="540.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" text="Đăng xuất" /> -->
+      <!-- <Button fx:id="dangXuat" layoutX="39.0" layoutY="506.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Đăng xuất" /> -->
+      <Label layoutX="42.0" layoutY="236.0" prefHeight="17.0" prefWidth="138.0" text="Thông tin tài khoản:" />
+      <Label layoutX="42.0" layoutY="273.0" text="Tên Chủ TK :" />
+      <TextField fx:id="tenTKTextField" editable="false" layoutX="42.0" layoutY="290.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label layoutX="42.0" layoutY="318.0" text="Chức vụ :" />
+      <TextField fx:id="chucVuTextField" editable="false" layoutX="42.0" layoutY="335.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label layoutX="42.0" layoutY="368.0" text="Email:" />
+      <TextField fx:id="emailTextField" editable="false" layoutX="42.0" layoutY="385.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label layoutX="42.0" layoutY="422.0" text="SĐT:" />
+      <TextField fx:id="sdtTextField" editable="false" layoutX="42.0" layoutY="439.0" prefHeight="25.0" prefWidth="162.0" />
 
       <ImageView fx:id="anhTaiKhoan" fitHeight="147.0" fitWidth="142.0" layoutX="39.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
       </ImageView>
-      <Label layoutX="1.0" layoutY="589.0" prefHeight="81.0" prefWidth="898.0" text="Phần mềm được phát triển bởi Team trễ deadline :((" alignment="center" />
+      <Label fx:id="dangXuat" styleClass="button-like-label" layoutX="45.0" layoutY="540.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Đăng xuất" />
+      <!-- <Label layoutX="1.0" layoutY="510.0" prefHeight="81.0" prefWidth="898.0" text="Phần mềm được phát triển bởi Team trễ deadline :((" alignment="center" /> -->
    </children>
 </Pane>

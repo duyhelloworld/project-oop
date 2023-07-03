@@ -1,17 +1,22 @@
 package huce.cntt.oop.doan.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.SinhVien;
 import huce.cntt.oop.doan.entities.VaiTro;
-import huce.cntt.oop.doan.entities.properties.DiaChi;
-import huce.cntt.oop.doan.entities.properties.HoTen;
+import huce.cntt.oop.doan.entities.exception.CapNhatException;
+import huce.cntt.oop.doan.entities.exception.ChuyenDiaChiException;
+import huce.cntt.oop.doan.entities.exception.ChuyenHoTenException;
+import huce.cntt.oop.doan.entities.exception.ChuyenSoException;
+import huce.cntt.oop.doan.entities.exception.DatabaseException;
+import huce.cntt.oop.doan.entities.exception.EmailException;
+import huce.cntt.oop.doan.entities.exception.KhoaLopException;
+import huce.cntt.oop.doan.entities.exception.NgayGioException;
+import huce.cntt.oop.doan.entities.exception.ThieuGiaTriException;
+import huce.cntt.oop.doan.entities.exception.XoaException;
 import huce.cntt.oop.doan.interfaces.IKhoaService;
 import huce.cntt.oop.doan.interfaces.ILopService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
@@ -29,7 +34,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -71,7 +75,7 @@ public class HomeSinhVienController {
     @FXML
     private TableColumn<SinhVien, String> cotDiaChiThuongTru;
     @FXML
-    private TableColumn<SinhVien, String> cotKhoa;
+    private TableColumn<SinhVien, String> cotTenKhoa;
     @FXML
     private TableColumn<SinhVien, String> cotEmail;
     @FXML
@@ -79,23 +83,17 @@ public class HomeSinhVienController {
     @FXML
     private TableColumn<SinhVien, Integer> cotNienKhoa;
     @FXML
-    private TableColumn<SinhVien, String> cotLopQuanLi;
+    private TableColumn<SinhVien, String> cotTenLopQuanLi;
     @FXML
     private TableColumn<SinhVien, Integer> cotMaLopQuanLi;
     @FXML
-    private TableColumn<SinhVien, Integer> cotMaKhoa;
-
-    @FXML
     private TextField maSoTextField;
-
     @FXML
     private TextField hoTenTextField;
-
     @FXML
     private RadioButton nam;
     @FXML
     private RadioButton nu;
-
     @FXML
     private DatePicker ngaySinhDatePicker;
     @FXML
@@ -111,8 +109,7 @@ public class HomeSinhVienController {
     @FXML
     private DatePicker ngayVaoTruongDatePicker;
     @FXML
-    private ChoiceBox<String> lopQuanLiChoiceBox;
-
+    private ComboBox<String> lopQuanLiComboBox;
     @FXML
     private TextField searchTextField;
     @FXML
@@ -126,15 +123,9 @@ public class HomeSinhVienController {
 
     private SinhVien sinhVien;
     private ToggleGroup gioiTinhToggle;
-    private ObservableList<SinhVien> data;
-    private Alert alert;
+    private ObservableList<SinhVien> data = FXCollections.observableArrayList();
+    private Alert alert  = new Alert(AlertType.INFORMATION);
     private int soLuotTimKiem;
-
-    private final DateTimeFormatter formatter = new DateTimeFormatterBuilder()
-            .appendOptional(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            .appendOptional(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            .toFormatter();
 
     @FXML
     private Button nutLuu;
@@ -143,12 +134,19 @@ public class HomeSinhVienController {
 
     @FXML
     public void initialize() {
-        alert = new Alert(AlertType.NONE);
+        try {
+            data.addAll(sinhVienService.layTatCaSinhVien());
+        } catch (DatabaseException e) {
+            alert.setAlertType(AlertType.ERROR);
+            alert.setContentText("Lỗi dữ liệu trong DB!");
+            alert.show();
+        }
 
-        data = FXCollections.observableArrayList();
-        data.addAll(loadDanhSachSinhVien());
+        ngaySinhDatePicker.getEditor().setDisable(true);
+        ngayVaoTruongDatePicker.getEditor().setDisable(true);
 
         showSinhVienTableView();
+        disableChoDenKhiClick(true);
 
         // Set Bool
         gioiTinhToggle = new ToggleGroup();
@@ -157,52 +155,72 @@ public class HomeSinhVienController {
 
         searchComboBox.getItems().addAll("Tên sinh viên", "Mã số", "Email");
 
-        nutLuu.setOnAction(e -> luu());
+        nutLuu.setOnAction(e -> {
+            if (!nutLuu.isPressed()) {
+                luu();
+            }
+        });
+
         nutQuayLai.setOnAction(e -> {
-            if (!nutQuayLai.isPressed()) { 
-                quayLai();
+            if (!nutQuayLai.isPressed()) {
+                if (chuaThayDoi()) {
+                    quayLaiHome();
+                } else {
+                    if (ok("Bạn có thay đổi chưa lưu.\nLưu ?")) {
+                        luu();
+                    }
+                    quayLaiHome();
+                }
         }});
+
         nutTimKiem.setOnAction(e -> {
             if (!nutTimKiem.isPressed()) {
                 timKiem();
             }
         });
-
         searchComboBox.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 timKiem();
             }
         });
-        nutXoa.setOnAction(e -> xoa());
+
+        nutXoa.setOnAction(e -> {
+            if (!nutXoa.isPressed()) {
+                xoa();
+            }
+        });
 
         nutThem.setOnAction(e -> {
             if (!nutThem.isPressed()) {
-                doiSceneSangThemSinhVien();
+                if (chuaThayDoi()) {
+                    doiSceneSangThemSinhVien();
+                } else {
+                    if (ok("Bạn có thay đổi chưa lưu.\nLưu ?")) {
+                        luu();
+                    }
+                    doiSceneSangThemSinhVien();
+                }
             }
         });
     }
 
     private void luu() {
-        if (nutLuu.isPressed()) {
-            return;
-        }
-        sinhVien = layGiaTriPromptHoacText();
+        sinhVien = layGiaTriDaNhap();
         try {
-            sinhVienService.capNhatThongTinSinhVien(sinhVien);
+            sinhVienService.capNhatThongTinSinhVien(sinhVien);            
             lopService.capNhatLopQuanLi(sinhVien);
-            data.clear();
             clearDataDaNhap();
-            data.setAll(loadDanhSachSinhVien());
+            loadLaiBang(sinhVienService.layTatCaSinhVien());
             alert.setAlertType(AlertType.INFORMATION);
             alert.setContentText("Sinh Viên đã cập nhật : \n" + sinhVien.toString());
             alert.setHeight(400);
             alert.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+            disableChoDenKhiClick(true);
+        } catch (CapNhatException | DatabaseException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
+            alert.show();
         }
-        alert.show();
     }
 
     private void timKiem() {
@@ -210,9 +228,12 @@ public class HomeSinhVienController {
         soLuotTimKiem++;
         if (searchString.isBlank()) {
             if (soLuotTimKiem >= 3) {
-                data.clear();
-                data.setAll(loadDanhSachSinhVien());
-                return;
+                try {
+                    loadLaiBang(sinhVienService.layTatCaSinhVien());
+                } catch (DatabaseException e) {
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
             } else {
                 alert.setAlertType(AlertType.WARNING);
                 alert.setContentText("Ô tìm kiếm trống. Hãy nhập điểu gì đó");
@@ -225,61 +246,43 @@ public class HomeSinhVienController {
         clearDataDaNhap();
         switch (searchComboBox.getSelectionModel().getSelectedItem()) {
             case "Tên sinh viên":
-                data.clear();
-                data.setAll(sinhVienService.timKiemSinhVienTheoTen(searchString));
+                try {
+                    loadLaiBang(sinhVienService.timKiemSinhVienTheoTen(searchString));
+                } catch (DatabaseException e) {
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
                 break;
             case "Mã số":
                 try {
-                    int mssv = Integer.parseInt(searchString);
+                    sinhVien.setMaSo(searchString);
+                    int mssv = sinhVien.getMaSo();
                     int soSinhVienHienTai = sinhVienService.tongSoSinhVien();
                     if (mssv < 1 || mssv >= soSinhVienHienTai) {
                         alert.setContentText("Lỗi : vượt khoảng sinh viên đang học tại trường!\nHiện tại có " + soSinhVienHienTai + " sinh viên.");
                         alert.show();
                         return;
                     }
-                    data.clear();
-                    data.setAll(sinhVienService.timKiemSinhVienTheoMaSo(mssv));
-                } catch (NumberFormatException e) {
-                    alert.setContentText("Giá trị không đúng");
+                    loadLaiBang(List.of(sinhVienService.timKiemSinhVienTheoMaSo(mssv)));
+                } catch (ChuyenSoException | DatabaseException e) {
+                    alert.setContentText(e.getMessage());
                     alert.show();
-                    return;
                 }
+                break;
             case "Email":
                 try {
                     SinhVien sv = new SinhVien();
                     sv.setEmail(searchString);
-                    data.clear();
-                    data.addAll(sinhVienService.timKiemSinhVienTheoEmail(searchString));
-                } catch (Exception e) {
+                    loadLaiBang(List.of(sinhVienService.timKiemSinhVienTheoEmail(searchString)));
+                } catch (DatabaseException | EmailException e) {
                     alert.setContentText(e.getMessage());
                     alert.show();
-                    return;
                 }
-                return;
-            default:
-                return;
+                break;
             }
-            alert.close();
-    }
-
-    private void quayLai() {
-        if (chuaThayDoi()) {
-            quayLaiHome();
-        } else {
-            alert.setAlertType(AlertType.CONFIRMATION);
-            alert.setContentText("Bạn có thay đổi chưa lưu.\nLưu ?");
-            Optional<ButtonType> confirm = alert.showAndWait();
-            if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
-                luu();
-                quayLaiHome();
-            }
-        }
     }
 
     private void xoa(){
-        if (nutXoa.isPressed()) {
-            return;
-        }
         Optional<ButtonType> confirm;
         sinhVien = bangSinhVien.getSelectionModel().getSelectedItem();
         if (sinhVien == null) {
@@ -287,6 +290,7 @@ public class HomeSinhVienController {
         }
         alert.setContentText("Bạn có muốn xoá sinh viên này?");
         confirm = alert.showAndWait();
+
         if (confirm.isPresent() && confirm.get() == ButtonType.CANCEL) {
             alert.close();
             return;
@@ -295,20 +299,17 @@ public class HomeSinhVienController {
         int mssv = sinhVien.getMaSo();
         try {
             int soLopMonDangTheoHoc = lopService.laySoLopMonHocDangHoc(mssv);
-            alert.setContentText("Sinh viên này đang theo học tại " + soLopMonDangTheoHoc + " lớp môn học.\nVẫn tiếp tục?");
-            confirm = alert.showAndWait();
-            if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+            if (ok("Sinh viên này đang theo học tại " + soLopMonDangTheoHoc + " lớp môn học.\nVẫn tiếp tục?")) {
                 lopService.xoaSinhVienKhoiLopMonHoc(mssv);
+                boolean xoaThanhCong = sinhVienService.xoaSinhVienTheoMaSo(mssv);
+                if (xoaThanhCong) {
+                    loadLaiBang(sinhVienService.layTatCaSinhVien());
+                    alert.setAlertType(AlertType.INFORMATION);
+                    alert.setContentText("Xoá thành công sinh viên mã số " + mssv);
+                    alert.show();
+                }
             }
-            boolean xoaThanhCong = sinhVienService.xoaSinhVienTheoMaSo(mssv);
-            if (xoaThanhCong) {
-                alert.setAlertType(AlertType.INFORMATION);
-                alert.setContentText("Xoá thành công sinh viên mã số " + mssv);
-                data.clear();
-                data.setAll(loadDanhSachSinhVien());
-                alert.show();
-            }
-        } catch (Exception e) {
+        } catch (XoaException | DatabaseException e) {
             alert.setAlertType(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
@@ -322,28 +323,24 @@ public class HomeSinhVienController {
         cotGioiTinh.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGioiTinhString()));
         cotQueQuan.setCellValueFactory(new PropertyValueFactory<>("queQuan"));
         cotDiaChiThuongTru.setCellValueFactory(new PropertyValueFactory<>("diaChiThuongTru"));
-        cotKhoa.setCellValueFactory(new PropertyValueFactory<>("khoa"));
+        cotTenKhoa.setCellValueFactory(new PropertyValueFactory<>("khoa"));
         cotEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         cotSoDienThoai.setCellValueFactory(new PropertyValueFactory<>("soDienThoai"));
         cotNienKhoa.setCellValueFactory(new PropertyValueFactory<>("nienKhoa"));
-        cotLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("tenLopQuanLi"));
-        cotMaKhoa.setCellValueFactory(new PropertyValueFactory<>("maKhoa"));
+        cotTenLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("tenLopQuanLi"));
         cotMaLopQuanLi.setCellValueFactory(new PropertyValueFactory<>("maLopQuanLi"));
+
         cotMaLopQuanLi.setVisible(false);
-        cotMaKhoa.setVisible(false);
         bangSinhVien.setItems(data);
 
         bangSinhVien.setRowFactory(tableView -> {
             TableRow<SinhVien> row = new TableRow<>();
             row.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
-                    Optional<ButtonType> confirm;
-                    alert.setAlertType(AlertType.CONFIRMATION);
-                    alert.setContentText("Bạn có muốn thay đổi sinh viên này?");
-                    confirm = alert.showAndWait();
-                    if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+                    if (ok("Bạn có muốn thay đổi sinh viên này?")) {
                         sinhVien = row.getItem();
-                        renderSinhVienKhiClick(sinhVien);
+                        showDataCapNhatKhiClick(sinhVien);
+                        disableChoDenKhiClick(false);
                     }
                 }
             });
@@ -354,123 +351,115 @@ public class HomeSinhVienController {
     private void clearDataDaNhap() {
         maSoTextField.clear();
         hoTenTextField.clear();
-        hoTenTextField.setPromptText("");
-        ngaySinhDatePicker.setPromptText("");
         queQuanTextField.clear();
-        queQuanTextField.setPromptText("");
         diaChiThuongTruTextField.clear();
-        diaChiThuongTruTextField.setPromptText("");
         emailTextField.clear();
-        emailTextField.setPromptText("");
         soDienThoaiTextField.clear();
-        soDienThoaiTextField.setPromptText("");
-        ngayVaoTruongDatePicker.setPromptText("");
         gioiTinhToggle.selectToggle(null);
         khoaComboBox.getEditor().clear();
+        lopQuanLiComboBox.getEditor().clear();
+        ngaySinhDatePicker.setValue(null);
+        ngayVaoTruongDatePicker.setValue(null);
     }
 
-    private SinhVien layGiaTriPromptHoacText() {
+    private SinhVien layGiaTriDaNhap() {
         sinhVien = new SinhVien();
         try {
-            Integer maSo = Integer.valueOf(maSoTextField.getText());
-            HoTen hoTen = new HoTen(
-                hoTenTextField.getText().isEmpty() ? hoTenTextField.getPromptText() : hoTenTextField.getText());
-        DiaChi queQuan = new DiaChi(
-                queQuanTextField.getText().isEmpty() ? queQuanTextField.getPromptText() : queQuanTextField.getText());
-        DiaChi diaChiHienTai = new DiaChi(
-                diaChiThuongTruTextField.getText().isEmpty() ? diaChiThuongTruTextField.getPromptText()
-                        : diaChiThuongTruTextField.getText());
-        LocalDate ngaySinh = ngaySinhDatePicker.getValue();
-        if (ngaySinh == null && ngaySinhDatePicker.getPromptText() != null) {
-            ngaySinh = LocalDate.parse(ngaySinhDatePicker.getPromptText(), formatter);
-        }
-        String soDienThoai = soDienThoaiTextField.getText().isEmpty() ? soDienThoaiTextField.getPromptText()
-                : soDienThoaiTextField.getText();
-        String email = emailTextField.getText().isEmpty() ? emailTextField.getPromptText() : emailTextField.getText();
+            String maSo = maSoTextField.getText();
+            String hoTen = hoTenTextField.getText();
+            String queQuan = queQuanTextField.getText();
+            String diaChiThuongTru = diaChiThuongTruTextField.getText();
+            String soDienThoai = soDienThoaiTextField.getText();
+            String email = emailTextField.getText();
+            LocalDate ngaySinh = ngaySinhDatePicker.getValue();
+            LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
+            Boolean gioiTinh = nam.isSelected();
+            if (nu.isSelected()) {
+                gioiTinh = false;
+            }
+            String tenLopQuanLi = lopQuanLiComboBox.getValue();
+            String tenKhoa = khoaComboBox.getValue();
+            Integer maLopQuanLi = lopService.checkKhoa(tenLopQuanLi, tenKhoa);
+            if (maLopQuanLi == null) {
+                throw new KhoaLopException("Lỗi đồng bộ giữa khoa và lớp quản lí!");
+            }
+            if (hoTen == null || hoTen.isBlank()) {
+                throw new ThieuGiaTriException("họ tên");
+            }
+            if (ngaySinh == null) {
+                throw new ThieuGiaTriException("ngày sinh");
+            }
+            if (queQuan == null || queQuan.isBlank()) {
+                throw new ThieuGiaTriException("quê quán");
+            }
+            if (diaChiThuongTru == null || diaChiThuongTru.isBlank()) {
+                throw new ThieuGiaTriException("địa chỉ thường trú");
+            }
+            if (soDienThoai == null || soDienThoai.isBlank()) {
+                throw new ThieuGiaTriException("số điện thoại");
+            }  
+            if (email == null || email.isBlank()) {
+                throw new ThieuGiaTriException("email");
+            }
+            if (tenLopQuanLi == null || tenLopQuanLi.isBlank()) {
+                throw new ThieuGiaTriException("lớp quản lí");
+            }
+            if (tenKhoa == null || tenKhoa.isBlank()) {
+                throw new ThieuGiaTriException("khoa");
+            }
+            if (ngayVaoTruong == null) {
+                throw new ThieuGiaTriException("ngày vào trường");
+            }
 
-        LocalDate ngayVaoTruong = ngayVaoTruongDatePicker.getValue();
-        if (ngayVaoTruong == null && ngayVaoTruongDatePicker.getPromptText() != null) {
-            ngayVaoTruong = LocalDate.parse(ngayVaoTruongDatePicker.getPromptText(), formatter);
-        }
-
-        Boolean gioiTinh = nam.isSelected();
-        if (nu.isSelected()) {
-            gioiTinh = false;
-        }
-        String tenLopQuanLi = lopQuanLiChoiceBox.getValue();
-        
-        String tenKhoa = khoaComboBox.getValue();
-
-        int selectedIndex = bangSinhVien.getSelectionModel().getFocusedIndex();
-        SinhVien sv = bangSinhVien.getItems().get(selectedIndex);
-
-        Integer maKhoa = sv.getMaKhoa(), maLopQuanLi = sv.getMaLopQuanLi();
-        
-        sinhVien.setMaSo(maSo);
-        sinhVien.setHoTen(hoTen);
-        sinhVien.setGioiTinh(gioiTinh);
-        sinhVien.setQueQuan(queQuan);
-        sinhVien.setDiaChiThuongTru(diaChiHienTai);
-        sinhVien.setSoDienThoai(soDienThoai);
-        sinhVien.setEmail(email);
-        sinhVien.setNgaySinh(ngaySinh);
-        sinhVien.setNgayVaoTruong(ngayVaoTruong);
-        sinhVien.setTenLopQuanLi(tenLopQuanLi);
-        sinhVien.setKhoa(tenKhoa);
-        sinhVien.setMaKhoa(maKhoa);
-        sinhVien.setMaLopQuanLi(maLopQuanLi);
-        } catch (IllegalArgumentException e) {
+            sinhVien.setMaSo(maSo);
+            sinhVien.setHoTen(hoTen);
+            sinhVien.setGioiTinh(gioiTinh);
+            sinhVien.setQueQuan(queQuan);
+            sinhVien.setDiaChiThuongTru(diaChiThuongTru);
+            sinhVien.setSoDienThoai(soDienThoai);
+            sinhVien.setEmail(email);
+            sinhVien.setNgaySinh(ngaySinh);
+            sinhVien.setNgayVaoTruong(ngayVaoTruong);
+            sinhVien.setTenLopQuanLi(tenLopQuanLi);
+            sinhVien.setKhoa(tenKhoa);
+            sinhVien.setMaLopQuanLi(maLopQuanLi);
+        } catch (ChuyenDiaChiException | ChuyenHoTenException | ChuyenSoException | NgayGioException | 
+        KhoaLopException | EmailException | ThieuGiaTriException e) {
             alert = new Alert(AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.show();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return sinhVien;
     }
 
-    private void renderSinhVienKhiClick(SinhVien sv) {
+    private void showDataCapNhatKhiClick(SinhVien sv) {
         maSoTextField.setText(sv.getMaSo().toString());
-        hoTenTextField.setPromptText(sv.getHoTen().toString());
-        ngaySinhDatePicker.setPromptText(sv.getNgaySinh().toString());
-        queQuanTextField.setPromptText(sv.getQueQuan().toString());
-        diaChiThuongTruTextField.setPromptText(sv.getDiaChiThuongTru().toString());
-        emailTextField.setPromptText(sv.getEmail());
-        soDienThoaiTextField.setPromptText(sv.getSoDienThoai());
+        hoTenTextField.setText(sv.getHoTen().toString());
+        ngaySinhDatePicker.setValue(sv.getNgaySinh());
+        queQuanTextField.setText(sv.getQueQuan().toString());
+        diaChiThuongTruTextField.setText(sv.getDiaChiThuongTru().toString());
+        emailTextField.setText(sv.getEmail());
+        soDienThoaiTextField.setText(sv.getSoDienThoai());
         khoaComboBox.setValue(sv.getKhoa());
-        ngayVaoTruongDatePicker.setPromptText(sv.getNgayVaoTruong().toString());
+        lopQuanLiComboBox.setValue(sv.getTenLopQuanLi());
+        ngayVaoTruongDatePicker.setValue(sv.getNgayVaoTruong());
         if (sv.getGioiTinh()) {
             gioiTinhToggle.selectToggle(nam);
         } else {
             gioiTinhToggle.selectToggle(nu);
         }
-        lopQuanLiChoiceBox.setValue(sv.getTenLopQuanLi());
 
-        List<String> tenCacKhoa = khoaService.layTenTatCaKhoa();
-        ObservableList<String> O_khoa = FXCollections.observableArrayList(tenCacKhoa);
-        khoaComboBox.setItems(O_khoa);
+        ObservableList<String> tenCacKhoa = FXCollections.observableArrayList(khoaService.layTenTatCaKhoa());
+        khoaComboBox.setItems(tenCacKhoa);
 
-        khoaComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldV, tenKhoa) -> {
-            List<String> tenCacLop = lopService.layTenCacLopQuanLiTheoKhoa(tenKhoa);
-            ObservableList<String> O_lopQuanLi = FXCollections.observableArrayList(tenCacLop);
-            lopQuanLiChoiceBox.setItems(O_lopQuanLi);
-        });
-    }
-
-    private List<SinhVien> loadDanhSachSinhVien() {
-        List<SinhVien> list = new ArrayList<>();
-        try {
-            list = sinhVienService.layTatCaSinhVien();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!khoaComboBox.isPressed()) {
+            khoaComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldV, tenKhoa) -> {
+                ObservableList<String> tenCacLop = FXCollections.observableArrayList();
+                lopQuanLiComboBox.setValue(null);
+                tenCacLop.addAll(lopService.layTenCacLopQuanLiTheoKhoa(tenKhoa));
+                lopQuanLiComboBox.setItems(tenCacLop);
+            });
         }
-        return list;
-    }
-
-    private void quayLaiHome() {
-        Scene home = LoadTrangChu.loadTrangChu(stage, VaiTro.NVDT, giangVien);
-        stage.setScene(home);
-        stage.show();
     }
 
     private boolean chuaThayDoi() {
@@ -479,17 +468,60 @@ public class HomeSinhVienController {
         String diaChiThuongTru = diaChiThuongTruTextField.getText();
         String soDienThoai = soDienThoaiTextField.getText();
         String email = emailTextField.getText();
+        String tenKhoa = khoaComboBox.getSelectionModel().getSelectedItem();
+        String tenLopQuanLi = lopQuanLiComboBox.getSelectionModel().getSelectedItem();
+        LocalDate ngaySinh = ngaySinhDatePicker.getValue();
+        LocalDate ngayVaoTruong = ngaySinhDatePicker.getValue();
         return 
             (hoTen == null || hoTen.isBlank()) ||
+            (ngaySinh == null) || 
             (queQuan == null || queQuan.isBlank()) ||
             (diaChiThuongTru == null || diaChiThuongTru.isBlank()) || 
             (soDienThoai == null || soDienThoai.isBlank()) || 
-            (email == null || email.isBlank());
+            (email == null || email.isBlank()) ||
+            (ngayVaoTruong == null) || 
+            (tenKhoa == null || tenKhoa.isBlank()) || 
+            (tenLopQuanLi == null || tenLopQuanLi.isBlank());
+    }
+
+    private boolean ok(String message){
+        alert.setAlertType(AlertType.CONFIRMATION);
+        alert.setContentText(message);
+        Optional<ButtonType> confirm = alert.showAndWait();
+        return confirm.isPresent() && confirm.get() == ButtonType.OK;
     }
 
     private void doiSceneSangThemSinhVien(){
-        Scene themSV = LoadThemSinhVien.loadThemSinhVien(stage, giangVien);
-        stage.setScene(themSV);
+        if (chuaThayDoi()) {
+            Scene themSV = LoadThemSinhVien.loadThemSinhVien(stage, giangVien);
+            stage.setScene(themSV);
+            stage.show();
+        }
+    }
+
+    private void quayLaiHome() {
+        Scene home = LoadTrangChu.loadTrangChu(stage, VaiTro.NVDT, giangVien);
+        stage.setScene(home);
         stage.show();
+    }
+
+    private void loadLaiBang(List<SinhVien> list) {
+        data.clear();
+        data.setAll(list);
+    }
+
+    private void disableChoDenKhiClick(boolean on) {
+        hoTenTextField.setDisable(on);
+        maSoTextField.setDisable(on);
+        ngaySinhDatePicker.setDisable(on);
+        queQuanTextField.setDisable(on);
+        diaChiThuongTruTextField.setDisable(on);
+        emailTextField.setDisable(on);;
+        soDienThoaiTextField.setDisable(on);
+        khoaComboBox.setDisable(on);
+        lopQuanLiComboBox.setDisable(on);
+        ngayVaoTruongDatePicker.setDisable(on);
+        nam.setDisable(on);
+        nu.setDisable(on);
     }
 }

@@ -4,14 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import huce.cntt.oop.doan.entities.DiemChu;
 import huce.cntt.oop.doan.entities.DiemLopHP;
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.MonHoc;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,12 +29,12 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.FloatStringConverter;
 
-public class DiemLopHPController {
+public class DiemLopHocPhanController {
     private Stage stage;
     private GiangVien giangVien;
     private final DiemLopHPService service = DiemLopHPService.getInstance();
 
-    public DiemLopHPController(Stage stage, GiangVien giangVien) {
+    public DiemLopHocPhanController(Stage stage, GiangVien giangVien){
         this.stage = stage;
         this.giangVien = giangVien;
     }
