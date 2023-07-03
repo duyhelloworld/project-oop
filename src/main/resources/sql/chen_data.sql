@@ -1,4 +1,4 @@
--- Active: 1683203836476@@127.0.0.1@3306@doanoop
+-- Active: 1670603812210@@127.0.0.1@3306@doanoop
 use doanoop;
 
 INSERT INTO khoa (ten_khoa) VALUES
@@ -76,16 +76,17 @@ INSERT INTO SinhVien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan
     ('Vũ Văn Tuấn', 1, '1991-02-15', '25, Trần Phú, Hà Đông', 'Thanh Liễu, Thanh Liễu, Hà Nam', 'vuvantuan@huce.edu.vn', '0912345678', "2021-10-08", 4);
 
 INSERT INTO diemsinhvien (ma_lop_mon_hoc, mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hoc_ki, ghi_chu)
-VALUES  (1, 1, 9.5, 7.8, 9.0, 2, "hoc lai lan 1"),
-        (2, 2, 7.5, 6.5, 6.9, 1, ""),
-        (2, 3, 8.0, 4.5, 4.0, 1, ""),
-        (2, 4, 6.0, 1.0, 1.0, 2, "vi pham quy che"),
-        (2, 5, 4.4, 7.5, 9.0, 3, ""),
-        (5, 6, 4.4, 7.5, 6.0, 3, ""),
-        (7, 7, 9.4, 6.5, 8.3, 4, ""),
-        (10, 8, 5.4, 2.5, 2.5, 5, ""),
-        (4, 9, 4.7, 0.0, 10.0, 5, ""),
-        (8, 10, 7.6, 8.5, 2.5, 5, "");
+VALUES  (1, 1, 0, 0, 0, 2, "hoc lai lan 1"),
+        (2, 2, 0, 0, 0, 1, ""),
+        (2, 3, 0, 0, 0, 1, ""),
+        (2, 4, 0, 0, 0, 2, "vi pham quy che"),
+        (2, 5, 0, 0, 0, 3, ""),
+        (5, 6, 0, 0, 0, 3, ""),
+        (7, 7, 0, 0, 0, 4, ""),
+        (10, 8, 0, 0, 0, 5, ""),
+        (4, 9, 0, 0, 0, 5, ""),
+        (8, 10, 0, 0, 0, 5, "");
+
 
 INSERT INTO khoa_monhoc (ma_khoa, ma_mon_hoc) 
 VALUES  (1, 1),
