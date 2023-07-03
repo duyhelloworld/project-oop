@@ -1,14 +1,6 @@
 package huce.cntt.oop.doan.controller;
 
 import java.util.List;
-<<<<<<< HEAD
-import java.util.regex.Pattern;
-
-import huce.cntt.oop.doan.entities.DiemCaNhan;
-import huce.cntt.oop.doan.entities.SinhVien;
-import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
-import huce.cntt.oop.doan.interfaces.ISinhVienService;
-=======
 
 import huce.cntt.oop.doan.entities.DiemCaNhan;
 import huce.cntt.oop.doan.entities.GiangVien;
@@ -18,17 +10,13 @@ import huce.cntt.oop.doan.entities.exception.DatabaseException;
 import huce.cntt.oop.doan.interfaces.IDiemCaNhanService;
 import huce.cntt.oop.doan.interfaces.ISinhVienService;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
->>>>>>> duycode
 import huce.cntt.oop.doan.service.DiemCaNhanService;
 import huce.cntt.oop.doan.service.SinhVienService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-<<<<<<< HEAD
-=======
 import javafx.scene.Scene;
->>>>>>> duycode
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -84,11 +72,8 @@ public class DiemCaNhanController {
     @FXML
     private TableColumn<DiemCaNhan, String> cotTenMon;
     @FXML
-<<<<<<< HEAD
-=======
     private TableColumn<DiemCaNhan, String> cotTenLopMon;
     @FXML
->>>>>>> duycode
     private TableColumn<DiemCaNhan, Integer> cotSoTinChi;
     @FXML
     private TableColumn<DiemCaNhan, Float> cotDiemChuyenCan;

@@ -102,7 +102,6 @@
                         <PropertyValueFactory property="maLopQuanLi" />
                     </cellValueFactory>
                 </TableColumn>
-<<<<<<<< HEAD:src/main/resources/view/XemSuaXoaSinhVien.fxml
                 <TableColumn fx:id="cotMaKhoa" editable="false" prefWidth="3.0"
                     text="MaKhoa">
                     <cellValueFactory>
@@ -111,8 +110,6 @@
                 </TableColumn>
                 <TableColumn fx:id="cotXoa" editable="false" visible="false" prefWidth="47.0" text="Xóa">
                 </TableColumn>
-========
->>>>>>>> duycode:src/main/resources/view/HomeSinhVien.fxml
             </columns>
         </TableView>
         <Button fx:id="nutTimKiem" layoutX="791.0" layoutY="28.0" mnemonicParsing="false"
