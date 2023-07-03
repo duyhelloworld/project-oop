@@ -288,6 +288,7 @@ public class HomeSinhVienController {
         if (sinhVien == null) {
             return;
         }
+        alert.setAlertType(AlertType.CONFIRMATION);
         alert.setContentText("Bạn có muốn xoá sinh viên này?");
         confirm = alert.showAndWait();
 
