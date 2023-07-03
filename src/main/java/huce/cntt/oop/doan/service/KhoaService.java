@@ -80,7 +80,7 @@ public class KhoaService implements IKhoaService {
         PreparedStatement statement = access.getStatement("DELETE FROM khoa_monhoc WHERE ma_mon_hoc = " + maMon);
         try {
             int rowAffected = statement.executeUpdate();
-            if (rowAffected != 1) {
+            if (rowAffected == 0) {
                 throw new XoaException("Lỗi khi xóa môn học có mã + " + maMon + " khỏi khoa!");
             }
         } catch (SQLException e) {

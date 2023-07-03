@@ -46,34 +46,6 @@ public class LopService implements ILopService {
     }
 
     @Override
-    public void capNhatLopQuanLi(SinhVien sinhVien) throws CapNhatException {
-        try {
-            PreparedStatement statement = access.getStatement(
-                "UPDATE SinhVien SET ma_lop_quan_li = " + sinhVien.getMaLopQuanLi() + 
-                " WHERE mssv = " + sinhVien.getMaSo());
-            int rowAffected = statement.executeUpdate();
-            if (rowAffected != 1) {
-                throw new CapNhatException("Có 1 số lỗi xảy ra với hệ thống.\nHãy quay lại sau!");
-            }
-        } catch (SQLException e) {
-            throw new CapNhatException("Lỗi khi cập nhật lớp quản lí cho sinh viên có mã số " + sinhVien.getMaSo());
-        }
-    }
-
-    @Override
-    public void xoaSinhVienKhoiLopQuanLi(Integer mssv) throws XoaException {
-        try {
-            PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ma_lop_quan_li = NULL WHERE mssv = " + mssv);
-            int rowAffected = statement.executeUpdate();
-            if (rowAffected < 1) {
-                throw new XoaException("Không tồn tại sinh viên mang mã số " + mssv);
-            } 
-        } catch (SQLException e) {
-            throw new XoaException("Lỗi khi xóa sinh viên khỏi lớp quản lí!");
-        }
-    }
-
-    @Override
     public int laySoLopMonHocDangHoc(Integer mssv) {
         PreparedStatement statement = access.getStatement("SELECT COUNT(*) FROM diemsinhvien WHERE mssv = " + mssv);
         int count = 0;
@@ -86,19 +58,6 @@ public class LopService implements ILopService {
             e.printStackTrace();
         }
         return count;
-    }
-
-    @Override
-    public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws XoaException {
-        PreparedStatement statement = access.getStatement("DELETE FROM diemsinhvien WHERE mssv = " + mssv);
-        try {
-            int rowAffected = statement.executeUpdate();
-            if (rowAffected < 1) {
-                throw new XoaException("Không tồn tại sinh viên mang mã số này");
-            }
-        } catch (SQLException e) {
-            throw new XoaException("Lỗi khi xóa sinh viên " + mssv + " khỏi mọi lớp môn học đang theo học!");
-        }
     }
 
     @Override
@@ -120,5 +79,121 @@ public class LopService implements ILopService {
             throw new KhoaLopException("Khoa '" + tenKhoa + "' và lớp '" + tenLopQuanLi + "' xảy ra xung đột");
         }
         return null;
-    }   
+    }
+
+    @Override
+    public List<Integer> layCacLopMonHocPhuThuoc(Integer maMon){
+        PreparedStatement statement = access.getStatement("SELECT " +
+        "ma_lop_mon_hoc " +
+        "FROM lopmonhoc " + 
+        "WHERE ma_mon_hoc = " + maMon);
+
+        try {
+            ResultSet result = statement.executeQuery();
+            List<Integer> danhSachMaLop = new ArrayList<>();
+            while (result.next()) {
+                Integer maLop = result.getInt("ma_lop_mon_hoc");
+                danhSachMaLop.add(maLop);
+            }
+            return danhSachMaLop;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> layTenCacLopMonHoc(Integer maMon) {
+        PreparedStatement statement = access.getStatement("SELECT " +
+        "ten_lop_mon_hoc " +
+        "FROM lopmonhoc " + 
+        "WHERE ma_mon_hoc = " + maMon);
+
+        try {
+            ResultSet result = statement.executeQuery();
+            List<String> danhSachTenLop = new ArrayList<>();
+            while (result.next()) {
+                String tenLop = result.getString("ten_lop_mon_hoc");
+                danhSachTenLop.add(tenLop);
+            }
+            return danhSachTenLop;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Integer soHocSinhHocOLopMonHoc(Integer maLopMonHoc) {
+        PreparedStatement statement = access.getStatement("SELECT " + 
+        "COUNT(*) FROM diemsinhvien WHERE ma_lop_mon_hoc = " + maLopMonHoc);
+        int count = 0;
+        try {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public void xoaLopMonHocKhoiDiemSinhVien(Integer maLopMonHoc) throws XoaException { 
+        PreparedStatement statement = access.getStatement("DELETE FROM " +
+        "diemsinhvien " +
+        "WHERE ma_lop_mon_hoc = " + maLopMonHoc);
+
+        try {
+            int rowAffected = statement.executeUpdate();
+            System.out.println(rowAffected);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new XoaException("Lỗi khi xóa!!!");
+        }
+    }
+
+    @Override
+    public void xoaMonHocKhoiLopMonHoc(Integer maMon) throws XoaException {
+        PreparedStatement statement = access.getStatement("DELETE FROM " +
+        "lopmonhoc " +
+        "WHERE ma_mon_hoc = " + maMon);
+
+        try {
+            int rowAffected = statement.executeUpdate();
+            while (rowAffected == 0) {
+                throw new XoaException("Không có môn nào!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new XoaException("Lỗi khi xóa!!!");
+        }  
+    } 
+
+    @Override
+    public void xoaSinhVienKhoiLopMonHoc(Integer mssv) throws XoaException {
+        PreparedStatement statement = access.getStatement("DELETE FROM diemsinhvien WHERE mssv = " + mssv);
+        try {
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected < 1) {
+                throw new XoaException("Không tồn tại sinh viên mang mã số này");
+            }
+        } catch (SQLException e) {
+            throw new XoaException("Lỗi khi xóa sinh viên " + mssv + " khỏi mọi lớp môn học đang theo học!");
+        }
+    }
+
+    @Override
+    public void capNhatLopQuanLi(SinhVien sinhVien) throws CapNhatException {
+        try {
+            PreparedStatement statement = access.getStatement("UPDATE SinhVien SET ma_lop_quan_li = " + sinhVien.getMaLopQuanLi() + " WHERE mssv = " + sinhVien.getMaSo());
+            int rowAffected = statement.executeUpdate();
+            if (rowAffected != 1) {
+                throw new CapNhatException("Có 1 số lỗi xảy ra với hệ thống.\nHãy quay lại sau!");
+            }
+        } catch (SQLException e) {
+            throw new CapNhatException("Lỗi khi cập nhật lớp quản lí cho sinh viên có mã số " + sinhVien.getMaSo());
+        }
+    }
 }

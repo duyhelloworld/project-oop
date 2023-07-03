@@ -66,7 +66,7 @@ public class MonHocService implements IMonHocService {
         try {
             statement.setInt(1, maso);
             ResultSet result = statement.executeQuery();
-            while (result.next()) {
+            if (result.next()) {
                 MonHoc mh = new MonHoc();
                 mh.setMaMon(maso);
                 mh.setTenMon(result.getString("ten_mon_hoc"));
@@ -167,7 +167,7 @@ public class MonHocService implements IMonHocService {
         } catch (SQLException e) {
             e.printStackTrace();
             if (contraintException(e)) {
-                throw new CapNhatException("Môn này đã tồn tại ");
+                throw new CapNhatException("Môn học này đã tồn tại!");
             }
             throw new CapNhatException("Có lỗi khi cập nhật môn học có mã số " + maMon);
         }

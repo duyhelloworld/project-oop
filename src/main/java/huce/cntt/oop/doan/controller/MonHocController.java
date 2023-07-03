@@ -7,8 +7,10 @@ import java.util.Optional;
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.MonHoc;
 import huce.cntt.oop.doan.entities.VaiTro;
+import huce.cntt.oop.doan.entities.exception.XoaException;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.KhoaService;
+import huce.cntt.oop.doan.service.LopService;
 import huce.cntt.oop.doan.service.MonHocService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -23,6 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -62,7 +65,7 @@ public class MonHocController {
     @FXML
     private TextField monTienQuyet;
     @FXML
-    private ComboBox<String> khoa;
+    private ChoiceBox<String> khoaChoiceBox;
     @FXML
     private TextField moTa;
     @FXML
@@ -84,6 +87,7 @@ public class MonHocController {
 
     private MonHocService monHocService = MonHocService.getInstance();
     private KhoaService khoaService = KhoaService.getInstance();
+    private LopService lopService = LopService.getInstance();
     private Stage stage;
     private GiangVien giangVien;
 
@@ -109,6 +113,8 @@ public class MonHocController {
         List<MonHoc> monHocs = monHocService.layTatCaMonHoc();
         observableList = FXCollections.observableArrayList(monHocs);
         tableView.setItems(observableList);
+
+        maMon.setEditable(false);
 
         thoat.setOnAction(e -> {
             if (!thoat.isPressed()) {
@@ -188,19 +194,29 @@ public class MonHocController {
         tableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 MonHoc selectedMonHoc = tableView.getSelectionModel().getSelectedItem();
-                if (selectedMonHoc != null) {
-                    // Đổ dữ liệu từ đối tượng được chọn vào các TextField
-                    maMon.setText(Integer.toString(selectedMonHoc.getMaMon()));
-                    tenMon.setText(selectedMonHoc.getTenMon());
-                    soTinChi.setText(Integer.toString(selectedMonHoc.getSoTinChi()));
-                    if (selectedMonHoc.getBatBuoc()) {
-                        group.selectToggle(batBuoc);
-                    } else
-                        group.selectToggle(koBatBuoc);
-                    monTienQuyet.setText(selectedMonHoc.getMonTienQuyet());
-                    khoa.setPromptText(selectedMonHoc.getKhoa());
-                    moTa.setText(selectedMonHoc.getMoTa());
+                if (selectedMonHoc == null) {
+                    return;
                 }
+                // Đổ dữ liệu từ đối tượng được chọn vào các TextField
+                maMon.setText(Integer.toString(selectedMonHoc.getMaMon()));
+                tenMon.setText(selectedMonHoc.getTenMon());
+                soTinChi.setText(Integer.toString(selectedMonHoc.getSoTinChi()));
+                if (selectedMonHoc.getBatBuoc()) {
+                    group.selectToggle(batBuoc);
+                } else
+                    group.selectToggle(koBatBuoc);
+                monTienQuyet.setText(selectedMonHoc.getMonTienQuyet());
+
+                ObservableList<String> tenCacKhoa = FXCollections.observableArrayList();
+                if (tenCacKhoa.addAll(selectedMonHoc.getKhoa())) {
+                    khoaChoiceBox.setItems(tenCacKhoa);
+                }
+                if (!khoaChoiceBox.isPressed()) {
+                    tenCacKhoa.clear();
+                    tenCacKhoa.addAll(khoaService.layTenTatCaKhoa());
+                    khoaChoiceBox.setItems(tenCacKhoa);
+                }
+                moTa.setText(selectedMonHoc.getMoTa());
             }
         });
 
@@ -213,6 +229,7 @@ public class MonHocController {
         // luuThayDoi.setOnAction(e -> luu());
         // thoat.setOnAction(e -> thoat());
     }
+
     // private void them(){
     // String ma = maMon.getText();
     // String ten = tenMon.getText();
@@ -230,41 +247,43 @@ public class MonHocController {
 
     private void xoa() {
         MonHoc monHoc = tableView.getSelectionModel().getSelectedItem();
-
-        if (monHoc == null) {
+        if (monHoc == null || xoaMon.isPressed()) {
             return;
         }
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Xác nhận xóa");
-        alert.setHeaderText(null);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận");
         alert.setContentText("Xác nhận xóa môn này?");
-
         Optional<ButtonType> confirm = alert.showAndWait();
-
         if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
             try {
-                khoaService.xoaMonKhoa(monHoc.getMaMon());
-                boolean xoaThanhCong = monHocService.xoaMonHoc(monHoc.getMaMon());
+                int maMon = monHoc.getMaMon();
+                khoaService.xoaMonKhoa(maMon);
+                List<Integer> cacMaLopMonHoc = lopService.layCacLopMonHocPhuThuoc(maMon);
+                if (cacMaLopMonHoc == null) {
+                    monHocService.xoaMonHoc(maMon);
+                }
+                for (Integer maLopMonHoc : cacMaLopMonHoc) {
+                    lopService.xoaMonHocKhoiLopMonHoc(maMon);
+                    lopService.xoaLopMonHocKhoiDiemSinhVien(maLopMonHoc);
+                }
 
+                boolean xoaThanhCong = monHocService.xoaMonHoc(monHoc.getMaMon());
                 if (xoaThanhCong) {
                     // Xóa môn học từ TableView
                     tableView.getItems().remove(monHoc);
                     // Hiển thị thông báo xóa thành công
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                     successAlert.setTitle("Thành công");
-                    successAlert.setHeaderText(null);
                     successAlert.setContentText("Xóa thành công");
                     successAlert.show();
                 }
-            } catch (Exception e) {
-                // Hiển thị thông báo lỗi nếu có lỗi xảy ra
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            } catch (XoaException e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(AlertType.ERROR);
                 errorAlert.setTitle("Lỗi");
-                errorAlert.setHeaderText(null);
                 errorAlert.setContentText(e.getMessage());
                 errorAlert.show();
-                e.printStackTrace();
             }
         }
     }

@@ -117,3 +117,4 @@ SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_qu
 FROM monhoc mh
 INNER JOIN Khoa_MonHoc kmh ON kmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN Khoa k ON k.ma_khoa = kmh.ma_khoa;
+
