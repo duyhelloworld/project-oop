@@ -138,7 +138,7 @@ public class HomeSinhVienController {
             data.addAll(sinhVienService.layTatCaSinhVien());
         } catch (DatabaseException e) {
             alert.setAlertType(AlertType.ERROR);
-            alert.setContentText("Lỗi dữ liệu trong DB!");
+            alert.setContentText("Lỗi dữ liệu trong CSDL!");
             alert.show();
         }
 
