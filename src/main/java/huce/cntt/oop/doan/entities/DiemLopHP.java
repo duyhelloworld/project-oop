@@ -32,6 +32,14 @@ public class DiemLopHP {
         this.tenLopMonHoc = tenLopMonHoc;
     }
 
+    public String getLopQL() {
+        return this.lopQL;
+    }
+
+    public void setLopQL(String lopQL) {
+        this.lopQL = lopQL;
+    }
+
     public Integer getMSSV() {
         return this.MSSV;
     }

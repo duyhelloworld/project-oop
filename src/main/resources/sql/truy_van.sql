@@ -1,4 +1,4 @@
--- Active: 1683203836476@@127.0.0.1@3306@doanoop
+-- Active: 1670603812210@@127.0.0.1@3306@doanoop
 use doanoop;
 
 SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_quyet, k.ten_khoa, mh.mo_ta 
@@ -117,4 +117,9 @@ SELECT mh.ma_mon_hoc, mh.ten_mon_hoc, mh.so_tin_chi, mh.bat_buoc, mh.mon_tien_qu
 FROM monhoc mh
 INNER JOIN Khoa_MonHoc kmh ON kmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN Khoa k ON k.ma_khoa = kmh.ma_khoa;
-
+SELECT lmh.ten_lop_mon_hoc
+FROM MonHoc mh
+INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
+INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
+INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv
+WHERE mh.ma_mon_hoc = 1 GROUP BY lmh.ten_lop_mon_hoc;
