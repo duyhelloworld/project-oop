@@ -1,14 +1,17 @@
 package huce.cntt.oop.doan.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import huce.cntt.oop.doan.entities.DiemChu;
 import huce.cntt.oop.doan.entities.DiemLopHP;
 import huce.cntt.oop.doan.entities.GiangVien;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,14 +27,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
-public class DiemLopHocPhanController {
+public class DiemLopHPController {
     private Stage stage;
     private GiangVien giangVien;
     private final DiemLopHPService service = DiemLopHPService.getInstance();
 
-    public DiemLopHocPhanController(Stage stage, GiangVien giangVien){
+    public DiemLopHPController(Stage stage, GiangVien giangVien) {
         this.stage = stage;
         this.giangVien = giangVien;
     }
@@ -61,7 +65,7 @@ public class DiemLopHocPhanController {
     @FXML
     private TableColumn<DiemLopHP, Integer> cotMaLopHP;
     @FXML
-    private TableColumn<DiemLopHP, Integer> cotHocKy;
+    private TableColumn<DiemLopHP, Integer> cotHocKi;
     // @FXML
     // private TableColumn<DiemLopHP, > cot;
     @FXML
@@ -71,7 +75,7 @@ public class DiemLopHocPhanController {
     @FXML
     private TextField monHoc;
     @FXML
-    private TextField hocKy;
+    private TextField hocKi;
     @FXML
     private Button xoa;
     @FXML
@@ -114,8 +118,8 @@ public class DiemLopHocPhanController {
         cotGPA.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemHe4().toString()));
         cotDiemChu.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDiemChu()));
         cotMaLopHP.setCellValueFactory(new PropertyValueFactory<>("maLopHP"));
-        cotHocKy.setCellValueFactory(new PropertyValueFactory<>("hocKy"));
-        
+        cotHocKi.setCellValueFactory(new PropertyValueFactory<>("hocKi"));
+
         List<DiemLopHP> diem = service.layTatCaDiem();
         observableList = FXCollections.observableArrayList();
         observableList.addAll(diem);
@@ -150,6 +154,71 @@ public class DiemLopHocPhanController {
         thoat.setOnAction(e -> {
             if (!thoat.isPressed()) {
                 thoat();
+            }
+        });
+        timKiemTheo.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String searchOption = timKiemTheo.getValue();
+                String searchMon = monHoc.getText();
+                // String searchLop = lop.getValue();
+                String searchHocKi = hocKi.getText();
+
+                List<DiemLopHP> searchResults = new ArrayList<DiemLopHP>();
+                ObservableList<String> tenLop = FXCollections.observableArrayList();
+
+                switch (searchOption) {
+                    case "Mã môn":
+                        try {
+                            int maMon = Integer.parseInt(searchMon);
+                            lop.setValue(null);
+                            tenLop.addAll(service.layDanhSachLopTheoMaMon(maMon));
+                            lop.setItems(tenLop);
+                            String searchLop = lop.getValue();
+                            searchResults.clear();
+                            searchResults.addAll(service.layDiemLopHPTheoMaMon(maMon, searchLop, Integer.parseInt(searchHocKi)));
+                            // System.out.println(maMon);
+                        } catch (NumberFormatException e) {
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setTitle("Lỗi");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Thông tin nhập vào không hợp lệ!");
+                            alert.show();
+                        }
+                        break;
+
+                    case "Tên môn":
+                        try {
+                            // int maMon = Integer.parseInt(searchMon);
+                            lop.setValue(null);
+                            tenLop.addAll(service.layDanhSachLopTheoTenMon(searchMon));
+                            lop.setItems(tenLop);
+                            String searchLop = lop.getValue();
+                            searchResults.clear();
+                            searchResults.addAll(service.layDiemLopHPTheoTenMon(searchMon, searchLop, Integer.parseInt(searchHocKi)));
+                            // System.out.println(maMon);
+                        } catch (NumberFormatException e) {
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setTitle("Lỗi");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Thông tin nhập vào không hợp lệ!");
+                            alert.show();
+                        }
+                        break;
+                }
+                // Xóa nội dung của TableView trước khi hiển thị kết quả tìm kiếm
+                tableView.getItems().clear();
+
+                if (!searchResults.isEmpty()) {
+                    observableList.clear();
+                    observableList.setAll(searchResults);
+                } else {
+                    // Hiển thị thông báo nếu không tìm thấy kết quả
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Thông báo");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Không tìm thấy kết quả");
+                    alert.show();
+                }
             }
         });
     }
@@ -229,13 +298,13 @@ public class DiemLopHocPhanController {
                 diem.setDiemGiuaKi(0f);
                 diem.setDiemCuoiKi(0f);
 
-                    // Hiển thị thông báo xóa thành công
-                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                    successAlert.setTitle("Thành công");
-                    successAlert.setHeaderText(null);
-                    successAlert.setContentText("Xóa thành công");
-                    successAlert.show();
-                    tableView.refresh();
+                // Hiển thị thông báo xóa thành công
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Thành công");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Xóa thành công");
+                successAlert.show();
+                tableView.refresh();
             } catch (Exception e) {
                 // Hiển thị thông báo lỗi nếu có lỗi xảy ra
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);

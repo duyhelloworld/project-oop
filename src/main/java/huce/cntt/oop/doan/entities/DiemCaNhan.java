@@ -90,18 +90,36 @@ public class DiemCaNhan {
         this.diemCuoiKi = diemCuoiKi;
     }
 
+    // public Float getDiemQuaTrinh() {
+    //     diemQuaTrinh = (diemChuyenCan + diemGiuaKi) / 2.0f;
+    //     return Float.parseFloat(String.format("%.1f", diemQuaTrinh));
+    //     // return 0.0f;
+    // }
+
     public Float getDiemQuaTrinh() {
-        diemQuaTrinh = (diemChuyenCan + diemGiuaKi) / 2;
-        return Float.parseFloat(String.format("%.1f", diemQuaTrinh));
+        float diemChuyenCan = getDiemChuyenCan();
+        float diemGiuaKi = getDiemGiuaKi();
+        Float diemQuaTrinh = Math.round((diemChuyenCan * 0.5f + diemGiuaKi * 0.5f) * 10.0f) / 10.0f;
+        return diemQuaTrinh;
     }
 
+
+    // public Float getDiemTongKet() {
+    //     diemTongKet = getDiemQuaTrinh() * 0.3f + getDiemCuoiKi() * 0.7f;
+    //     return Float.parseFloat(String.format("%.1f", diemTongKet));
+    //     // return 0.0f;
+    // }
+
     public Float getDiemTongKet() {
-        diemTongKet = getDiemQuaTrinh() * 0.3f + getDiemCuoiKi() * 0.7f;
-        return Float.parseFloat(String.format("%.1f", diemTongKet));
+        float diemQuaTrinh = getDiemQuaTrinh();
+        float diemCuoiKi = getDiemCuoiKi();
+        float diemTongKet = Math.round((diemQuaTrinh * 0.3f + diemCuoiKi * 0.7f) * 10.0f) / 10.0f;
+        return diemTongKet;
     }
 
     public Float getDiemTongKetHe4() {
         return Float.parseFloat(String.format("%.1f", getDiemTongKet() * 0.2f));
+        // return 0.0f;
     }
 
     public DiemChu getDiemChu(){
