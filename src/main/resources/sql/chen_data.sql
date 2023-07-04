@@ -1,4 +1,4 @@
--- Active: 1670603812210@@127.0.0.1@3306@doanoop
+-- Active: 1683203836476@@127.0.0.1@3306@doanoop
 use doanoop;
 
 INSERT INTO khoa (ten_khoa) VALUES
@@ -75,17 +75,26 @@ INSERT INTO SinhVien (ho_ten, gioi_tinh, ngay_sinh, dia_chi_thuong_tru, que_quan
     ('Lê Thị Ngọc', 0, '1993-08-12', '20, Phạm Hùng, Cầu Giấy', 'Giang Tiên, Đại Lộc, Quảng Nam', 'lethingoc@huce.edu.vn', '0956789123', "2022-09-18", 4),
     ('Vũ Văn Tuấn', 1, '1991-02-15', '25, Trần Phú, Hà Đông', 'Thanh Liễu, Thanh Liễu, Hà Nam', 'vuvantuan@huce.edu.vn', '0912345678', "2021-10-08", 4);
 
-INSERT INTO diemsinhvien (ma_lop_mon_hoc, mssv, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hoc_ki, ghi_chu)
-VALUES  (1, 1, 0, 0, 0, 2, "hoc lai lan 1"),
-        (2, 2, 0, 0, 0, 1, ""),
-        (2, 3, 0, 0, 0, 1, ""),
-        (2, 4, 0, 0, 0, 2, "vi pham quy che"),
-        (2, 5, 0, 0, 0, 3, ""),
-        (5, 6, 0, 0, 0, 3, ""),
-        (7, 7, 0, 0, 0, 4, ""),
-        (10, 8, 0, 0, 0, 5, ""),
-        (4, 9, 0, 0, 0, 5, ""),
-        (8, 10, 0, 0, 0, 5, "");
+INSERT INTO diemsinhvien (mssv, ma_lop_mon_hoc, diem_chuyen_can, diem_giua_ki, diem_cuoi_ki, hoc_ki, ghi_chu)
+VALUES  
+        (10, 1, 5, 5, 5, 1, ""),
+        (10, 2, 10, 10, 10, 1, ""),
+        (10, 3, 10, 10, 10, 2, ""),
+        (10, 4, 10, 10, 10, 3, ""),
+        (10, 5, 5, 5, 5, 2, ""),
+        (10, 2, 10, 10, 10, 1, ""),
+        (10, 3, 5, 5, 5, 2, "");
+
+        -- (1, 1, 0, 0, 0, 2, "hoc lai lan 1"),
+        -- (2, 2, 0, 0, 0, 1, ""),
+        -- (2, 3, 0, 0, 0, 1, ""),
+        -- (2, 4, 0, 0, 0, 2, "vi pham quy che"),
+        -- (2, 5, 0, 0, 0, 3, ""),
+        -- (5, 6, 0, 0, 0, 3, ""),
+        -- (7, 7, 0, 0, 0, 4, ""),
+        -- (10, 8, 0, 0, 0, 5, ""),
+        -- (4, 9, 0, 0, 0, 5, ""),
+        -- (8, 10, 0, 0, 0, 5, "");
 
 
 INSERT INTO khoa_monhoc (ma_khoa, ma_mon_hoc) 

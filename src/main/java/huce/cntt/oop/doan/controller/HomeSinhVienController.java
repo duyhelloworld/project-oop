@@ -230,6 +230,7 @@ public class HomeSinhVienController {
             if (soLuotTimKiem >= 3) {
                 try {
                     loadLaiBang(sinhVienService.layTatCaSinhVien());
+                    soLuotTimKiem = 0;
                 } catch (DatabaseException e) {
                     alert.setContentText(e.getMessage());
                     alert.show();
@@ -248,6 +249,7 @@ public class HomeSinhVienController {
             case "Tên sinh viên":
                 try {
                     loadLaiBang(sinhVienService.timKiemSinhVienTheoTen(searchString));
+                    soLuotTimKiem = 0;
                 } catch (DatabaseException e) {
                     alert.setContentText(e.getMessage());
                     alert.show();
@@ -255,6 +257,7 @@ public class HomeSinhVienController {
                 break;
             case "Mã số":
                 try {
+                    sinhVien = new SinhVien();
                     sinhVien.setMaSo(searchString);
                     int mssv = sinhVien.getMaSo();
                     int soSinhVienHienTai = sinhVienService.tongSoSinhVien();
@@ -263,7 +266,12 @@ public class HomeSinhVienController {
                         alert.show();
                         return;
                     }
-                    loadLaiBang(List.of(sinhVienService.timKiemSinhVienTheoMaSo(mssv)));
+                    SinhVien sinhVien = sinhVienService.timKiemSinhVienTheoMaSo(mssv);
+                    if (sinhVien == null) {
+                        data.clear();
+                        throw new DatabaseException("Không có sinh viên mang mã số " + mssv);
+                    }
+                    loadLaiBang(List.of(sinhVien));
                 } catch (ChuyenSoException | DatabaseException e) {
                     alert.setContentText(e.getMessage());
                     alert.show();

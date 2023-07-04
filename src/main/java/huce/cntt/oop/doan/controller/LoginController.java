@@ -49,7 +49,7 @@ public class LoginController {
         alert = new Alert(AlertType.ERROR);
         nutQuenMatKhau.setOnMouseClicked(e -> {
             alert.setAlertType(AlertType.INFORMATION);
-            alert.setContentText("Chức năng này chưa được hỗ trợ!\nXin thông cảm, hãy liên hệ với hotline 0333666999.");
+            alert.setContentText("Hãy liên hệ với hotline 0333666999 hoặc email zenitsu.yeu.nezuko.chan@kimesu_no_yaiba để được cấp lại ");
             alert.show();
         });
 

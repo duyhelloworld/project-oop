@@ -61,8 +61,10 @@ public class SinhVienService implements ISinhVienService {
                 temp.setKhoa(result.getString("ten_khoa"));
                 listSinhVien.add(temp);
             }
-        } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
+        } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return listSinhVien;
     }
@@ -94,7 +96,7 @@ public class SinhVienService implements ISinhVienService {
                 temp.setKhoa(result.getString("ten_khoa"));
                 return temp;
             }
-        } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
+        } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException | SQLException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
         }
         return null;
@@ -112,9 +114,6 @@ public class SinhVienService implements ISinhVienService {
             "WHERE ho_ten LIKE ?");
             statement.setString(1, "%" + ten + "%");
             ResultSet result = statement.executeQuery();
-            if (!result.first()) {
-                return null;
-            }
             while (result.next()) {
                 SinhVien temp = new SinhVien();
                 temp.setMaSo(result.getInt("mssv"));
@@ -131,9 +130,12 @@ public class SinhVienService implements ISinhVienService {
                 kq.add(temp);
             }
             return kq;
-        }  catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
+        }  catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -163,8 +165,10 @@ public class SinhVienService implements ISinhVienService {
                 temp.setEmail(email);
                 return temp;
             }
-        } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException |SQLException e) {
+        } catch (ChuyenDiaChiException | NgayGioException | EmailException | ChuyenSoException | ChuyenHoTenException e) {
             throw new DatabaseException("Lỗi dữ liệu trong database!!!");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
