@@ -101,7 +101,7 @@ public class MonHocController {
         koBatBuoc.setToggleGroup(group);
         // Khởi tạo và cấu hình TableView và các cột
         cotMaMon.setCellValueFactory(new PropertyValueFactory<MonHoc, Integer>("maMon"));
-        cotTenMon.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTenMon()));
+        cotTenMon.setCellValueFactory( new PropertyValueFactory<>("tenMon"));
         cotSoTinChi.setCellValueFactory(new PropertyValueFactory<>("soTinChi"));
         cotBatBuoc.setCellValueFactory(new PropertyValueFactory<>("batBuoc"));
         cotMonTienQuyet.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getMonTienQuyet()));

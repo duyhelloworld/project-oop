@@ -4,9 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import huce.cntt.oop.doan.entities.DiemLopHP;
-import huce.cntt.oop.doan.entities.exception.CapNhatException;
-import huce.cntt.oop.doan.entities.exception.DatabaseException;
-import javafx.scene.control.ChoiceBox;
 
 public interface IDiemLopService {
     public List<DiemLopHP> layTatCaDiem();
@@ -17,9 +14,9 @@ public interface IDiemLopService {
     
     public List<DiemLopHP> layDanhSachLopHPTheoMon(String tenMon);
 
-    public List<String> layDanhSachLopTheoMaMon(Integer maMonc);
+    public List<String> layDanhSachLopTheoMaMon(Integer maMonc, Integer hocki);
 
-    public List<String> layDanhSachLopTheoTenMon(String tenMon);
+    public List<String> layDanhSachLopTheoTenMon(String tenMon, Integer hocKi);
     
     public boolean xoaDiemLopHP(Integer MSSV) throws SQLException;
 

@@ -72,11 +72,11 @@ public class DiemLopHPController {
     // @FXML
     // private TableColumn<DiemLopHP, > cot;
     @FXML
-    private ComboBox<String> timKiemTheo;
-    @FXML
-    private ChoiceBox<String> lop;
+    private ChoiceBox<String> timKiemTheo;
     @FXML
     private TextField monHoc;
+    @FXML
+    private ChoiceBox<String> lop;
     @FXML
     private TextField hocKi;
     @FXML
@@ -128,6 +128,13 @@ public class DiemLopHPController {
         observableList.addAll(diem);
         tableView.setItems(observableList);
 
+        diemChuTextField.setEditable(false);
+        diemHe4TextField.setEditable(false);
+        diemTongKetTextField.setEditable(false);
+        diemQTTextField.setEditable(false);
+        hoTenTextField.setEditable(false);
+        lopQLTextField.setEditable(false);
+
         tableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 DiemLopHP selectedDiemLopHP = tableView.getSelectionModel().getSelectedItem();
@@ -159,43 +166,46 @@ public class DiemLopHPController {
                 thoat();
             }
         });
-        timKiemTheo.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
+        // hocKi.setEditable(false);
+
+        hocKi.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER && lop.getValue() == null && hocKi.getText() != null && timKiemTheo.getValue() != null) {
                 String searchOption = timKiemTheo.getValue();
                 String searchMon = monHoc.getText();
-                // String searchLop = lop.getValue();
+                String searchLop = lop.getValue();
                 String searchHocKi = hocKi.getText();
+                System.out.println("Hoc Ki : " + searchHocKi + "\nMon hoc : " + searchMon + "\nLop : " + searchLop + "\nLua Chon : " + searchOption);
 
-                List<DiemLopHP> searchResults = new ArrayList<DiemLopHP>();
+                List<DiemLopHP> searchResults = new ArrayList<>();
                 ObservableList<String> tenLop = FXCollections.observableArrayList();
-
+                
                 switch (searchOption) {
                     case "Mã môn":
-                        try {
-                            int maMon = Integer.parseInt(searchMon);
-                            lop.setValue(null);
-                            tenLop.addAll(service.layDanhSachLopTheoMaMon(maMon));
-                            lop.setItems(tenLop);
-                            String searchLop = lop.getValue();
-                            searchResults.clear();
-                            searchResults.addAll(service.layDiemLopHPTheoMaMon(maMon, searchLop, Integer.parseInt(searchHocKi)));
-                            // System.out.println(maMon);
-                        } catch (NumberFormatException e) {
-                            Alert alert = new Alert(AlertType.ERROR);
-                            alert.setTitle("Lỗi");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Thông tin nhập vào không hợp lệ!");
-                            alert.show();
-                        }
+                    try {
+                        int maMon = Integer.parseInt(searchMon);                        
+                        // lop.setValue(null);
+                        System.out.println(service.layDanhSachLopTheoMaMon(maMon, Integer.parseInt(searchHocKi)));
+                        tenLop.setAll(service.layDanhSachLopTheoMaMon(maMon, Integer.parseInt(searchHocKi)));
+                        lop.setItems(tenLop);
+                        // String searchLop = lop.getValue();
+                        searchResults.clear();
+                        System.out.println(service.layDiemLopHPTheoMaMon(maMon, searchLop, Integer.parseInt(searchHocKi)));
+                        searchResults.addAll(service.layDiemLopHPTheoMaMon(maMon, searchLop, Integer.parseInt(searchHocKi)));
+                        // System.out.println(maMon);
+                    } catch (NumberFormatException e) {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Lỗi");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Thông tin nhập vào không hợp lệ!");
+                        alert.show();
+                    }
                         break;
 
                     case "Tên môn":
                         try {
-                            // int maMon = Integer.parseInt(searchMon);
                             lop.setValue(null);
-                            tenLop.addAll(service.layDanhSachLopTheoTenMon(searchMon));
+                            tenLop.addAll(service.layDanhSachLopTheoTenMon(searchMon, Integer.parseInt(searchHocKi)));
                             lop.setItems(tenLop);
-                            String searchLop = lop.getValue();
                             searchResults.clear();
                             searchResults.addAll(service.layDiemLopHPTheoTenMon(searchMon, searchLop, Integer.parseInt(searchHocKi)));
                             // System.out.println(maMon);
@@ -248,7 +258,7 @@ public class DiemLopHPController {
             return;
         }
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Xác nhận lưu thay đổi");
         alert.setHeaderText(null);
         alert.setContentText("Xác nhận lưu thay đổi điểm này?");

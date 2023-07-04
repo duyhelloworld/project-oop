@@ -8,7 +8,6 @@ import java.util.List;
 
 import huce.cntt.oop.doan.dataconnection.DataAccess;
 import huce.cntt.oop.doan.entities.DiemLopHP;
-import huce.cntt.oop.doan.entities.MonHoc;
 import huce.cntt.oop.doan.interfaces.IDiemLopService;
 
 public class DiemLopHPService implements IDiemLopService {
@@ -35,7 +34,7 @@ public class DiemLopHPService implements IDiemLopService {
     public List<DiemLopHP> layDiemLopHPTheoTenMon(String tenMon, String tenLop, Integer hocKi) {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement(
-                "SELECT sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ki"
+                "SELECT sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ki "
                         +
                         "FROM monhoc mh " +
                         "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc " +
@@ -68,7 +67,7 @@ public class DiemLopHPService implements IDiemLopService {
     public List<DiemLopHP> layDiemLopHPTheoMaMon(Integer maMon, String tenLop, Integer hocKi) {
         List<DiemLopHP> kq = new ArrayList<DiemLopHP>();
         PreparedStatement statement = access.getStatement(
-                "SELECT sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ki"
+                "SELECT sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ki "
                         +
                         "FROM monhoc mh " +
                         "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc " +
@@ -180,7 +179,7 @@ public class DiemLopHPService implements IDiemLopService {
     }
 
     @Override
-    public List<String> layDanhSachLopTheoMaMon(Integer maMon) {
+    public List<String> layDanhSachLopTheoMaMon(Integer maMon, Integer hocKi) {
         List<String> kq = new ArrayList<String>();
         PreparedStatement statement = access.getStatement(
                 "SELECT lmh.ten_lop_mon_hoc " +
@@ -188,15 +187,15 @@ public class DiemLopHPService implements IDiemLopService {
                         "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc " +
                         "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc " +
                         "INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv " +
-                        "WHERE mh.ma_mon_hoc = ? GROUP BY lmh.ten_lop_mon_hoc");
+                        "WHERE mh.ma_mon_hoc = " + maMon + " AND dsv.hoc_ki = "+ hocKi + " GROUP BY lmh.ten_lop_mon_hoc");
         try {
-            statement.setInt(1, maMon);
+            // statement.setInt(1, maMon);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 String tenLopMonHoc = result.getString("ten_lop_mon_hoc");
                 kq.add(tenLopMonHoc);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // System.out.println(kq);
@@ -204,7 +203,7 @@ public class DiemLopHPService implements IDiemLopService {
     }
 
     @Override
-    public List<String> layDanhSachLopTheoTenMon(String tenMon) {
+    public List<String> layDanhSachLopTheoTenMon(String tenMon, Integer hocKi) {
         List<String> kq = new ArrayList<String>();
         PreparedStatement statement = access.getStatement(
                 "SELECT lmh.ten_lop_mon_hoc " +
@@ -212,9 +211,9 @@ public class DiemLopHPService implements IDiemLopService {
                         "INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc " +
                         "INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc " +
                         "INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv " +
-                        "WHERE mh.ten_mon_hoc LIKE ? GROUP BY lmh.ten_lop_mon_hoc");
+                        "WHERE mh.ten_mon_hoc LIKE " + tenMon + " AND = dsv.hoc_ki " + hocKi + " GROUP BY lmh.ten_lop_mon_hoc");
         try {
-            statement.setString(1, tenMon);
+            // statement.setString(1, tenMon);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 String tenLopMonHoc = result.getString("ten_lop_mon_hoc");
