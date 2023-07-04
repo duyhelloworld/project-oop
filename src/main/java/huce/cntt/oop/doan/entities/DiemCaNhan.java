@@ -118,8 +118,23 @@ public class DiemCaNhan {
     }
 
     public Float getDiemTongKetHe4() {
-        return Float.parseFloat(String.format("%.1f", getDiemTongKet() * 0.2f));
-        // return 0.0f;
+        float diemtk = getDiemTongKet();
+        if (diemtk >= 8.5f)
+            return 4f;
+        else if (diemtk >= 8.0f)
+            return 3.5f;
+        else if (diemtk >= 7.0f)
+            return 3.0f;
+        else if (diemtk >= 6.5f)
+            return 2.5f;
+        else if (diemtk >= 5.5f)
+            return 2.0f;
+        else if (diemtk >= 5.0f)
+            return 1.5f;
+        else if (diemtk >= 4.0f)
+            return 1.0f;
+        else
+            return 0f;
     }
 
     public DiemChu getDiemChu(){

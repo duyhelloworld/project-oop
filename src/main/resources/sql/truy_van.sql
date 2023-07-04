@@ -122,4 +122,12 @@ FROM MonHoc mh
 INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc
 INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc
 INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv
-WHERE mh.ma_mon_hoc = 1 GROUP BY lmh.ten_lop_mon_hoc;
+WHERE mh.ma_mon_hoc = 1 AND dsv.hoc_ki = 2 GROUP BY lmh.ten_lop_mon_hoc;
+SELECT sv.mssv, sv.ho_ten, lmh.ten_lop_mon_hoc, dsv.diem_chuyen_can, dsv.diem_giua_ki, dsv.diem_cuoi_ki, lmh.ma_lop_mon_hoc, dsv.hoc_ki
+                
+                FROM monhoc mh 
+                INNER JOIN lopmonhoc lmh ON lmh.ma_mon_hoc = mh.ma_mon_hoc 
+                INNER JOIN diemsinhvien dsv ON dsv.ma_lop_mon_hoc = lmh.ma_lop_mon_hoc 
+                INNER JOIN sinhvien sv ON sv.mssv = dsv.mssv 
+                INNER JOIN lopquanli lql ON lql.ma_lop_quan_li = sv.ma_lop_quan_li 
+                WHERE mh.ma_mon_hoc = 1 AND lmh.ten_lop_mon_hoc = '66IT1' AND dsv.hoc_ki = 2
