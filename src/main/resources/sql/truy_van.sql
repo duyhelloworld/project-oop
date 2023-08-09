@@ -52,7 +52,7 @@ monhoc.ma_mon_hoc, ten_mon_hoc, ten_lop_mon_hoc, so_tin_chi, diem_chuyen_can, di
 FROM diemsinhvien
 INNER JOIN lopmonhoc ON LopMonHoc.ma_lop_mon_hoc = diemsinhvien.ma_lop_mon_hoc
 INNER JOIN monhoc ON LopMonHoc.ma_mon_hoc = monhoc.ma_mon_hoc
--- WHERE diemsinhvien.mssv = 2
+WHERE diemsinhvien.mssv = 2
 ORDER BY monhoc.ma_mon_hoc;
 
 -- Danh sách giảng viên
