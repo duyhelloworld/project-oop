@@ -27,7 +27,15 @@ public class DiemLopHPService implements IDiemLopService {
 
     @Override
     public boolean xoaDiemLopHP(Integer MSSV) throws SQLException {
-        throw new UnsupportedOperationException("Unimplemented method 'xoaDiemLopHP'");
+        String query = "UPDATE diemsinhvien SET diem_Chuyen_Can = 0, diem_Giua_Ki = 0, diem_Cuoi_Ki = 0 WHERE " + 
+                "MSSV = " + MSSV;
+        PreparedStatement statement = access.getStatement(query);
+
+        int rowAffected = statement.executeUpdate();
+        if (rowAffected != 1) {
+            throw new SQLException("Lỗi dữ liệu!!!");
+        }
+        return true;
     }
 
     @Override

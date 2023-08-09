@@ -8,7 +8,6 @@ import java.util.Optional;
 import huce.cntt.oop.doan.entities.DiemChu;
 import huce.cntt.oop.doan.entities.DiemLopHP;
 import huce.cntt.oop.doan.entities.GiangVien;
-import huce.cntt.oop.doan.entities.MonHoc;
 import huce.cntt.oop.doan.entities.VaiTro;
 import huce.cntt.oop.doan.loader.LoadTrangChu;
 import huce.cntt.oop.doan.service.DiemLopHPService;
@@ -28,10 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import javafx.util.converter.FloatStringConverter;
 
 public class DiemLopHPController {
     private Stage stage;
